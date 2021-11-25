@@ -1,0 +1,13 @@
+h3 {
+    color: red;
+}
+table {
+  border: 1px solid black;
+}
+td{
+    padding: 10px;
+}
+
+th{
+    padding: 10px;
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tux:hiscores 
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:tux='http://myGame/tux'
+    xsi:schemaLocation='http://myGame/tux hiscores.xsd'>
+    <tux:score date="2019-11-02">
+        <tux:nom>Krogoth</tux:nom>
+        <tux:mot>Sérendipité</tux:mot>
+        <tux:niveau>5</tux:niveau>
+        <tux:temps>24</tux:temps>        
+    </tux:score>
+    <tux:score date="2020-02-20">
+        <tux:nom>NGlade</tux:nom>
+        <tux:mot>Etudes</tux:mot>
+        <tux:niveau>3</tux:niveau>
+        <tux:temps>14</tux:temps>        
+    </tux:score>
+    <tux:score date="2021-09-14">
+        <tux:nom>KSpinicci</tux:nom>
+        <tux:mot>Programme</tux:mot>
+        <tux:niveau>4</tux:niveau>
+        <tux:temps>31</tux:temps>        
+    </tux:score>
+    <tux:score date="2020-03-17">
+        <tux:nom>NGlade</tux:nom>
+        <tux:mot>Confinement</tux:mot>
+        <tux:niveau>5</tux:niveau>
+        <tux:temps>26</tux:temps>        
+    </tux:score>
+</tux:hiscores>

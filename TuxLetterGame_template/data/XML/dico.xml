@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Dictionnaire de mot pour le jeux Tux
+    Mot comporte une au moins 3 lettres 
+    Mot peut contenir 1-* majuscule
+    Autorise les mots composés
+-->
+
+<dictionnaire   xmlns="http://myGame/tux"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://myGame/tux ../XSD/dico.xsd">
+    <mot niveau="1">Jazz</mot>
+    <mot niveau="1">Clef</mot>
+    <mot niveau="1">Lait</mot>
+    <mot niveau="1">Fuir</mot>
+    <mot niveau="1">Fruit</mot>
+    <mot niveau="1">Fort</mot>
+    
+    <mot niveau="2">Chant</mot>
+    <mot niveau="2">Livre</mot>
+    <mot niveau="2">Avion</mot>
+    <mot niveau="2">Jazz</mot>
+    <mot niveau="2">Jour</mot>
+    
+    <mot niveau="3">Journal</mot>
+    <mot niveau="3">Chien</mot>
+    <mot niveau="3">Poire</mot>
+    <mot niveau="3">Volet</mot>
+    <mot niveau="3">Venir</mot>
+    <mot niveau="3">Tapis</mot>
+    
+    <mot niveau="4">Drapeau</mot>
+    <mot niveau="4">Jupiter</mot>
+    <mot niveau="4">Xylophone</mot>
+    <mot niveau="4">Manteau</mot>
+    <mot niveau="4">Apprecier</mot>
+    
+    <mot niveau="5">Dragon</mot>
+    <mot niveau="5">Bouteille</mot>
+    <mot niveau="5">Bonjour</mot>
+    <mot niveau="5">Langage</mot>
+    <mot niveau="5">Gratte-ciel</mot>
+    <mot niveau="5">Porte-monnaie</mot>
+    <mot niveau="5">Gratte-ciel</mot>
+    <mot niveau="5">Porte-bonheur</mot>
+    <mot niveau="5">Haut-parleur</mot>
+    <mot niveau="5">Bourg-en-bresse</mot>
+    
+    
+    <!--- MOT QUI NE DOIT JAMAIS FONCTIONNER
+        <mot niveau="2">Ab3</mot>     
+        <mot niveau="2">123</mot> 
+        <mot niveau="2">aCd</mot>
+        <mot niveau="2">Aadhd-</mot>
+        <mot niveau="2">abc</mot>
+        <mot niveau="2">Ab</mot>
+        <mot niveau="2">ab!!c</mot>
+        <mot niveau="2">@abc</mot>
+        <mot niveau="0">Mot</mot>
+        <mot niveau="6">Mot</mot>
+    -->
+</dictionnaire>

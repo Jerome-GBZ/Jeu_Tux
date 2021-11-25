@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://myGame/tux"
+    targetNamespace="http://myGame/tux"
+    elementFormDefault="qualified">
+    
+    <xs:element name="dictionnaire" type="Dictionnaire"/>
+
+    <xs:complexType name="Dictionnaire">
+        <xs:sequence>
+            <xs:element name="mot" type="Mot" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Mot" mixed="true">
+        <xs:simpleContent>
+            <xs:extension base="verifSyntax">
+                <xs:attribute name="niveau" type="verifNiveau" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="verifNiveau">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="5"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="verifSyntax">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z]{1}[A-Za-zéèêàçùîïô-]{1,}[A-Za-zéèêàçùîïô]{1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

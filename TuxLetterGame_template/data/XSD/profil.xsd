@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<xs:schema version="1.0"
+        xmlns="http://myGame/tux"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://myGame/tux"
+        elementFormDefault="qualified">
+    <xs:include schemaLocation="dico.xsd"/>
+    
+    <xs:element name="profil" type="Profil"/>
+    <!-- Création du profil d'un joueur avec les éléments:
+          - nom : string
+          - avatar : string
+          - anniversaire : string
+          - parties : Liste de parties
+    -->
+    <xs:complexType name="Profil">
+        <xs:sequence>
+            <xs:element name="nom" type="xs:string"/>
+            <xs:element name="avatar" type="xs:string"/> <!-- Bien vérifier si .jpg -->
+            <xs:element name="anniversaire" type="xs:date"/>
+            <xs:element name="parties" type="Parties"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Liste de parties il peut y en avoir de 0 à une infinité de parties
+         il contient un/plusieurs élément.s partie.s.
+        -->
+    
+    <xs:complexType name="Parties">
+        <xs:sequence>
+            <xs:element name="partie" type="Partie" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Partie contient des éléments:
+            -temps : double
+            -mot : Mot 
+         des attributs:
+            -date : Date YYYY-MM-DD
+            -trouvé : String
+    -->
+    
+     <xs:complexType name="Partie">
+        <xs:sequence>
+            <xs:element name="temps" type="xs:double" minOccurs="0"/>
+            <xs:element name="mot" type="Mot"/>
+        </xs:sequence>
+        <xs:attribute name="date" type="xs:date" use="required"/>
+        <xs:attribute name="trouvé" type="xs:string"/> <!-- ? Restriction de 0 à 100 + char '%' -->
+    </xs:complexType>
+</xs:schema>
