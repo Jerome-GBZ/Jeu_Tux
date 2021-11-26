@@ -241,11 +241,13 @@ public abstract class Jeu {
             case Keyboard.KEY_1:
                 // demande le nom du joueur existant
                 nomJoueur = getNomJoueur();
+                System.out.println("nomJoueur : "+nomJoueur);
+
                 // charge le profil de ce joueur si possible
                 if (profil.charge(nomJoueur)) {
                     choix = menuJeu();
                 } else {
-                    choix = MENU_VAL.MENU_SORTIE;//CONTINUE;
+                    choix = MENU_VAL.MENU_CONTINUE; //CONTINUE;
                 }
                 break;
 
@@ -301,13 +303,13 @@ public abstract class Jeu {
             tux.déplace();
             // Contrôles globaux du jeu (sortie, ...)
             //1 is for escape key
-            if (env.getKey() == 1) {
+            if (env.getKey() == 1 || appliqueTemps()) {
                 finished = true;
             }
  
             // Ici, on applique les regles
             appliqueRegles(partie);
-            finished = appliqueTemps();
+            // finished = appliqueTemps();
  
             // Fait avancer le moteur de jeu (mise à jour de l'affichage, de l'écoute des événements clavier...)
             env.advanceOneFrame();

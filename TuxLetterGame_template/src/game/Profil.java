@@ -152,6 +152,24 @@ public class Profil {
     }
     
     public boolean charge(String nom){
+        DOMParser parser = new DOMParser();
+       
+        try{
+            parser.parse("data/XML/profil.xml");
+            Document doc = parser.getDocument();
+            
+            String nom_existant = ((Element) doc.getElementsByTagName("nom")).getTextContent();
+            System.out.println("Joueur existant : "+nom_existant);
+
+            if(nom_existant.equals(nom)) {
+                System.out.println("Return true");
+                return true;
+            }
+        } catch(Exception e) {
+            System.out.println("Erreur: "+e);
+        }
+
+        System.out.println("Return false");
         return false;
     }
 }

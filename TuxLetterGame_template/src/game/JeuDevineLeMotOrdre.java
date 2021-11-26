@@ -20,7 +20,7 @@ public class JeuDevineLeMotOrdre extends Jeu{
         nbLettresRestantes = super.lettres.size();
     }
 
-    private boolean tuxTrouveLettre(){
+    private boolean tuxTrouveLettre() {
         if(super.collision(super.lettres.get(0))){
             System.out.println("Tux trouve lettre !");
             return true;
@@ -38,7 +38,7 @@ public class JeuDevineLeMotOrdre extends Jeu{
     
     @Override
     protected void démarrePartie(Partie partie) {
-       chrono = new Chronometre(10);
+       chrono = new Chronometre(1000000000);
        chrono.start();
        chrono.stop();
     }
