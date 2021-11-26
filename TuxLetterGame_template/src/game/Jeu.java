@@ -123,18 +123,24 @@ public abstract class Jeu {
             
             // vérifie qu'une touche 1, 2, 3 ou 4 est pressée
             int touche = 0;
-            while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4)) {
-            if(env.getKeyDown() == 75) {
-                touche = 5;
-            } else if(env.getKeyDown() == 79) {
-                touche = 2;
-            } else if (env.getKeyDown() == 80) {
-                touche = 3;
-            }  else if (env.getKeyDown() == 81) {
-                touche = 4;
-            } else {
-                touche = 0;
-            }
+            while (!(touche == Keyboard.KEY_1 
+            || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 
+            || touche == Keyboard.KEY_4)) {
+                if(env.getKeyDown() == 75) {
+                    //Touche 4
+                    touche = 5;
+                } else if(env.getKeyDown() == 79) {
+                    //Touche 1
+                    touche = 2;
+                } else if (env.getKeyDown() == 80) {
+                    //Touche 2
+                    touche = 3;
+                }  else if (env.getKeyDown() == 81) {
+                    //Touche 3
+                    touche = 4;
+                } else {
+                    touche = 0;
+                }
                 
                 env.advanceOneFrame();
             }
@@ -213,7 +219,7 @@ public abstract class Jeu {
         int touche = 0;
         
         while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3)) {
-            if(env.getKeyDown() == 79) {
+            if(env.getKeyDown() == 79 || touche == (Keyboard.KEY_NUMPAD1 + Keyboard.KEY_NUMLOCK)) {
                 touche = 2;
             } else if (env.getKeyDown() == 80) {
                 touche = 3;

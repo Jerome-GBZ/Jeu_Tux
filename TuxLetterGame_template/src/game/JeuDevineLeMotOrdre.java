@@ -15,6 +15,7 @@ public class JeuDevineLeMotOrdre extends Jeu{
 
     private int nbLettresRestantes;
     private Chronometre chrono;
+    private static int TIME = 100000000;
     public JeuDevineLeMotOrdre(){
         super();
         nbLettresRestantes = super.lettres.size();
@@ -38,9 +39,9 @@ public class JeuDevineLeMotOrdre extends Jeu{
     
     @Override
     protected void démarrePartie(Partie partie) {
-       chrono = new Chronometre(10);
+
+       chrono = new Chronometre(TIME);
        chrono.start();
-       chrono.stop();
     }
 
     @Override
@@ -55,6 +56,7 @@ public class JeuDevineLeMotOrdre extends Jeu{
     
     @Override
     protected boolean appliqueTemps() {
+        
         if(chrono.remainsTime()) {
             return true;
         } else {

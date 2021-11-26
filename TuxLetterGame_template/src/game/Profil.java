@@ -6,14 +6,11 @@
 package game;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import utils.XMLUtil;
 
 public class Profil {
