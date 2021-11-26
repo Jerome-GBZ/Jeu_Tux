@@ -33,12 +33,12 @@ public abstract class Jeu {
     protected EnvTextMap gameText;                         //text (affichage des texte du jeu)
     private final Room mainRoom;
     private final Room menuRoom;
+    private ArrayList<Letter> motTrouve;
     
     
     public Jeu() {
         // Crée un nouvel environnement
         env = new Env();
-        
         // Instancie une Room du menu principal
         mainRoom = new Room();
         
@@ -48,6 +48,9 @@ public abstract class Jeu {
         menuRoom.setTextureWest("textures/black.png");
         menuRoom.setTextureNorth("textures/black.png");
         menuRoom.setTextureBottom("textures/black.png");
+
+        
+    
         
         //Instancie la room du tux
         room = new Room();
@@ -63,7 +66,9 @@ public abstract class Jeu {
         profil = new Profil("data/XML/profil.xml");
         
         //Instancie le conteneur de lettres
-        lettres = new ArrayList();
+        lettres = new ArrayList<>();
+
+        motTrouve = new ArrayList<>();
         // Dictionnaire
         dico = new Dico("dico.xml");
 
@@ -80,6 +85,8 @@ public abstract class Jeu {
         menuText.addText("1. Charger un profil de joueur existant ?", "Principal1", 250, 280);
         menuText.addText("2. Créer un nouveau joueur ?", "Principal2", 250, 260);
         menuText.addText("3. Sortir du jeu ?", "Principal3", 250, 240);
+    
+
     }
     
     public void execute(){
@@ -93,6 +100,7 @@ public abstract class Jeu {
         
         this.env.setDisplayStr("Au revoir !", 300, 30);
         env.exit();
+        
     }
     
     
@@ -153,6 +161,7 @@ public abstract class Jeu {
             menuText.getText("Jeu3").clean();
             menuText.getText("Jeu4").clean();
 
+            
             // restaure la room du jeu
             env.setRoom(mainRoom);
 
@@ -209,18 +218,18 @@ public abstract class Jeu {
 
         // restaure la room du menu
         env.setRoom(menuRoom);
-
         menuText.getText("Question").display();
         menuText.getText("Principal1").display();
         menuText.getText("Principal2").display();
         menuText.getText("Principal3").display();
                
+        
         // vérifie qu'une touche 1, 2 ou 3 est pressée
         System.out.println("game.Jeu.menuPrincipal()");
         int touche = 0;
         
         while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3)) {
-            if(env.getKeyDown() == 79 || touche == (Keyboard.KEY_NUMPAD1 + Keyboard.KEY_NUMLOCK)) {
+            if(env.getKeyDown() == 79) {
                 touche = 2;
             } else if (env.getKeyDown() == 80) {
                 touche = 3;
@@ -233,7 +242,6 @@ public abstract class Jeu {
             env.advanceOneFrame();
         }
 
-        System.out.println("Touche sortante : "+touche);
 
         menuText.getText("Question").clean();
         menuText.getText("Principal1").clean();
@@ -276,22 +284,24 @@ public abstract class Jeu {
         return choix;
     }
     
-    public void joue(Partie partie){
-        // TEMPORAIRE : on règle la room de l'environnement. Ceci sera à enlever lorsque vous ajouterez les menus.
+    public void joue(Partie partie){   
+        
+        env.advanceOneFrame();
+        int level = frameChoisirNiveau();
+        System.out.println("level = "+ level);
+        String mot = dico.getMotDepusiListeNiveaux(level);
+        frameApprendreLeMot(mot);
         env.setRoom(room);
  
         // Instancie un Tux
         tux = new Tux(env, room);
-        String mot = "salut";
         char[] tab = mot.toCharArray();
-        int spacing = 15; // Espace de 15 pixel
-        int middleWord = mot.length()/2; // Moitié d'un mot
-        int startPos = (room.getWidth() / 2) - (middleWord * 20);// Position de départ
         for(int i=0; i<mot.length(); i++){
-           Letter l = new Letter(tab[i], startPos,50, room);
+            int randomPositionX = (int) (Math.random() * (room.getWidth()));
+            int randomPositionZ = (int) (Math.random() * (room.getDepth()));
+           Letter l = new Letter(tab[i], randomPositionX,randomPositionZ, room);
            lettres.add(l);
            env.addObject(l); 
-           startPos+=spacing;
         }
         
         env.addObject(tux);
@@ -303,6 +313,7 @@ public abstract class Jeu {
         Boolean finished;
         finished = false;
         gameText = new EnvTextMap(env);
+        
         
         while (!finished) {
             finished = appliqueTemps(new OnJeuCallback() {
@@ -336,6 +347,102 @@ public abstract class Jeu {
         // Ici on peut calculer des valeurs lorsque la partie est terminée
         terminePartie(partie);
     }
+
+
+    /**
+     * La frame choisir niveau permet à l'utilisateur de choisir un niveau 
+     * afin de pouvoir apprendre des mots à son rythme
+     * @return level compris entre 1 et 5
+     */
+    private int frameChoisirNiveau(){
+        env.setRoom(mainRoom);
+        menuText.addText("Choisissez un niveau [ 1 simple -> 5 difficile] ", "choixLvl", 200, 300);
+        menuText.addText("1. Niveau 1", "lvl1", 250, 280);
+        menuText.addText("2. Niveau 2", "lvl2", 250, 260);
+        menuText.addText("3. Niveau 3", "lvl3", 250, 240);
+        menuText.addText("4. Niveau 4", "lvl4", 250, 220);
+        menuText.addText("5. Niveau 5", "lvl5", 250, 200);
+        menuText.getText("choixLvl").display();
+        menuText.getText("lvl1").display();
+        menuText.getText("lvl2").display();
+        menuText.getText("lvl3").display();
+        menuText.getText("lvl4").display();
+        menuText.getText("lvl5").display();
+
+        int touche = 0;
+        
+        
+        while (!(touche == Keyboard.KEY_1 
+        || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 
+        || touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5)) {
+            if(env.getKeyDown() == 75) {
+                //Touche 4
+                touche = 5;
+            }
+            else if(env.getKeyDown() == 76) {
+                //Touche 5
+                touche = 6;
+            
+            }else if(env.getKeyDown() == 83) {//79
+                //Touche 1
+                touche = 2;
+            } else if (env.getKeyDown() == 80) {
+                //Touche 2
+                touche = 3;
+            }  else if (env.getKeyDown() == 81) {
+                //Touche 3
+                touche = 4;
+            } else {
+                touche = 0;
+            }
+            env.advanceOneFrame();
+        }
+
+        menuText.getText("choixLvl").clean();
+        menuText.getText("lvl1").clean();
+        menuText.getText("lvl2").clean();
+        menuText.getText("lvl3").clean();
+        menuText.getText("lvl4").clean();
+        menuText.getText("lvl5").clean();
+        
+        return touche-1;
+    }
+
+    /**
+     * Cette frame contient une dark box qui contient le mot à apprendre (dans l'ordre)
+     * On a 5s pour apprendre le mot !
+     */
+    private void frameApprendreLeMot(String mot){
+        env.setRoom(menuRoom);
+        char[] tab = mot.toCharArray();
+        int spacing = 15; // Espace de 15 pixel
+        int middleWord = mot.length()/2; // Moitié d'un mot
+        int startPos = (room.getWidth() / 2) - (middleWord * 20);// Position de départ
+        ArrayList<Letter> motTmp = new ArrayList<>();
+        for(int i=0; i<mot.length(); i++){
+           Letter l = new Letter(tab[i], startPos,50, room);
+           env.addObject(l); 
+           motTmp.add(l);
+           startPos+=spacing;
+        }
+        //5 sec
+        Chronometre chrono = new Chronometre(5);
+        chrono.start();
+        while(chrono.remainsTime()){
+            if(menuText.getText("time") != null)
+                menuText.getText("time").clean();
+            menuText.addText("Temps restant pour apprendre le mot: "+(5-chrono.getSeconds()), "time", 150, 420);
+            menuText.getText("time").display();
+            
+            env.advanceOneFrame();
+        }
+        for(int i=0; i<motTmp.size(); i++){
+            env.removeObject(motTmp.get(i));
+        }
+        if(menuText.getText("time") != null)
+                menuText.getText("time").clean();
+        
+    }
     
     protected abstract void démarrePartie(Partie partie);
     
@@ -358,7 +465,7 @@ public abstract class Jeu {
         double zT = tux.getZ();
         
         //Formule DISTANCE = racine((x-xT)²+ (y-yT)²)
-        System.out.println("distance = "+ Math.sqrt(Math.pow(x-xT, 2)+Math.pow(y-yT, 2)+Math.pow(z-zT, 2))+"\n");
+        //System.out.println("distance = "+ Math.sqrt(Math.pow(x-xT, 2)+Math.pow(y-yT, 2)+Math.pow(z-zT, 2))+"\n");
         return Math.sqrt(Math.pow(x-xT, 2)+Math.pow(y-yT, 2)+Math.pow(z-zT, 2));
     }
     
@@ -374,9 +481,19 @@ public abstract class Jeu {
     }
 
     private void lettreTrouve(Letter letter){
+        motTrouve.add(letter);
+        afficherLettreSelectionnee(letter);
         if(lettres.size() != 0)
             env.removeObject(letter);
             lettres.remove(0);
+    }
+
+    private void afficherLettreSelectionnee(Letter letter){
+        int startPos = (room.getWidth() / 2) - (lettres.size() * 5);
+        Letter l = new Letter(letter.getLetter(), startPos,room.getDepth(), room);
+        l.setScale(1.0);
+        l.setY(room.getHeight());
+        env.addObject(l); 
     }
     
     

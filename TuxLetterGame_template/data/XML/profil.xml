@@ -7,7 +7,7 @@
 <profil xmlns="http://myGame/tux" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="http://myGame/tux ../XSD/profil.xsd">
-    <nom>Alban</nom>
+    <nom>riad</nom>
     <avatar>player1.svg</avatar>
     <anniversaire>2006-05-08</anniversaire>
     <parties>

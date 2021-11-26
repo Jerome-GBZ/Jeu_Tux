@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import utils.XMLUtil;
 
 public class Profil {
@@ -26,6 +28,11 @@ public class Profil {
         this.dateNaissance = dateNaissance;
         this.avatar = getCheminAvatar()+"player1.svg";
         parties = new ArrayList();
+    }
+
+    public String getProfilInformations(){
+        return "nom: " + nom + "\n" +
+        "date de naissance: " + dateNaissance + "\n";
     }
     
     public Profil(String filename){
@@ -79,6 +86,9 @@ public class Profil {
                 + "\n dateNaissance = " + dateNaissance; //To change body of generated methods, choose Tools | Templates.
     }
     
+    public void sauvegarderJoueur(){
+        
+    }
     
     public void sauvegarder(String filename){
         DOMParser parser = new DOMParser();
@@ -149,6 +159,25 @@ public class Profil {
     }
     
     public boolean charge(String nom){
+        DOMParser parser = new DOMParser();
+       
+        try{
+            parser.parse("data/XML/profil.xml");
+            Document doc = parser.getDocument();
+            
+            NodeList list_noms = doc.getElementsByTagName("nom");
+            String nom_existant = ((Element)list_noms.item(0)).getTextContent();
+            System.out.println("Joueur existant : "+nom_existant);
+
+            if(nom_existant.equals(nom)) {
+                System.out.println("Return true");
+                return true;
+            }
+        } catch(Exception e) {
+            System.out.println("Erreur: "+e);
+        }
+
+        System.out.println("Return false");
         return false;
     }
 }

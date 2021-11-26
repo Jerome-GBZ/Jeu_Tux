@@ -25,5 +25,10 @@ public class Letter extends EnvNode{
         setTexture(texturePath);
         setModel("/models/letter/cube.obj");  
     }
+
+    public char getLetter() {
+        return letter;
+    }
+
     
 }
