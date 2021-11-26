@@ -5,8 +5,6 @@
  */
 package game;
 
-import de.lessvoid.nifty.NiftyStopwatch;
-
 /**
  *
  * @author riad7
@@ -15,7 +13,7 @@ public class JeuDevineLeMotOrdre extends Jeu{
 
     private int nbLettresRestantes;
     private Chronometre chrono;
-    private static int TIME = 100000000;
+    private static int TIME = 2500;
     public JeuDevineLeMotOrdre(){
         super();
         nbLettresRestantes = super.lettres.size();
@@ -30,23 +28,21 @@ public class JeuDevineLeMotOrdre extends Jeu{
     }
     
     private int getNbLettresRestantes(){
-        return 0;
+        return nbLettresRestantes--;
     }
     
-    private int getTemps(){
-        return 0;
-    }
+    
     
     @Override
     protected void démarrePartie(Partie partie) {
-
        chrono = new Chronometre(TIME);
        chrono.start();
     }
 
     @Override
     protected void appliqueRegles(Partie partie) {
-        
+        if(tuxTrouveLettre())
+            getNbLettresRestantes();
     }
 
     @Override
@@ -55,12 +51,13 @@ public class JeuDevineLeMotOrdre extends Jeu{
     }
     
     @Override
-    protected boolean appliqueTemps() {
-        
+    protected boolean appliqueTemps(OnJeuCallback callback) {
         if(chrono.remainsTime()) {
-            return true;
-        } else {
+            callback.onTimeSpentListener(chrono.getSeconds());
             return false;
+        } else {
+            return true;
         }
     }
+
 }

@@ -23,7 +23,6 @@ public class Chronometre {
     public void start(){
         stop();
         begin = System.currentTimeMillis(); 
-        System.out.println("begin = "+ begin);
     }
  
     public void stop(){
@@ -60,8 +59,8 @@ public class Chronometre {
     * Method to know if it remains time.
     */
     public boolean remainsTime() {
+        
         if(getSeconds() < limite){
-            System.out.println(getSeconds() + "s");
              return true;
         }
         return false;

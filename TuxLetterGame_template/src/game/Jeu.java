@@ -30,6 +30,7 @@ public abstract class Jeu {
     public ArrayList<Letter> lettres;
     private final Dico dico;
     protected EnvTextMap menuText;                         //text (affichage des texte du jeu)
+    protected EnvTextMap gameText;                         //text (affichage des texte du jeu)
     private final Room mainRoom;
     private final Room menuRoom;
     
@@ -288,7 +289,7 @@ public abstract class Jeu {
         int startPos = (room.getWidth() / 2) - (middleWord * 20);// Position de départ
         for(int i=0; i<mot.length(); i++){
            Letter l = new Letter(tab[i], startPos,50, room);
-         
+           lettres.add(l);
            env.addObject(l); 
            startPos+=spacing;
         }
@@ -301,9 +302,21 @@ public abstract class Jeu {
         // Boucle de jeu
         Boolean finished;
         finished = false;
+        gameText = new EnvTextMap(env);
         
         while (!finished) {
- 
+            finished = appliqueTemps(new OnJeuCallback() {
+                @Override
+                public void onTimeSpentListener(int time) {
+                    // TODO Auto-generated method stub
+                    if(gameText.getText("time") != null)
+                        gameText.getText("time").clean();
+                    gameText.addText("Time: "+time, "time", 10, 420);
+                    gameText.getText("time").display();
+                    
+                }
+            });
+            
             tux.déplace();
             // Contrôles globaux du jeu (sortie, ...)
             //1 is for escape key
@@ -313,12 +326,13 @@ public abstract class Jeu {
  
             // Ici, on applique les regles
             appliqueRegles(partie);
-            finished = appliqueTemps();
  
             // Fait avancer le moteur de jeu (mise à jour de l'affichage, de l'écoute des événements clavier...)
             env.advanceOneFrame();
         }
  
+        if(gameText.getText("time") != null)
+            gameText.getText("time").clean();
         // Ici on peut calculer des valeurs lorsque la partie est terminée
         terminePartie(partie);
     }
@@ -329,19 +343,23 @@ public abstract class Jeu {
     
     protected abstract void terminePartie(Partie partie);
     
-    protected abstract boolean appliqueTemps();
+    protected abstract boolean appliqueTemps(OnJeuCallback callback);
     
     protected double distance(Letter letter){
         //Cordonnées cartesienne de notre lettre
         double x = letter.getX();
+        double y = letter.getY();
         double z = letter.getZ();
+
         
         //Cordonnées cartesuenne de notre tux
         double xT = tux.getX();
-        double zT = tux.getY();
+        double yT = tux.getY();
+        double zT = tux.getZ();
         
         //Formule DISTANCE = racine((x-xT)²+ (y-yT)²)
-        return Math.sqrt(Math.pow(x-xT, 2)-Math.pow(z-zT, 2));
+        System.out.println("distance = "+ Math.sqrt(Math.pow(x-xT, 2)+Math.pow(y-yT, 2)+Math.pow(z-zT, 2))+"\n");
+        return Math.sqrt(Math.pow(x-xT, 2)+Math.pow(y-yT, 2)+Math.pow(z-zT, 2));
     }
     
     protected boolean collision(Letter letter){
@@ -349,7 +367,16 @@ public abstract class Jeu {
             System.out.println("Collision détéctée avec"
                     + "la lettre "+ letter);
         }
-        return distance(letter) <= 5.0;
+        if(distance(letter) <= 5.5){
+            lettreTrouve(letter);
+        }
+        return distance(letter) <= 5.5;
+    }
+
+    private void lettreTrouve(Letter letter){
+        if(lettres.size() != 0)
+            env.removeObject(letter);
+            lettres.remove(0);
     }
     
     
