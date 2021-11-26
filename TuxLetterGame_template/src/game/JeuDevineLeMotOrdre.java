@@ -15,12 +15,13 @@ public class JeuDevineLeMotOrdre extends Jeu{
 
     private int nbLettresRestantes;
     private Chronometre chrono;
+    private static int TIME = 5;
     public JeuDevineLeMotOrdre(){
         super();
         nbLettresRestantes = super.lettres.size();
     }
 
-    private boolean tuxTrouveLettre() {
+    private boolean tuxTrouveLettre(){
         if(super.collision(super.lettres.get(0))){
             System.out.println("Tux trouve lettre !");
             return true;
@@ -38,9 +39,9 @@ public class JeuDevineLeMotOrdre extends Jeu{
     
     @Override
     protected void démarrePartie(Partie partie) {
-       chrono = new Chronometre(1000000000);
+
+       chrono = new Chronometre(TIME);
        chrono.start();
-       chrono.stop();
     }
 
     @Override
@@ -56,9 +57,9 @@ public class JeuDevineLeMotOrdre extends Jeu{
     @Override
     protected boolean appliqueTemps() {
         if(chrono.remainsTime()) {
-            return true;
+            return false;//reste du temps
         } else {
-            return false;
+            return true;
         }
     }
 }
