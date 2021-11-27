@@ -1,36 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
+
+import java.util.ArrayList;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-/**
- *
- * @author riad7
- */
 public class Partie {
     private String date;
     private String mot;
     private int niveau;
-    private int trouvé;
+    private int trouve;
     private int temps;
     
-    public Partie(String date, String mot, int niveau){
+    public Partie(String date, String mot, int niveau) {
         this.date = date;
         this.mot = mot;
         this.niveau = niveau;
+        this.trouve = 0;
     }
     
-    // A FAIRE
+    // A TESTER
     public Partie(Element partieElt) {
+        this.date = partieElt.getAttribute("date");
+        this.trouve = Integer.parseInt(partieElt.getAttribute("trouvé"));
+
+        NodeList list_mot = partieElt.getElementsByTagName("mot");
+        this.mot = ((Element) list_mot.item(0)).getTextContent();
+        this.niveau = Integer.parseInt(((Element) list_mot.item(0)).getAttribute("niveau"));
         
+        /*
+         *  <partie date="2013-12-11" trouve="75%">
+         *      <mot niveau="2">indice</mot>
+         *  </partie>
+         */
     }
     
-    // A FAIRE
+    // A TESTER
+    public ArrayList<Partie> getParties(Document doc) {
+        NodeList parties = doc.getElementsByTagName("partie");
+        System.out.println(parties.item(0));
+        ArrayList<Partie> listParties = new ArrayList<>();
+        
+        for (int i = 0; i < parties.getLength(); i++) {
+            listParties.add(new Partie((Element) parties.item(i)));
+        }
+        
+        return listParties;
+    }
+
     public Element getPartie(Document doc) {
         return null;
     }
@@ -43,12 +61,12 @@ public class Partie {
         this.niveau = niveau;
     }
 
-    public int getTrouvé() {
-        return trouvé;
+    public int getTrouve() {
+        return trouve;
     }
 
-    public void setTrouvé(int trouvé) {
-        this.trouvé = trouvé;
+    public void settrouve(int trouve) {
+        this.trouve = trouve;
     }
 
     public int getTemps() {
@@ -70,7 +88,6 @@ public class Partie {
     public void setMot(String mot) {
         this.mot = mot;
     }
-    
 
     public void setTemps(int temps) {
         this.temps = temps;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
@@ -12,7 +7,6 @@ import java.util.logging.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
 import utils.XMLUtil;
 
 public class Profil {
@@ -111,7 +105,7 @@ public class Profil {
                 //Implémentation des nodes
                 // node partie :
                 newPartie.setAttribute("date", profileDateToXmlDate(this.parties.get(i).getDate()));
-                newPartie.setAttribute("trouvé", String.valueOf(this.parties.get(i).getTrouvé()));
+                newPartie.setAttribute("trouvé", String.valueOf(this.parties.get(i).getTrouve()));
                 // node Mot :
                 newMot.setAttribute("niveau", String.valueOf(this.parties.get(i).getNiveau()));
                 newMot.setTextContent(this.parties.get(i).getMot());

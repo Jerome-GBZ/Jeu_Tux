@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
@@ -12,10 +7,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-/**
- *
- * @author riad7
- */
 public class Dico {
     
     private ArrayList<String> listeNiveau1;

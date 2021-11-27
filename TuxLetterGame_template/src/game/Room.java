@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
-/**
- *
- * @author riad
- */
 public class Room {
     private int depth;
     private int height;
@@ -25,6 +16,7 @@ public class Room {
         textureNorth = "/textures/skybox/default/north.png";
         textureEast = "/textures/skybox/default/east.png";
         textureWest = "/textures/skybox/default/west.png";
+        
         depth = 100;
         width = 100;
         height = 60;
@@ -101,6 +93,4 @@ public class Room {
     public void setTextureSouth(String textureSouth) {
         this.textureSouth = textureSouth;
     }
-    
-    
 }

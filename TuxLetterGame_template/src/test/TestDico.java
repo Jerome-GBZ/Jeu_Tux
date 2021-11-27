@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package test;
 
 import game.Dico;
 
-/**
- *
- * @author gambiezj
- */
 public class TestDico {
     public static void main(String[] args){
         // Création d'un objet dico

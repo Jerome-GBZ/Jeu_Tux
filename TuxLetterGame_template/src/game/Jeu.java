@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
 import env.EnvTextMap;
 import env3d.Env;
 import java.util.ArrayList;
+
+import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 
-/**
- *
- * @author riad7
- */
 public abstract class Jeu {
     
     enum MENU_VAL {
@@ -132,23 +125,17 @@ public abstract class Jeu {
             
             // vérifie qu'une touche 1, 2, 3 ou 4 est pressée
             int touche = 0;
-            while (!(touche == Keyboard.KEY_1 
-            || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 
-            || touche == Keyboard.KEY_4)) {
-                if(env.getKeyDown() == 75) {
-                    //Touche 4
+            while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4)) {
+                if(env.getKeyDown() == 75) { // Touche 4
                     touche = 5;
-                } else if(env.getKeyDown() == 79) {
-                    //Touche 1
+                } else if(env.getKeyDown() == 79) { // Touche 1
                     touche = 2;
-                } else if (env.getKeyDown() == 80) {
-                    //Touche 2
+                } else if (env.getKeyDown() == 80) { // Touche 2
                     touche = 3;
-                }  else if (env.getKeyDown() == 81) {
-                    //Touche 3
+                }  else if (env.getKeyDown() == 81) { // Touche 3
                     touche = 4;
                 } else {
-                    touche = 0;
+                    touche = env.getKeyDown();
                 }
                 
                 env.advanceOneFrame();
@@ -229,14 +216,16 @@ public abstract class Jeu {
         int touche = 0;
         
         while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3)) {
-            if(env.getKeyDown() == 79) {
+            System.out.println("Touche : "+env.getKeyDown());
+            
+            if(env.getKeyDown() == 79) { // Touche 1
                 touche = 2;
-            } else if (env.getKeyDown() == 80) {
+            } else if (env.getKeyDown() == 80) { // Touche 2
                 touche = 3;
-            }  else if (env.getKeyDown() == 81) {
+            }  else if (env.getKeyDown() == 81) { // Touche 3
                 touche = 4;
             } else {
-                touche = 0;
+                touche = env.getKeyDown();
             }
             
             env.advanceOneFrame();
@@ -356,6 +345,7 @@ public abstract class Jeu {
      */
     private int frameChoisirNiveau(){
         env.setRoom(mainRoom);
+        
         menuText.addText("Choisissez un niveau [ 1 simple -> 5 difficile] ", "choixLvl", 200, 300);
         menuText.addText("1. Niveau 1", "lvl1", 250, 280);
         menuText.addText("2. Niveau 2", "lvl2", 250, 260);
@@ -370,31 +360,21 @@ public abstract class Jeu {
         menuText.getText("lvl5").display();
 
         int touche = 0;
-        
-        
-        while (!(touche == Keyboard.KEY_1 
-        || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 
-        || touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5)) {
-            if(env.getKeyDown() == 75) {
-                //Touche 4
+        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5)) {
+            if(env.getKeyDown() == 75) { // Touche 4
                 touche = 5;
-            }
-            else if(env.getKeyDown() == 76) {
-                //Touche 5
+            } else if(env.getKeyDown() == 76) { // Touche 5
                 touche = 6;
-            
-            }else if(env.getKeyDown() == 83) {//79
-                //Touche 1
+            } else if(env.getKeyDown() == 83) { // Touche 1
                 touche = 2;
-            } else if (env.getKeyDown() == 80) {
-                //Touche 2
+            } else if (env.getKeyDown() == 80) { // Touche 2
                 touche = 3;
-            }  else if (env.getKeyDown() == 81) {
-                //Touche 3
+            } else if (env.getKeyDown() == 81) { // Touche 3
                 touche = 4;
             } else {
-                touche = 0;
+                touche = env.getKeyDown(); // avant : 0
             }
+
             env.advanceOneFrame();
         }
 

@@ -1,7 +1,5 @@
 package game;
 
-
-
 public class Chronometre {
     private long begin;
     private long end;
