@@ -216,8 +216,6 @@ public abstract class Jeu {
         int touche = 0;
         
         while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3)) {
-            System.out.println("Touche : "+env.getKeyDown());
-            
             if(env.getKeyDown() == 79) { // Touche 1
                 touche = 2;
             } else if (env.getKeyDown() == 80) { // Touche 2

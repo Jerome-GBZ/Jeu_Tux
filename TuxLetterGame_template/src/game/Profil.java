@@ -21,27 +21,30 @@ public class Profil {
         this.nom = nom;
         this.dateNaissance = dateNaissance;
         this.avatar = getCheminAvatar()+"player1.svg";
-        parties = new ArrayList();
-    }
-
-    public String getProfilInformations(){
-        return "nom: " + nom + "\n" +
-        "date de naissance: " + dateNaissance + "\n";
+        parties = new ArrayList<>();
     }
     
     public Profil(String filename){
+        parties = new ArrayList<>();
+
         _doc = fromXML(filename);
         DOMParser parser = new DOMParser();
        
         try{
             parser.parse(filename);
             _doc = parser.getDocument();
-            nom = ((Element) _doc.getElementsByTagName("nom")).getTextContent();
-            dateNaissance = xmlDateToProfileDate(((Element) _doc.getElementsByTagName("anniversaire")).getTextContent());
-            avatar = getCheminAvatar()+((Element) _doc.getElementsByTagName("avatar")).getTextContent();
+
+            nom = ((Element) _doc.getElementsByTagName("nom").item(0)).getTextContent();
+            dateNaissance = xmlDateToProfileDate(((Element) _doc.getElementsByTagName("anniversaire").item(0)).getTextContent());
+            avatar = getCheminAvatar()+((Element) _doc.getElementsByTagName("avatar").item(0)).getTextContent();
         } catch(Exception e) {
             System.out.println("Erreur: "+e);
         }
+    }
+
+    public String getProfilInformations(){
+        return "nom: " + nom + "\n" +
+        "date de naissance: " + dateNaissance + "\n";
     }
     
     private String getCheminAvatar() {
@@ -91,7 +94,7 @@ public class Profil {
             parser.parse(filename);
             Document doc = parser.getDocument();
             
-            Element partiesElem = (Element) doc.getElementsByTagName("parties");
+            Element partiesElem = (Element) doc.getElementsByTagName("parties").item(0);
             
             System.out.println("game.Profil.sauvegarder()");
             for (int i = 0; i < this.parties.size(); i++) {
