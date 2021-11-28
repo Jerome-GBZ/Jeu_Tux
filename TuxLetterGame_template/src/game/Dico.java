@@ -30,6 +30,7 @@ public class Dico {
     
     public String getMotDepusiListeNiveaux(int niveau){
         String mot = "error";
+        
         switch(vérifieNiveau(niveau)){
             case 1:
                 mot = getMotDepuisListe(listeNiveau1);

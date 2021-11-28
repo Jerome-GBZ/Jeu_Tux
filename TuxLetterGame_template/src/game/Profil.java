@@ -16,40 +16,59 @@ public class Profil {
     private String avatar;
     private ArrayList<Partie> parties;
     public Document _doc;
+    private static final String filepathAvatar = "data/AVATAR/";
+    private static final String filepathProfil = "data/XML/profil.xml";
     
-    
-    public Profil(String nom, String dateNaissance){
+    public Profil(String nom, String dateNaissance) {
         this.nom = nom;
         this.dateNaissance = dateNaissance;
-        this.avatar = getCheminAvatar()+"player1.svg";
+        this.avatar = "player1.svg";
+
+        if(!this.JoeurExist(nom)) {
+            sauvegarderJoueur(filepathProfil);
+        }
+
         parties = new ArrayList<>();
     }
     
-    public Profil(String filename){
+    public Profil(String nomJ, boolean test) {
         parties = new ArrayList<>();
 
-        _doc = fromXML(filename);
-        DOMParser parser = new DOMParser();
-       
-        try{
-            parser.parse(filename);
-            _doc = parser.getDocument();
-
-            nom = ((Element) _doc.getElementsByTagName("nom").item(0)).getTextContent();
-            dateNaissance = xmlDateToProfileDate(((Element) _doc.getElementsByTagName("anniversaire").item(0)).getTextContent());
-            avatar = getCheminAvatar()+((Element) _doc.getElementsByTagName("avatar").item(0)).getTextContent();
+        try {
+            Element joueur = this.ChargerJoueur(nomJ);
+            if(joueur != null) {
+                nom = ((Element) joueur.getElementsByTagName("nom").item(0)).getTextContent();
+                dateNaissance = xmlDateToProfileDate(((Element) joueur.getElementsByTagName("anniversaire").item(0)).getTextContent());
+                avatar = getCheminAvatar()+((Element) joueur.getElementsByTagName("avatar").item(0)).getTextContent();
+            } else {
+                nom = "default";
+                dateNaissance = "1970/01/01";
+                avatar = "player1.svg";
+            }
         } catch(Exception e) {
             System.out.println("Erreur: "+e);
         }
     }
 
-    public String getProfilInformations(){
+    public Profil() {
+        nom = "default";
+        dateNaissance = "1970/01/01";
+        avatar = "player1.svg";
+
+        parties = new ArrayList<>();
+    }
+
+    public String getProfilInformations() {
         return "nom: " + nom + "\n" +
         "date de naissance: " + dateNaissance + "\n";
     }
     
     private String getCheminAvatar() {
-        return "data/AVATAR";
+        return filepathAvatar;
+    }
+
+    private String getAvatar() {
+        return avatar;
     }
     
     private void toXML(String filename){
@@ -78,6 +97,10 @@ public class Profil {
         return parties.get(dernierePartie).getNiveau();
     }
 
+    public String getNom() {
+        return this.nom;
+    }
+
     public String toString() {
         return "Profile :"
                 + "\n nom = " + nom
@@ -85,23 +108,42 @@ public class Profil {
     }
     
     public void sauvegarderJoueur(String filename){
-        //DOMParser parser = new DOMParser();
-       
         try{
-            System.out.println("Sauvegarde du profil en cours...");
-            //parser.parse(filename);
+            System.out.println("Sauvegarde d'un nouveau profil en cours...");
             _doc = fromXML(filename);
-            
-            
-            Node mProfil = _doc.getDocumentElement();
-            Node exName = _doc.getElementsByTagName("nom").item(0);
-            Node exAnniversaire = _doc.getElementsByTagName("anniversaire").item(0);
-            Node newName = _doc.createElement("nom");
-            Node newAnniversaire = _doc.createElement("anniversaire");
-            newAnniversaire.setTextContent(dateNaissance);
-            newName.setTextContent(this.nom);
-            mProfil.replaceChild(newName, exName);
-            mProfil.replaceChild(newAnniversaire, exAnniversaire);
+
+            Element profils = (Element) _doc.getElementsByTagName("profils").item(0);
+
+            Element newProfil = _doc.createElement("profil");
+            Element newName = _doc.createElement("nom");
+            Element newAvatar = _doc.createElement("avatar");
+            Element newBirthday = _doc.createElement("anniversaire");
+            Element newParties = _doc.createElement("parties");
+
+            /*  Exemple profil :
+                <profil>
+                    <nom>jerome</nom>
+                    <avatar>player2.svg</avatar>
+                    <anniversaire>2000-03-22</anniversaire>
+                    <parties>
+                        ...
+                    </parties>
+                </profil>
+            */
+
+            // Ajout contenu :
+            newName.setTextContent(this.nom.toLowerCase());
+            newAvatar.setTextContent(getAvatar());
+            newBirthday.setTextContent(this.dateNaissance);
+
+            // Ajout des nodes à profils :
+            newProfil.appendChild(newName);
+            newProfil.appendChild(newAvatar);
+            newProfil.appendChild(newBirthday);
+            newProfil.appendChild(newParties);
+
+            profils.appendChild(newProfil);
+
             toXML(filename); 
             
             System.out.println("Sauvegarde du profil fini..");
@@ -111,39 +153,43 @@ public class Profil {
         }
     }
     
-    public void sauvegarder(String filename){
-       
+    public void sauvegarder(String filename) {
         try{
             _doc = fromXML(filename);
+            Element unJoueur = this.ChargerJoueur(this.getNom());
             
-            Element partiesElem = (Element) _doc.getElementsByTagName("parties").item(0);
+            if(unJoueur != null) {
+                Element partiesElem = (Element) unJoueur.getElementsByTagName("parties").item(0);
             
-            for (int i = 0; i < this.parties.size(); i++) {
-                System.out.println("Partie n°"+i);
-                
-                //Création des nodes
-                Element newPartie = _doc.createElement("partie");
-                Element newMot = _doc.createElement("mot");
-                Element newTemps = _doc.createElement("temps");
-
-                //Implémentation des nodes
-                // node partie :
-                newPartie.setAttribute("date", this.parties.get(i).getDate());
-                newPartie.setAttribute("trouvé", String.valueOf(this.parties.get(i).getTrouve())+"%");
-                // node Mot :
-                newMot.setAttribute("niveau", String.valueOf(this.parties.get(i).getNiveau()));
-                newMot.setTextContent(this.parties.get(i).getMot());
-                // Node Temps :
-                newTemps.setTextContent(String.valueOf(this.parties.get(i).getTemps()));
-
-                //Ajout des nodes à notre partie :
-                newPartie.appendChild(newMot);
-                newPartie.appendChild(newTemps);
-
-                //Ajout des nodes à notre liste de partie :
-                partiesElem.appendChild(newPartie);
+                for (int i = 0; i < this.parties.size(); i++) {
+                    System.out.println("Partie n°"+(i+1));
+                    
+                    // Création des nodes
+                    Element newPartie = _doc.createElement("partie");
+                    Element newMot = _doc.createElement("mot");
+                    Element newTemps = _doc.createElement("temps");
+    
+                    // Implémentation des nodes
+                    // node partie :
+                    newPartie.setAttribute("date", profileDateToXmlDate(this.parties.get(i).getDate()));
+                    newPartie.setAttribute("trouvé", String.valueOf(this.parties.get(i).getTrouve())+"%");
+                    // node Mot :
+                    newMot.setAttribute("niveau", String.valueOf(this.parties.get(i).getNiveau()));
+                    newMot.setTextContent(this.parties.get(i).getMot());
+                    // Node Temps :
+                    newTemps.setTextContent(String.valueOf(this.parties.get(i).getTemps()));
+    
+                    // Ajout des nodes à notre partie :
+                    newPartie.appendChild(newTemps);
+                    newPartie.appendChild(newMot);
+    
+                    // Ajout des nodes à notre liste de partie :
+                    partiesElem.appendChild(newPartie);
+                }
             }
+
             toXML(filename);
+            System.out.println("Sauvegarder !");
         } catch(Exception e) {
             System.out.println("Erreur: "+e);
         }
@@ -177,26 +223,88 @@ public class Profil {
         return date;
     }
     
-    public boolean charge(String nom){
-        DOMParser parser = new DOMParser();
-       
-        try{
-            parser.parse("data/XML/profil.xml");
-            Document doc = parser.getDocument();
-            
-            NodeList list_noms = doc.getElementsByTagName("nom");
-            String nom_existant = ((Element)list_noms.item(0)).getTextContent();
-            System.out.println("Joueur existant : "+nom_existant);
+    public boolean JoeurExist(String nomJ) {
+        boolean joueurTrouve = false;
+        int i = 0;
+        nomJ = nomJ.toLowerCase();
 
-            if(nom_existant.equals(nom)) {
-                System.out.println("Return true");
-                return true;
+        try {
+            _doc = fromXML(filepathProfil);
+            NodeList list_profil = _doc.getElementsByTagName("profil");
+
+            while(!joueurTrouve && i < list_profil.getLength()) {
+                String nom_existant = ((Element) _doc.getElementsByTagName("nom").item(i)).getTextContent();
+                System.out.println("Joueur existant : "+nom_existant);
+
+                if(nom_existant.equals(nomJ)) {
+                    joueurTrouve = true;
+                    System.out.println("Return true");
+                }
+                i++;
             }
         } catch(Exception e) {
             System.out.println("Erreur: "+e);
         }
 
-        System.out.println("Return false");
-        return false;
+        if(!joueurTrouve)
+            System.out.println("Return false");
+        
+        return joueurTrouve;
+    }
+
+    private Element ChargerJoueur(String nomJ) {
+        boolean joueurTrouve = false;
+        int i = 0;
+        Element joueur = null;
+
+        try {
+            DOMParser parser = new DOMParser();
+            _doc = fromXML(filepathProfil);
+            parser.parse(filepathProfil);
+            _doc = parser.getDocument();
+
+            NodeList list_profil = _doc.getElementsByTagName("profil");
+
+            while(!joueurTrouve || i < list_profil.getLength()) {
+                String nom_existant = ((Element) _doc.getElementsByTagName("nom").item(i)).getTextContent();
+                System.out.println("Joueur existant : "+nom_existant);
+                System.out.println("Joueur à chercher : "+nomJ);
+
+                if(nomJ.equals(nom_existant)) {
+                    joueurTrouve = true;
+                    joueur = (Element) _doc.getElementsByTagName("profil").item(i);
+                    System.out.println("i : "+i+" - Vrai");
+                    System.out.println("Return Joueur");
+                } else {
+                    System.out.println("i : "+i+" - Faux");
+                }
+
+                i++;
+            }
+        } catch(Exception e) {
+            System.out.println("Erreur: "+e);
+        }
+        
+        if(!joueurTrouve)
+            System.out.println("Return null");
+        
+        String joueurSelected = ((Element) joueur.getElementsByTagName("nom").item(0)).getTextContent();
+        System.out.println("Joueur select : "+joueurSelected);
+
+        return joueur;
+    }
+
+    public void ChargerProfil(String nomP) {
+        Element unJoueur = ChargerJoueur(nomP);
+
+        if(unJoueur != null) {
+            this.nom = ((Element) unJoueur.getElementsByTagName("nom").item(0)).getTextContent();
+            this.dateNaissance = xmlDateToProfileDate(((Element) unJoueur.getElementsByTagName("anniversaire").item(0)).getTextContent());
+            this.avatar = getCheminAvatar()+((Element) unJoueur.getElementsByTagName("avatar").item(0)).getTextContent();
+        } else {
+            this.nom = "default";
+            this.dateNaissance = "1970/01/01";
+            this.avatar = "player1.svg";
+        }
     }
 }

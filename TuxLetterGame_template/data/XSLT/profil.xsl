@@ -35,9 +35,7 @@
             
             <!-- Création du corps html -->
             <body>
-                
                  <!-- Informations générales sur le joueur -->
-
                 <xsl:element name="img">
                     <xsl:attribute name="src"><xsl:value-of select="//tux:avatar"/></xsl:attribute>
                     <xsl:attribute name="alt"><xsl:value-of select="//tux:avatar"/></xsl:attribute>

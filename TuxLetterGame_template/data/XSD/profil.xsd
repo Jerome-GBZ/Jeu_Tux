@@ -13,13 +13,19 @@ and open the template in the editor.
         elementFormDefault="qualified">
     <xs:include schemaLocation="dico.xsd"/>
     
-    <xs:element name="profil" type="Profil"/>
+    <xs:element name="profils" type="Profils"/>
     <!-- Création du profil d'un joueur avec les éléments:
           - nom : string
           - avatar : string
           - anniversaire : string
           - parties : Liste de parties
     -->
+    <xs:complexType name="Profils">
+        <xs:sequence>
+            <xs:element name="profil" type="Profil" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="Profil">
         <xs:sequence>
             <xs:element name="nom" type="xs:string"/>

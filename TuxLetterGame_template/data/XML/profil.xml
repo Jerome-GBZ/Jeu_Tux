@@ -1,35 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="profil.xsl"?><!--
-    ...
---><profil xmlns="http://myGame/tux" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://myGame/tux ../XSD/profil.xsd">
-    <nom>riad</nom>
-    <avatar>player1.svg</avatar>
-    <anniversaire>2000-01-30</anniversaire>
-    <parties>
-        <partie date="2013-12-10">
-            <temps>20.0</temps>
-            <mot niveau="1">cle</mot>
-        </partie>
-        <partie date="2013-12-11" trouvé="75%">
-            <mot niveau="2">indice</mot>
-        </partie>
-        <partie date="2013-12-11">
-            <temps>20.0</temps>
-            <mot niveau="2">indice</mot>
-        </partie>
-        <partie date="2013-12-11" trouvé="100%">
-            <temps>15.0</temps>
-            <mot niveau="2">bouche</mot>
-        </partie>
-    <partie date="2021-09-7" trouvé="100%">
-            <mot niveau="1">Jazz</mot>
-            <temps>3.0</temps>
-        </partie>
-        <partie date="2021-09-7" trouvé="100%">
-            <mot niveau="1">Fruit</mot>
-            <temps>6.0</temps>
-        </partie>
-    </parties>
-
-
-</profil>
+<?xml-stylesheet type="text/xsl" href="profil.xsl"?><profils xmlns="http://myGame/tux" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://myGame/tux ../XSD/profil.xsd">
+    <profil>
+        <nom>riad</nom>
+        <avatar>player1.svg</avatar>
+        <anniversaire>2000-10-01</anniversaire>
+        <parties>
+            <partie date="2013-12-10">
+                <temps>20.0</temps>
+                <mot niveau="1">cle</mot>
+            </partie>
+            <partie date="2013-12-11" trouvé="75%">
+                <mot niveau="2">indice</mot>
+            </partie>
+            <partie date="2021-09-07" trouvé="100%">
+                <temps>3.0</temps>
+                <mot niveau="1">Jazz</mot>
+            </partie>
+            <partie date="2021-09-07" trouvé="100%">
+                <temps>6.0</temps>
+                <mot niveau="1">Fruit</mot>
+            </partie>
+            <partie date="2021-11-28" trouvé="98%">
+                <temps>14.78</temps>
+                <mot niveau="2">acheter</mot>
+            </partie>
+        </parties>
+    </profil>
+    <profil>
+        <nom>jerome</nom>
+        <avatar>player2.svg</avatar>
+        <anniversaire>2000-03-22</anniversaire>
+        <parties>
+            <partie date="2013-12-10">
+                <temps>17.50</temps>
+                <mot niveau="1">police</mot>
+            </partie>
+        <partie date="28-11-2021" trouvé="100%">
+                <temps>14.0</temps>
+                <mot niveau="1">Jazz</mot>
+            </partie>
+            <partie date="28-11-2021" trouvé="100%">
+                <temps>15.0</temps>
+                <mot niveau="1">Fuir</mot>
+            </partie>
+        <partie date="28-11-2021" trouvé="100%">
+                <temps>10.0</temps>
+                <mot niveau="1">Lait</mot>
+            </partie>
+        </parties>
+    </profil>
+    <profil>
+        <nom>mathis</nom>
+        <avatar>player1.svg</avatar>
+        <anniversaire>2000/02/02</anniversaire>
+        <parties>
+            <partie date="28-11-2021" trouvé="98%">
+                <temps>14.78</temps>
+                <mot niveau="2">acheter</mot>
+            </partie>
+        </parties>
+    </profil>
+    <profil>
+        <nom>leo</nom>
+        <avatar>player1.svg</avatar>
+        <anniversaire>2000-01-30</anniversaire>
+        <parties/>
+    </profil>
+</profils>
