@@ -3,6 +3,7 @@ package game;
 import env.EnvTextMap;
 import env3d.Env;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.function.ToDoubleFunction;
 
 import org.lwjgl.input.Keyboard;
@@ -75,6 +76,7 @@ public abstract class Jeu {
         menuText.addText("4. Quitter le jeu ?", "Jeu4", 250, 220);
 
         menuText.addText("Choisissez un nom de joueur : ", "NomJoueur", 200, 300);
+        menuText.addText("Le joueur entré n'existe pas !", "J_not_exist", 150, 300);
         menuText.addText("1. Charger un profil de joueur existant ?", "Principal1", 250, 280);
         menuText.addText("2. Créer un nouveau joueur ?", "Principal2", 250, 260);
         menuText.addText("3. Sortir du jeu ?", "Principal3", 250, 240);
@@ -123,36 +125,47 @@ public abstract class Jeu {
             menuText.getText("Jeu3").display();
             menuText.getText("Jeu4").display();
             
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch(InterruptedException e) {
+                System.out.println(e);
+            }
+
             // vérifie qu'une touche 1, 2, 3 ou 4 est pressée
             int touche = 0;
+            System.out.println("Touche Avant : "+touche);
 
             while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4)) {
-                if(env.getKeyDown() == 75) { // Touche 4
+                System.out.println("Touche Pendant 1 : "+touche);
+
+                if(touche == 75) { // Touche 4
                     touche = 5;
-                } else if(env.getKeyDown() == 79) { // Touche 1
+                } else if(touche == 79) { // Touche 1
                     touche = 2;
-                } else if (env.getKeyDown() == 80) { // Touche 2
+                } else if (touche == 80) { // Touche 2
                     touche = 3;
-                }  else if (env.getKeyDown() == 81) { // Touche 3
+                }  else if (touche == 81) { // Touche 3
                     touche = 4;
                 } else {
                     touche = env.getKeyDown();
                 }
-                
+
+                System.out.println("Touche Pendant 2 : "+touche);
                 env.advanceOneFrame();
             }
+            System.out.println("Touche Pendant : "+touche);
 
-            // nettoie l'environnement du texte
+            // Nettoie l'environnement du texte
             menuText.getText("Question").clean();
             menuText.getText("Jeu1").clean();
             menuText.getText("Jeu2").clean();
             menuText.getText("Jeu3").clean();
             menuText.getText("Jeu4").clean();
 
-            // restaure la room du jeu
+            // Restaure la room du jeu
             env.setRoom(mainRoom);
 
-            // et décide quoi faire en fonction de la touche pressée
+            // Décide quoi faire en fonction de la touche pressée
             switch (touche) {
                 // -----------------------------------------
                 // Touche 1 : Commencer une nouvelle partie
@@ -209,6 +222,12 @@ public abstract class Jeu {
         menuText.getText("Principal2").display();
         menuText.getText("Principal3").display();
         
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch(InterruptedException e) {
+            System.out.println(e);
+        }
+
         // vérifie qu'une touche 1, 2 ou 3 est pressée
         System.out.println("game.Jeu.menuPrincipal()");
         int touche = 0;
@@ -232,23 +251,24 @@ public abstract class Jeu {
         menuText.getText("Principal2").clean();
         menuText.getText("Principal3").clean();
 
-        // et décide quoi faire en fonction de la touche pressée
+        // Décide quoi faire en fonction de la touche pressée
         switch (touche) {
             // -------------------------------------
             // Touche 1 : Charger un profil existant
             // -------------------------------------
             case Keyboard.KEY_1:
-                // demande le nom du joueur existant
+                // Demande le nom du joueur existant
                 nomJoueur = getNomJoueur();
 
-                // charge le profil de ce joueur si possible
+                
                 if (profil.JoeurExist(nomJoueur)) {
                     profil.ChargerProfil(nomJoueur);
 
                     choix = menuJeu();
                 } else {
-                    choix = MENU_VAL.MENU_SORTIE;//CONTINUE;
+                    choix = menuPrincipal(); //CONTINUE;
                 }
+
                 break;
 
             // -------------------------------------
@@ -344,15 +364,20 @@ public abstract class Jeu {
 
         //Calcul de trouvé = score
         int score = 0;
-        score = totalNblettres / motTrouve.size();
+        if(motTrouve.size() > 0) {
+            score = totalNblettres / motTrouve.size();
+        }
         partie.setTrouve(score*100);
         
- 
-        if(gameText.getText("time") != null)
+        if(gameText.getText("time") != null) {
             gameText.getText("time").clean();
+        }
+        
         // Ici on peut calculer des valeurs lorsque la partie est terminée
-        if(finished)
-            profil.ajouterPartie(partie);
+        // if(finished) {
+        profil.ajouterPartie(partie);
+        // }
+
         terminePartie(partie);
     }
 
@@ -377,6 +402,12 @@ public abstract class Jeu {
         menuText.getText("lvl3").display();
         menuText.getText("lvl4").display();
         menuText.getText("lvl5").display();
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch(InterruptedException e) {
+            System.out.println(e);
+        }
 
         int touche = 0;
         int levelSelected = 0;

@@ -47,6 +47,10 @@
                 <temps>10.0</temps>
                 <mot niveau="1">Lait</mot>
             </partie>
+        <partie date="28-11-2021" trouvé="0%">
+                <temps>1.0</temps>
+                <mot niveau="1">Fuir</mot>
+            </partie>
         </parties>
     </profil>
     <profil>

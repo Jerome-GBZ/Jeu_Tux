@@ -2,15 +2,16 @@ package test;
 
 import game.Partie;
 import game.Profil;
+import java.util.ArrayList;
 import org.w3c.dom.Document;
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
-import java.util.ArrayList;
+
 
 public class TestPartie {
     public static void main(String[] args) {
         String filename = "data/XML/profil.xml";
         Partie p1 = new Partie("2021/11/28", "acheter", 2, 0, 0);
-        /*
+        
         // Tester la methode getParties()
         try {
             DOMParser parser = new DOMParser();
@@ -22,7 +23,7 @@ public class TestPartie {
         } catch(Exception e) {
             System.out.println("Erreur: "+e);
         }
-        */
+        
 
         // Tester la methode ajouterJoeur()
         p1.setTemps(14.78);
