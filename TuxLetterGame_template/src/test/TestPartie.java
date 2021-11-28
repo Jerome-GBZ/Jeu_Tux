@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class TestPartie {
     public static void main(String[] args) {
-        String filename = "data/XML/profil.xml";
+        /*String filename = "data/XML/profil.xml";
         Partie unePartie = new Partie("date", "mot", 1);
         DOMParser parser = new DOMParser();
        
@@ -30,5 +30,6 @@ public class TestPartie {
         Profil profil = new Profil(filename);
         profil.ajouterPartie(p1);
         profil.sauvegarder(filename);
+        */
     }
 }

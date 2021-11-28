@@ -13,12 +13,12 @@ public class Partie {
     private int trouve;
     private double temps;
     
-    public Partie(String date, String mot, int niveau) {
+    public Partie(String date, String mot, int niveau, int trouve, double temps) {
         this.date = date;
         this.mot = mot;
         this.niveau = niveau;
-        this.trouve = 0;
-        this.temps = 0.0;
+        this.trouve = trouve;
+        this.temps = temps;
     }
     
     // A TESTER

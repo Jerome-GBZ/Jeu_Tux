@@ -3,8 +3,6 @@ package game;
 import env.EnvTextMap;
 import env3d.Env;
 import java.util.ArrayList;
-
-import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 
 public abstract class Jeu {
@@ -63,7 +61,7 @@ public abstract class Jeu {
 
         motTrouve = new ArrayList<>();
         // Dictionnaire
-        dico = new Dico("dico.xml");
+        dico = new Dico("data/XML/");
 
         // instancie le menuText
         menuText = new EnvTextMap(env);
@@ -160,11 +158,10 @@ public abstract class Jeu {
                 case Keyboard.KEY_1: // choisi un niveau et charge un mot depuis le dico
                     // .......... dico.******
                     // crée un nouvelle partie
-                    partie = new Partie("2021-09-7", "test", 2);
+                    partie = new Partie("2021-09-7", "test", 2, 0, 0);
                     // joue
                     joue(partie);
                     // enregistre la partie dans le profil --> enregistre le profil
-                    profil.sauvegarder(FILEPATH_PROFIL);
                     playTheGame = MENU_VAL.MENU_JOUE;
                     break;
 
@@ -172,10 +169,12 @@ public abstract class Jeu {
                 // Touche 2 : Charger une partie existante
                 // -----------------------------------------                
                 case Keyboard.KEY_2: // charge une partie existante
-                    partie = new Partie("2018-09-7", "test", 1); //XXXXXXXXX
+                    //partie = new Partie("2018-09-7", "test", 1); //XXXXXXXXX
                     // Recupère le mot de la partie existante
                     // ..........
                     // joue
+                    
+                    partie = new Partie("2021-09-7", "test", 2, 0, 0);
                     joue(partie);
                     // enregistre la partie dans le profil --> enregistre le profil
                     // .......... profil.******
@@ -193,6 +192,7 @@ public abstract class Jeu {
                 // Touche 4 : Quitter le jeu
                 // -----------------------------------------                
                 case Keyboard.KEY_4:
+                    profil.sauvegarder(FILEPATH_PROFIL);
                     playTheGame = MENU_VAL.MENU_SORTIE;
             }
         } while (playTheGame == MENU_VAL.MENU_JOUE);
@@ -227,6 +227,7 @@ public abstract class Jeu {
             }
             
             env.advanceOneFrame();
+            
         }
 
 
@@ -258,7 +259,7 @@ public abstract class Jeu {
                 // demande le nom du nouveau joueur
                 nomJoueur = getNomJoueur();
                 // crée un profil avec le nom d'un nouveau joueur
-                profil = new Profil(nomJoueur, "2000/01/30");
+                profil = new Profil(nomJoueur, "2000-01-30");
                 choix = menuJeu();
                 break;
 
@@ -272,11 +273,16 @@ public abstract class Jeu {
     }
     
     public void joue(Partie partie){   
+        motTrouve.clear();
+        lettres.clear();
         
         env.advanceOneFrame();
         int level = frameChoisirNiveau();
         System.out.println("level = "+ level);
         String mot = dico.getMotDepusiListeNiveaux(level);
+        
+        partie.setMot(mot);
+        partie.setNiveau(level);
         frameApprendreLeMot(mot);
         env.setRoom(room);
  
@@ -290,7 +296,7 @@ public abstract class Jeu {
            lettres.add(l);
            env.addObject(l); 
         }
-        
+        int totalNblettres = lettres.size();
         env.addObject(tux);
          
         // Ici, on peut initialiser des valeurs pour une nouvelle partie
@@ -301,16 +307,18 @@ public abstract class Jeu {
         finished = false;
         gameText = new EnvTextMap(env);
         
-        
         while (!finished) {
+
+            //On applique le chronometre lors du lancement du jeu
+            //L'interface va update le chronomètre chaque secondes
             finished = appliqueTemps(new OnJeuCallback() {
                 @Override
                 public void onTimeSpentListener(int time) {
-                    // TODO Auto-generated method stub
                     if(gameText.getText("time") != null)
                         gameText.getText("time").clean();
-                    gameText.addText("Time: "+time, "time", 10, 420);
+                    gameText.addText("Time: "+(30-time), "time", 10, 420);
                     gameText.getText("time").display();
+                    partie.setTemps(time);
                     
                 }
             });
@@ -324,14 +332,25 @@ public abstract class Jeu {
  
             // Ici, on applique les regles
             appliqueRegles(partie);
+            if(lettres.size() ==0){
+                finished = true;
+            }
  
             // Fait avancer le moteur de jeu (mise à jour de l'affichage, de l'écoute des événements clavier...)
             env.advanceOneFrame();
         }
+
+        //Calcul de trouvé = score
+        int score = 0;
+        score = totalNblettres / motTrouve.size();
+        partie.setTrouve(score*100);
+        
  
         if(gameText.getText("time") != null)
             gameText.getText("time").clean();
         // Ici on peut calculer des valeurs lorsque la partie est terminée
+        if(finished)
+            profil.ajouterPartie(partie);
         terminePartie(partie);
     }
 
@@ -461,9 +480,10 @@ public abstract class Jeu {
     private void lettreTrouve(Letter letter){
         motTrouve.add(letter);
         afficherLettreSelectionnee(letter);
-        if(lettres.size() != 0)
+        if(lettres.size() != 0){
             env.removeObject(letter);
             lettres.remove(0);
+        }
     }
 
     private void afficherLettreSelectionnee(Letter letter){

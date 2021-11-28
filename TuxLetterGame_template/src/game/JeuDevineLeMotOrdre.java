@@ -3,7 +3,7 @@ package game;
 public class JeuDevineLeMotOrdre extends Jeu{
     private int nbLettresRestantes;
     private Chronometre chrono;
-    private static int TIME = 2500;
+    private static int TIME = 30;
 
     public JeuDevineLeMotOrdre(){
         super();
@@ -18,10 +18,10 @@ public class JeuDevineLeMotOrdre extends Jeu{
         return false;
     }
     
-    private int getNbLettresRestantes(){
-        return nbLettresRestantes--;
-    }
     
+    public void setNbLettresRestantes(int nbLettresRestantes) {
+        this.nbLettresRestantes = nbLettresRestantes;
+    }
     @Override
     protected void démarrePartie(Partie partie) {
        chrono = new Chronometre(TIME);
@@ -31,7 +31,7 @@ public class JeuDevineLeMotOrdre extends Jeu{
     @Override
     protected void appliqueRegles(Partie partie) {
         if(tuxTrouveLettre()) {
-            getNbLettresRestantes();
+            setNbLettresRestantes(nbLettresRestantes-1);
         }
     }
 

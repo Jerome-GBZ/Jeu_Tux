@@ -4,7 +4,6 @@ import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import java.util.ArrayList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Dico {
@@ -19,14 +18,15 @@ public class Dico {
     
     public Dico(String cheminFichierDico){
         this.cheminFichierDico = cheminFichierDico;
-        listeNiveau1 = new ArrayList();
-        listeNiveau2 = new ArrayList();
-        listeNiveau3 = new ArrayList();
-        listeNiveau4 = new ArrayList();
-        listeNiveau5 = new ArrayList();
+        listeNiveau1 = new ArrayList<>();
+        listeNiveau2 = new ArrayList<>();
+        listeNiveau3 = new ArrayList<>();
+        listeNiveau4 = new ArrayList<>();
+        listeNiveau5 = new ArrayList<>();
         
-        lireDictionnaireDOM(getCheminFichierDico(), "dico.xml");
+        lireDictionnaireDOM(this.cheminFichierDico, "dico.xml");
     }
+    
     
     public String getMotDepusiListeNiveaux(int niveau){
         String mot = "error";

@@ -1,15 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<?xml-stylesheet type="text/xsl" href="profil.xsl"?>
-<!--
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="profil.xsl"?><!--
     ...
--->
-
-<profil xmlns="http://myGame/tux" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="http://myGame/tux ../XSD/profil.xsd">
+--><profil xmlns="http://myGame/tux" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://myGame/tux ../XSD/profil.xsd">
     <nom>riad</nom>
     <avatar>player1.svg</avatar>
-    <anniversaire>2006-05-08</anniversaire>
+    <anniversaire>2000-01-30</anniversaire>
     <parties>
         <partie date="2013-12-10">
             <temps>20.0</temps>
@@ -22,9 +17,19 @@
             <temps>20.0</temps>
             <mot niveau="2">indice</mot>
         </partie>
-        <partie date="2013-12-11"  trouvé="100%">
+        <partie date="2013-12-11" trouvé="100%">
             <temps>15.0</temps>
             <mot niveau="2">bouche</mot>
         </partie>
+    <partie date="2021-09-7" trouvé="100%">
+            <mot niveau="1">Jazz</mot>
+            <temps>3.0</temps>
+        </partie>
+        <partie date="2021-09-7" trouvé="100%">
+            <mot niveau="1">Fruit</mot>
+            <temps>6.0</temps>
+        </partie>
     </parties>
+
+
 </profil>

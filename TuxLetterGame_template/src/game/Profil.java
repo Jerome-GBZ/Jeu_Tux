@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import utils.XMLUtil;
 
@@ -83,32 +84,52 @@ public class Profil {
                 + "\n dateNaissance = " + dateNaissance; //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void sauvegarderJoueur(){
-        
+    public void sauvegarderJoueur(String filename){
+        //DOMParser parser = new DOMParser();
+       
+        try{
+            System.out.println("Sauvegarde du profil en cours...");
+            //parser.parse(filename);
+            _doc = fromXML(filename);
+            
+            
+            Node mProfil = _doc.getDocumentElement();
+            Node exName = _doc.getElementsByTagName("nom").item(0);
+            Node exAnniversaire = _doc.getElementsByTagName("anniversaire").item(0);
+            Node newName = _doc.createElement("nom");
+            Node newAnniversaire = _doc.createElement("anniversaire");
+            newAnniversaire.setTextContent(dateNaissance);
+            newName.setTextContent(this.nom);
+            mProfil.replaceChild(newName, exName);
+            mProfil.replaceChild(newAnniversaire, exAnniversaire);
+            toXML(filename); 
+            
+            System.out.println("Sauvegarde du profil fini..");
+            
+        } catch(Exception e) {
+            System.out.println("Erreur: "+e);
+        }
     }
     
     public void sauvegarder(String filename){
-        DOMParser parser = new DOMParser();
        
         try{
-            parser.parse(filename);
-            Document doc = parser.getDocument();
+            _doc = fromXML(filename);
             
-            Element partiesElem = (Element) doc.getElementsByTagName("parties").item(0);
+            Element partiesElem = (Element) _doc.getElementsByTagName("parties").item(0);
             
-            System.out.println("game.Profil.sauvegarder()");
             for (int i = 0; i < this.parties.size(); i++) {
                 System.out.println("Partie n°"+i);
                 
                 //Création des nodes
-                Element newPartie = doc.createElement("partie");
-                Element newMot = doc.createElement("mot");
-                Element newTemps = doc.createElement("temps");
+                Element newPartie = _doc.createElement("partie");
+                Element newMot = _doc.createElement("mot");
+                Element newTemps = _doc.createElement("temps");
 
                 //Implémentation des nodes
                 // node partie :
-                newPartie.setAttribute("date", profileDateToXmlDate(this.parties.get(i).getDate()));
-                newPartie.setAttribute("trouvé", String.valueOf(this.parties.get(i).getTrouve()));
+                newPartie.setAttribute("date", this.parties.get(i).getDate());
+                newPartie.setAttribute("trouvé", String.valueOf(this.parties.get(i).getTrouve())+"%");
                 // node Mot :
                 newMot.setAttribute("niveau", String.valueOf(this.parties.get(i).getNiveau()));
                 newMot.setTextContent(this.parties.get(i).getMot());
@@ -122,6 +143,7 @@ public class Profil {
                 //Ajout des nodes à notre liste de partie :
                 partiesElem.appendChild(newPartie);
             }
+            toXML(filename);
         } catch(Exception e) {
             System.out.println("Erreur: "+e);
         }

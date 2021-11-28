@@ -5,7 +5,7 @@ import game.Dico;
 public class TestDico {
     public static void main(String[] args){
         // Création d'un objet dico
-        Dico dico = new Dico("/data/XML/dico.xml");
+        Dico dico = new Dico("data/XML/");
         
         // Ajouter des mots dans tous les niveaux
         dico.ajouteMotADico(1, "Coucou");
@@ -20,7 +20,7 @@ public class TestDico {
         dico.ajouteMotADico(4, "Lumineux");
         dico.ajouteMotADico(5, "Radieux");
         
-        dico.ajouteMotADico(-10, "Formalisation");
+        dico.ajouteMotADico(-10, "Loup");
         dico.ajouteMotADico(8, "Biere");
         
         try{
