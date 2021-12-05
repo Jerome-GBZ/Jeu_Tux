@@ -136,8 +136,6 @@ public abstract class Jeu {
             System.out.println("Touche Avant : "+touche);
 
             while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4)) {
-                System.out.println("Touche Pendant 1 : "+touche);
-
                 if(touche == 75) { // Touche 4
                     touche = 5;
                 } else if(touche == 79) { // Touche 1
@@ -149,11 +147,9 @@ public abstract class Jeu {
                 } else {
                     touche = env.getKeyDown();
                 }
-
-                System.out.println("Touche Pendant 2 : "+touche);
+                
                 env.advanceOneFrame();
             }
-            System.out.println("Touche Pendant : "+touche);
 
             // Nettoie l'environnement du texte
             menuText.getText("Question").clean();
@@ -161,10 +157,8 @@ public abstract class Jeu {
             menuText.getText("Jeu2").clean();
             menuText.getText("Jeu3").clean();
             menuText.getText("Jeu4").clean();
-
             // Restaure la room du jeu
             env.setRoom(mainRoom);
-
             // Décide quoi faire en fonction de la touche pressée
             switch (touche) {
                 // -----------------------------------------
@@ -222,12 +216,6 @@ public abstract class Jeu {
         menuText.getText("Principal2").display();
         menuText.getText("Principal3").display();
         
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch(InterruptedException e) {
-            System.out.println(e);
-        }
-
         // vérifie qu'une touche 1, 2 ou 3 est pressée
         System.out.println("game.Jeu.menuPrincipal()");
         int touche = 0;
@@ -242,9 +230,10 @@ public abstract class Jeu {
             } else {
                 touche = env.getKeyDown();
             }
-            
             env.advanceOneFrame();
+
         }
+        
 
         menuText.getText("Question").clean();
         menuText.getText("Principal1").clean();
@@ -391,11 +380,11 @@ public abstract class Jeu {
         env.setRoom(mainRoom);
         
         menuText.addText("Choisissez un niveau [ 1 simple -> 5 difficile] ", "choixLvl", 200, 300);
-        menuText.addText("1. Niveau 1", "lvl1", 250, 280);
-        menuText.addText("2. Niveau 2", "lvl2", 250, 260);
-        menuText.addText("3. Niveau 3", "lvl3", 250, 240);
-        menuText.addText("4. Niveau 4", "lvl4", 250, 220);
-        menuText.addText("5. Niveau 5", "lvl5", 250, 200);
+        menuText.addText("4. Niveau 1", "lvl1", 250, 280);
+        menuText.addText("5. Niveau 2", "lvl2", 250, 260);
+        menuText.addText("6. Niveau 3", "lvl3", 250, 240);
+        menuText.addText("7. Niveau 4", "lvl4", 250, 220);
+        menuText.addText("8. Niveau 5", "lvl5", 250, 200);
         menuText.getText("choixLvl").display();
         menuText.getText("lvl1").display();
         menuText.getText("lvl2").display();
@@ -403,31 +392,16 @@ public abstract class Jeu {
         menuText.getText("lvl4").display();
         menuText.getText("lvl5").display();
 
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch(InterruptedException e) {
-            System.out.println(e);
-        }
+        
 
         int touche = 0;
         int levelSelected = 0;
-
-        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5)) {
+         
+    
+        while (!(touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5 || touche == Keyboard.KEY_6 || touche == Keyboard.KEY_7 || touche == Keyboard.KEY_8)) {
             System.out.println("Touche : "+touche);
             
-            if(env.getKeyDown() == 75) { // Touche 4
-                touche = 5;
-            } else if(env.getKeyDown() == 76) { // Touche 5
-                touche = 6;
-            } else if(env.getKeyDown() == 79) { // Touche 1
-                touche = 2;
-            } else if (env.getKeyDown() == 80) { // Touche 2
-                touche = 3;
-            } else if (env.getKeyDown() == 81) { // Touche 3
-                touche = 4;
-            } else {
-                touche = env.getKeyDown(); // avant : 0
-            }
+            touche = env.getKeyDown(); // avant : 0
             
             System.out.println("Touche : "+touche);
 
@@ -441,7 +415,7 @@ public abstract class Jeu {
         menuText.getText("lvl4").clean();
         menuText.getText("lvl5").clean();
         
-        levelSelected = touche-1;
+        levelSelected = touche-4;
         System.out.println("Level avant : "+levelSelected);
 
         if(levelSelected > 5) {

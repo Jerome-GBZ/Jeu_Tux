@@ -24,6 +24,10 @@
                 <temps>14.78</temps>
                 <mot niveau="2">acheter</mot>
             </partie>
+        <partie date="28-11-2021" trouvé="100%">
+                <temps>9.0</temps>
+                <mot niveau="1">Clef</mot>
+            </partie>
         </parties>
     </profil>
     <profil>
@@ -66,6 +70,12 @@
     </profil>
     <profil>
         <nom>leo</nom>
+        <avatar>player1.svg</avatar>
+        <anniversaire>2000-01-30</anniversaire>
+        <parties/>
+    </profil>
+<profil>
+        <nom>iad</nom>
         <avatar>player1.svg</avatar>
         <anniversaire>2000-01-30</anniversaire>
         <parties/>
