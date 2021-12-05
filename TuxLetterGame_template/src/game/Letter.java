@@ -12,6 +12,7 @@ public class Letter extends EnvNode{
         setY(getScale() * 1.1); // positionnement en hauteur basé sur la taille de Tux
         setZ(z); // positionnement au milieu de la profondeur de la room
         
+        System.out.println("Letter: "+letter);
         String texturePath = "/models/letter/"+letter+".png";
         setTexture(texturePath);
         setModel("/models/letter/cube.obj");  

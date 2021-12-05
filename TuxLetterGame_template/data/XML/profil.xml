@@ -39,7 +39,7 @@
                 <temps>17.50</temps>
                 <mot niveau="1">police</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="100%">
+            <partie date="28-11-2021" trouvé="100%">
                 <temps>14.0</temps>
                 <mot niveau="1">Jazz</mot>
             </partie>
@@ -47,13 +47,21 @@
                 <temps>15.0</temps>
                 <mot niveau="1">Fuir</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="100%">
+            <partie date="28-11-2021" trouvé="100%">
                 <temps>10.0</temps>
                 <mot niveau="1">Lait</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="0%">
+            <partie date="28-11-2021" trouvé="0%">
                 <temps>1.0</temps>
                 <mot niveau="1">Fuir</mot>
+            </partie>
+            <partie date="28-11-2021" trouvé="200%">
+                <temps>29.0</temps>
+                <mot niveau="5">Gratte-ciel</mot>
+            </partie>
+        <partie date="28-11-2021" trouvé="100%">
+                <temps>17.0</temps>
+                <mot niveau="5">Bonjour</mot>
             </partie>
         </parties>
     </profil>

@@ -399,12 +399,21 @@ public abstract class Jeu {
          
     
         while (!(touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5 || touche == Keyboard.KEY_6 || touche == Keyboard.KEY_7 || touche == Keyboard.KEY_8)) {
-            System.out.println("Touche : "+touche);
+            if(env.getKeyDown() == 72) { // Touche 8
+                touche = 9;
+            } else if (env.getKeyDown() == 71) { // Touche 7
+                touche = 8;
+            }  else if (env.getKeyDown() == 77) { // Touche 6
+                touche = 7;
+            }  else if (env.getKeyDown() == 76) { // Touche 5
+                touche = 6;
+            }  else if (env.getKeyDown() == 75) { // Touche 4
+                touche = 5;
+            }  else {
+                touche = env.getKeyDown(); // avant : 0
+            }
             
-            touche = env.getKeyDown(); // avant : 0
-            
             System.out.println("Touche : "+touche);
-
             env.advanceOneFrame();
         }
 
@@ -415,7 +424,7 @@ public abstract class Jeu {
         menuText.getText("lvl4").clean();
         menuText.getText("lvl5").clean();
         
-        levelSelected = touche-4;
+        levelSelected = touche-3;
         System.out.println("Level avant : "+levelSelected);
 
         if(levelSelected > 5) {
@@ -423,6 +432,7 @@ public abstract class Jeu {
         } else if(levelSelected < 1) {
             levelSelected = 1;
         }
+
         System.out.println("Level apres : "+levelSelected);
 
         return levelSelected;
@@ -441,7 +451,7 @@ public abstract class Jeu {
         ArrayList<Letter> motTmp = new ArrayList<>();
 
         for(int i=0; i<mot.length(); i++){
-           Letter l = new Letter(tab[i], startPos,50, room);
+           Letter l = new Letter(tab[i], startPos, 50, room);
            env.addObject(l); 
            motTmp.add(l);
            startPos+=spacing;
@@ -452,8 +462,10 @@ public abstract class Jeu {
         chrono.start();
 
         while(chrono.remainsTime()){
-            if(menuText.getText("time") != null)
+            if(menuText.getText("time") != null) {
                 menuText.getText("time").clean();
+            }
+
             menuText.addText("Temps restant pour apprendre le mot: "+(5-chrono.getSeconds()), "time", 150, 420);
             menuText.getText("time").display();
             
