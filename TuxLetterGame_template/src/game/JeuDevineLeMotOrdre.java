@@ -1,7 +1,7 @@
 package game;
 
 // import org.lwjgl.input.Keyboard;
-import net.java.games.input.Keyboard;
+// import net.java.games.input.Keyboard;
 
 public class JeuDevineLeMotOrdre extends Jeu{
     private int nbLettresRestantes;

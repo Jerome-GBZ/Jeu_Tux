@@ -4,7 +4,7 @@ import env.EnvTextMap;
 import env3d.Env;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.function.ToDoubleFunction;
+// import java.util.function.ToDoubleFunction;
 
 import org.lwjgl.input.Keyboard;
 

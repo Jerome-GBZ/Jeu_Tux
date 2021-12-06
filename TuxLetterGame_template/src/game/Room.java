@@ -5,7 +5,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.sun.org.apache.xerces.internal.parsers.DOMParser;
+// import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 
 public class Room {
     private int depth;
