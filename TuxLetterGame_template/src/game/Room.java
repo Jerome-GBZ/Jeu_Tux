@@ -1,5 +1,12 @@
 package game;
 
+import utils.XMLUtil;
+import org.w3c.dom.Element;
+import org.w3c.dom.Document;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import com.sun.org.apache.xerces.internal.parsers.DOMParser;
+
 public class Room {
     private int depth;
     private int height;
@@ -11,15 +18,49 @@ public class Room {
     private String textureTop;
     private String textureSouth;
     
-    public Room(){
-        textureBottom = "/textures/skybox/default/bottom.png";
-        textureNorth = "/textures/skybox/default/north.png";
-        textureEast = "/textures/skybox/default/east.png";
-        textureWest = "/textures/skybox/default/west.png";
-        
-        depth = 100;
-        width = 100;
-        height = 60;
+    public Room() {
+        this.depth  = 100;
+        this.width  = 100;
+        this.height = 100;
+
+        this.textureBottom = "/textures/black.png";
+        this.textureNorth  = "/textures/black.png";
+        this.textureEast   = "/textures/black.png";
+        this.textureWest   = "/textures/black.png";
+    }
+
+    public Room(String filename) {
+        Document doc = fromXML(filename);
+
+        Element dimensions = (Element) doc.getElementsByTagName("dimensions").item(0);
+        this.depth  = Integer.parseInt( ((Element) dimensions.getElementsByTagName("depth").item(0)).getTextContent() );
+        this.width  = Integer.parseInt( ((Element) dimensions.getElementsByTagName("width").item(0)).getTextContent() );
+        this.height = Integer.parseInt( ((Element) dimensions.getElementsByTagName("height").item(0)).getTextContent() );
+
+        Element mapping = (Element) doc.getElementsByTagName("mapping").item(0);
+        this.textureBottom  = ((Element) mapping.getElementsByTagName("textureBottom").item(0)).getTextContent();
+        this.textureNorth   = ((Element) mapping.getElementsByTagName("textureNorth").item(0)).getTextContent();
+        this.textureEast    = ((Element) mapping.getElementsByTagName("textureEast").item(0)).getTextContent();
+        this.textureWest    = ((Element) mapping.getElementsByTagName("textureWest").item(0)).getTextContent();
+    }
+
+    private Document fromXML(String filename){
+        try {
+            return XMLUtil.DocumentFactory.fromFile(filename);
+        } catch (Exception ex) {
+            Logger.getLogger(Profil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void resetRoom(String filename) {
+        Document doc = fromXML(filename);
+
+        Element mapping = (Element) doc.getElementsByTagName("mapping").item(0);
+        setTextureBottom( ((Element) mapping.getElementsByTagName("textureBottom").item(0)).getTextContent() );
+        setTextureNorth(  ((Element) mapping.getElementsByTagName("textureNorth").item(0)).getTextContent()  );
+        setTextureEast(   ((Element) mapping.getElementsByTagName("textureEast").item(0)).getTextContent()   );
+        setTextureWest(   ((Element) mapping.getElementsByTagName("textureWest").item(0)).getTextContent()   );
     }
 
     public int getDepth() {

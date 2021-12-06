@@ -17,6 +17,8 @@ public abstract class Jeu {
     //CONSTANTES
     private static final String filepathXML = "data/XML/";
     private static final String FILEPATH_PROFIL = "data/XML/profil.xml";
+    private static final String FILEPATH_PLATEAU = "data/XML/plateau.xml";
+
     //VAR
     private Env env;
     private Room room;
@@ -36,21 +38,17 @@ public abstract class Jeu {
         env = new Env();
 
         // Instancie une Room du menu principal
-        mainRoom = new Room();
+        mainRoom = new Room(FILEPATH_PLATEAU);
         
         // Instancie une Room du menu
         menuRoom = new Room();
-        menuRoom.setTextureEast("textures/black.png");
-        menuRoom.setTextureWest("textures/black.png");
-        menuRoom.setTextureNorth("textures/black.png");
-        menuRoom.setTextureBottom("textures/black.png");
 
         //Instancie la room du tux
-        room = new Room();
+        room = new Room(FILEPATH_PLATEAU);
         
         // Règle la camera
-        env.setCameraXYZ(50, 60, 175);
-        env.setCameraPitch(-20);
+        env.setCameraXYZ(50, 50, 150);
+        env.setCameraPitch(0);
 
         // Désactive les contrôles par défaut
         env.setDefaultControl(false);
@@ -74,7 +72,7 @@ public abstract class Jeu {
         menuText.addText("2. Charger une partie existante ?", "Jeu2", 250, 260);
         menuText.addText("3. Sortir de ce jeu ?", "Jeu3", 250, 240);
         menuText.addText("4. Quitter le jeu ?", "Jeu4", 250, 220);
-
+        
         menuText.addText("Choisissez un nom de joueur : ", "NomJoueur", 200, 300);
         menuText.addText("Le joueur entré n'existe pas !", "J_not_exist", 150, 300);
         menuText.addText("1. Charger un profil de joueur existant ?", "Principal1", 250, 280);
@@ -116,14 +114,10 @@ public abstract class Jeu {
 
         do {
             // restaure la room du menu
+            env.setCameraXYZ(50, 50, 150);
+            env.setCameraPitch(0);
+            menuRoom.setTextureNorth("textures/menuJeu.png");
             env.setRoom(menuRoom);
-
-            // affiche menu
-            menuText.getText("Question").display();
-            menuText.getText("Jeu1").display();
-            menuText.getText("Jeu2").display();
-            menuText.getText("Jeu3").display();
-            menuText.getText("Jeu4").display();
             
             try {
                 TimeUnit.SECONDS.sleep(1);
@@ -133,32 +127,51 @@ public abstract class Jeu {
 
             // vérifie qu'une touche 1, 2, 3 ou 4 est pressée
             int touche = 0;
-            System.out.println("Touche Avant : "+touche);
+            // System.out.println("Touche Avant : "+touche);
 
             while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4)) {
-                if(touche == 75) { // Touche 4
-                    touche = 5;
-                } else if(touche == 79) { // Touche 1
+                if( env.getMouseButtonClicked() == 0                        // ( Y , X )
+                    && (env.getMouseY() <= 435 && env.getMouseX() >= 135)   // (435,135)
+                    && (env.getMouseY() <= 435 && env.getMouseX() <= 500)   // (435,500)
+                    && (env.getMouseY() >= 335 && env.getMouseX() >= 135)   // (335,135)
+                    && (env.getMouseY() >= 335 && env.getMouseX() <= 500) ) // (335,500) 
+                { 
                     touche = 2;
-                } else if (touche == 80) { // Touche 2
+                } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
+                    && (env.getMouseY() <= 290 && env.getMouseX() >= 135)   // (290,135)
+                    && (env.getMouseY() <= 290 && env.getMouseX() <= 500)   // (290,500)
+                    && (env.getMouseY() >= 195 && env.getMouseX() >= 135)   // (195,135)
+                    && (env.getMouseY() >= 195 && env.getMouseX() <= 500) ) // (195,500) 
+                {
                     touche = 3;
-                }  else if (touche == 81) { // Touche 3
+                } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
+                    && (env.getMouseY() <= 150 && env.getMouseX() >= 135)   // (150,135)
+                    && (env.getMouseY() <= 150 && env.getMouseX() <= 500)   // (150,500)
+                    && (env.getMouseY() >= 50 && env.getMouseX() >= 135)   // (50,135)
+                    && (env.getMouseY() >= 50 && env.getMouseX() <= 500) ) // (50,500) 
+                {
                     touche = 4;
-                } else {
-                    touche = env.getKeyDown();
                 }
                 
                 env.advanceOneFrame();
             }
 
             // Nettoie l'environnement du texte
-            menuText.getText("Question").clean();
-            menuText.getText("Jeu1").clean();
-            menuText.getText("Jeu2").clean();
-            menuText.getText("Jeu3").clean();
-            menuText.getText("Jeu4").clean();
+            // menuText.getText("Question").clean();
+            // menuText.getText("Jeu1").clean();
+            // menuText.getText("Jeu2").clean();
+            // menuText.getText("Jeu3").clean();
+            // menuText.getText("Jeu4").clean();
+
+            System.out.println("Menu Jeu - Touche: "+touche);
+
             // Restaure la room du jeu
+            menuRoom.setTextureEast("textures/black.png");
+            menuRoom.setTextureWest("textures/black.png");
+            menuRoom.setTextureNorth("textures/black.png");
+            menuRoom.setTextureBottom("textures/black.png");
             env.setRoom(mainRoom);
+            
             // Décide quoi faire en fonction de la touche pressée
             switch (touche) {
                 // -----------------------------------------
@@ -186,22 +199,18 @@ public abstract class Jeu {
                     break;
 
                 // -----------------------------------------
-                // Touche 3 : Sortie de ce jeu
+                // Touche 3 : Revenir au menu Principal
                 // -----------------------------------------                
                 case Keyboard.KEY_3:
                     profil.sauvegarder(FILEPATH_PROFIL);
-                    playTheGame = MENU_VAL.MENU_CONTINUE;
-                    break;
 
-                // -----------------------------------------
-                // Touche 4 : Quitter le jeu
-                // -----------------------------------------                
-                case Keyboard.KEY_4:
-                    profil.sauvegarder(FILEPATH_PROFIL);
-                    playTheGame = MENU_VAL.MENU_SORTIE;
+                    menuPrincipal();
+
+                    playTheGame = MENU_VAL.MENU_CONTINUE;
                     break;
             }
         } while (playTheGame == MENU_VAL.MENU_JOUE);
+
         return playTheGame;
     }
 
@@ -210,35 +219,53 @@ public abstract class Jeu {
         String nomJoueur;
 
         // restaure la room du menu
+        env.setCameraXYZ(50, 50, 150);
+        env.setCameraPitch(0);
+        menuRoom.setTextureEast("textures/black.png");
+        menuRoom.setTextureWest("textures/black.png");
+        menuRoom.setTextureNorth("textures/menuPrincipal.png");
+        menuRoom.setTextureBottom("textures/black.png");
         env.setRoom(menuRoom);
-        menuText.getText("Question").display();
-        menuText.getText("Principal1").display();
-        menuText.getText("Principal2").display();
-        menuText.getText("Principal3").display();
         
         // vérifie qu'une touche 1, 2 ou 3 est pressée
         System.out.println("game.Jeu.menuPrincipal()");
         int touche = 0;
         
-        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3)) {
-            if(env.getKeyDown() == 79) { // Touche 1
+        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3)) {                                                         
+            if( env.getMouseButtonClicked() == 0                            // ( Y , X )
+                && (env.getMouseY() <= 435 && env.getMouseX() >= 135)   // (435,135)
+                && (env.getMouseY() <= 435 && env.getMouseX() <= 500)   // (435,500)
+                && (env.getMouseY() >= 335 && env.getMouseX() >= 135)   // (335,135)
+                && (env.getMouseY() >= 335 && env.getMouseX() <= 500) ) // (335,500) 
+            { 
                 touche = 2;
-            } else if (env.getKeyDown() == 80) { // Touche 2
+            } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
+                  && (env.getMouseY() <= 290 && env.getMouseX() >= 135)   // (290,135)
+                  && (env.getMouseY() <= 290 && env.getMouseX() <= 500)   // (290,500)
+                  && (env.getMouseY() >= 195 && env.getMouseX() >= 135)   // (195,135)
+                  && (env.getMouseY() >= 195 && env.getMouseX() <= 500) ) // (195,500) 
+            {
                 touche = 3;
-            }  else if (env.getKeyDown() == 81) { // Touche 3
+            } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
+                && (env.getMouseY() <= 150 && env.getMouseX() >= 135)   // (150,135)
+                && (env.getMouseY() <= 150 && env.getMouseX() <= 500)   // (150,500)
+                && (env.getMouseY() >= 50 && env.getMouseX() >= 135)   // (50,135)
+                && (env.getMouseY() >= 50 && env.getMouseX() <= 500) ) // (50,500) 
+            {
                 touche = 4;
-            } else {
-                touche = env.getKeyDown();
             }
+
             env.advanceOneFrame();
-
         }
-        
 
-        menuText.getText("Question").clean();
-        menuText.getText("Principal1").clean();
-        menuText.getText("Principal2").clean();
-        menuText.getText("Principal3").clean();
+        System.out.println("Menu Principal - Touche: "+touche);
+
+        // Reset les paramètres de texture :
+        menuRoom.setTextureEast("textures/black.png");
+        menuRoom.setTextureWest("textures/black.png");
+        menuRoom.setTextureNorth("textures/black.png");
+        menuRoom.setTextureBottom("textures/black.png");
+        env.setRoom(menuRoom);
 
         // Décide quoi faire en fonction de la touche pressée
         switch (touche) {
@@ -249,7 +276,6 @@ public abstract class Jeu {
                 // Demande le nom du joueur existant
                 nomJoueur = getNomJoueur();
 
-                
                 if (profil.JoeurExist(nomJoueur)) {
                     profil.ChargerProfil(nomJoueur);
 
@@ -304,9 +330,10 @@ public abstract class Jeu {
         for(int i=0; i<mot.length(); i++) {
             int randomPositionX = (int) (Math.random() * (room.getWidth()));
             int randomPositionZ = (int) (Math.random() * (room.getDepth()));
-           Letter l = new Letter(tab[i], randomPositionX,randomPositionZ, room);
-           lettres.add(l);
-           env.addObject(l); 
+
+            Letter l = new Letter(tab[i], randomPositionX,randomPositionZ, room);
+            lettres.add(l);
+            env.addObject(l); 
         }
         int totalNblettres = lettres.size();
         env.addObject(tux);
@@ -320,18 +347,18 @@ public abstract class Jeu {
         gameText = new EnvTextMap(env);
         
         while (!finished) {
-
-            //On applique le chronometre lors du lancement du jeu
-            //L'interface va update le chronomètre chaque secondes
+            // On applique le chronometre lors du lancement du jeu
+            // L'interface va update le chronomètre chaque secondes
             finished = appliqueTemps(new OnJeuCallback() {
                 @Override
                 public void onTimeSpentListener(int time) {
-                    if(gameText.getText("time") != null)
+                    if(gameText.getText("time") != null) {
                         gameText.getText("time").clean();
+                    }
+
                     gameText.addText("Time: "+(30-time), "time", 10, 420);
                     gameText.getText("time").display();
                     partie.setTemps(time);
-                    
                 }
             });
             
@@ -377,65 +404,73 @@ public abstract class Jeu {
      * @return level compris entre 1 et 5
      */
     private int frameChoisirNiveau(){
+        menuRoom.setTextureEast("textures/black.png");
+        menuRoom.setTextureWest("textures/black.png");
+        mainRoom.setTextureNorth("textures/menuNiveau.png");
+        menuRoom.setTextureBottom("textures/black.png");
+        env.setCameraXYZ(50, 30, 150);
+        env.setCameraPitch(0);
         env.setRoom(mainRoom);
-        
-        menuText.addText("Choisissez un niveau [ 1 simple -> 5 difficile] ", "choixLvl", 200, 300);
-        menuText.addText("4. Niveau 1", "lvl1", 250, 280);
-        menuText.addText("5. Niveau 2", "lvl2", 250, 260);
-        menuText.addText("6. Niveau 3", "lvl3", 250, 240);
-        menuText.addText("7. Niveau 4", "lvl4", 250, 220);
-        menuText.addText("8. Niveau 5", "lvl5", 250, 200);
-        menuText.getText("choixLvl").display();
-        menuText.getText("lvl1").display();
-        menuText.getText("lvl2").display();
-        menuText.getText("lvl3").display();
-        menuText.getText("lvl4").display();
-        menuText.getText("lvl5").display();
-
-        
 
         int touche = 0;
-        int levelSelected = 0;
          
-    
-        while (!(touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5 || touche == Keyboard.KEY_6 || touche == Keyboard.KEY_7 || touche == Keyboard.KEY_8)) {
-            if(env.getKeyDown() == 72) { // Touche 8
-                touche = 9;
-            } else if (env.getKeyDown() == 71) { // Touche 7
-                touche = 8;
-            }  else if (env.getKeyDown() == 77) { // Touche 6
-                touche = 7;
-            }  else if (env.getKeyDown() == 76) { // Touche 5
-                touche = 6;
-            }  else if (env.getKeyDown() == 75) { // Touche 4
+        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5)) {
+            if( env.getMouseButtonClicked() == 0                        // ( Y , X )
+                && (env.getMouseY() <= 355 && env.getMouseX() >= 195)   // (355,195)
+                && (env.getMouseY() <= 355 && env.getMouseX() <= 440)   // (355,440)
+                && (env.getMouseY() >= 320 && env.getMouseX() >= 195)   // (320,195)
+                && (env.getMouseY() >= 320 && env.getMouseX() <= 440) ) // (320,440) 
+            { 
+                touche = 2;
+            } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
+                  && (env.getMouseY() <= 310 && env.getMouseX() >= 195)   // (310,195)
+                  && (env.getMouseY() <= 310 && env.getMouseX() <= 440)   // (310,440)
+                  && (env.getMouseY() >= 270 && env.getMouseX() >= 195)   // (270,195)
+                  && (env.getMouseY() >= 270 && env.getMouseX() <= 440) ) // (270,440) 
+            {
+                touche = 3;
+            } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
+                  && (env.getMouseY() <= 260 && env.getMouseX() >= 195)   // (260,195)
+                  && (env.getMouseY() <= 260 && env.getMouseX() <= 440)   // (260,440)
+                  && (env.getMouseY() >= 220 && env.getMouseX() >= 195)   // (220,195)
+                  && (env.getMouseY() >= 220 && env.getMouseX() <= 440) ) // (220,440) 
+            {
+                touche = 4;
+            } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
+                && (env.getMouseY() <= 210 && env.getMouseX() >= 195)     // (210,195)
+                && (env.getMouseY() <= 210 && env.getMouseX() <= 440)     // (210,440)
+                && (env.getMouseY() >= 170 && env.getMouseX() >= 195)     // (170,195)
+                && (env.getMouseY() >= 170 && env.getMouseX() <= 440) )   // (170,440) 
+            {
                 touche = 5;
-            }  else {
-                touche = env.getKeyDown(); // avant : 0
+            } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
+                && (env.getMouseY() <= 160 && env.getMouseX() >= 195)     // (160,195)
+                && (env.getMouseY() <= 160 && env.getMouseX() <= 440)     // (160,440)
+                && (env.getMouseY() >= 120 && env.getMouseX() >= 195)     // (120,195)
+                && (env.getMouseY() >= 120 && env.getMouseX() <= 440) )   // (120,440) 
+            {
+                touche = 6;
             }
-            
-            System.out.println("Touche : "+touche);
+
+            // System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX()+" - click: "+env.getMouseButtonClicked());
+
             env.advanceOneFrame();
         }
 
-        menuText.getText("choixLvl").clean();
-        menuText.getText("lvl1").clean();
-        menuText.getText("lvl2").clean();
-        menuText.getText("lvl3").clean();
-        menuText.getText("lvl4").clean();
-        menuText.getText("lvl5").clean();
-        
-        levelSelected = touche-3;
-        System.out.println("Level avant : "+levelSelected);
+        env.setCameraXYZ(50, 60, 175); 
+        env.setCameraPitch(-20);
+        mainRoom.resetRoom(FILEPATH_PLATEAU);
+        env.setRoom(mainRoom);
 
-        if(levelSelected > 5) {
-            levelSelected = 5;
-        } else if(levelSelected < 1) {
-            levelSelected = 1;
+        if(touche > 5) {
+            touche = 5;
+        } else if(touche < 1) {
+            touche = 1;
         }
 
-        System.out.println("Level apres : "+levelSelected);
+        System.out.println("Level apres : "+touche);
 
-        return levelSelected;
+        return touche;
     }
 
     /**
@@ -444,6 +479,7 @@ public abstract class Jeu {
      */
     private void frameApprendreLeMot(String mot){
         env.setRoom(menuRoom);
+
         char[] tab = mot.toCharArray();
         int spacing = 15; // Espace de 15 pixel
         int middleWord = mot.length()/2; // Moitié d'un mot

@@ -6,7 +6,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import utils.XMLUtil;
 
@@ -273,10 +272,10 @@ public class Profil {
                 if(nomJ.equals(nom_existant)) {
                     joueurTrouve = true;
                     joueur = (Element) _doc.getElementsByTagName("profil").item(i);
-                    System.out.println("i : "+i+" - Vrai");
+                    // System.out.println("i : "+i+" - Vrai");
                     System.out.println("Return Joueur");
                 } else {
-                    System.out.println("i : "+i+" - Faux");
+                    // System.out.println("i : "+i+" - Faux");
                 }
 
                 i++;
