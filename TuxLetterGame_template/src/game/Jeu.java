@@ -163,7 +163,7 @@ public abstract class Jeu {
             // menuText.getText("Jeu4").clean();
 
             System.out.println("Menu Jeu - Touche: "+touche);
-
+            env.soundPlay("/audio/click.wav");
             // Restaure la room du jeu
             menuRoom.setTextureEast("textures/black.png");
             menuRoom.setTextureWest("textures/black.png");
@@ -241,7 +241,6 @@ public abstract class Jeu {
                 && (env.getMouseY() >= 335 && env.getMouseX() <= 500) ) // (335,500) 
             { 
                 touche = 2;
-                env.soundPlay("/audio/clic.mp3.flac");
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
                   && (env.getMouseY() <= 290 && env.getMouseX() >= 135)   // (290,135)
                   && (env.getMouseY() <= 290 && env.getMouseX() <= 500)   // (290,500)
@@ -257,7 +256,6 @@ public abstract class Jeu {
             {
                 touche = 4;
             }
-
             env.advanceOneFrame();
         }
 
@@ -269,7 +267,9 @@ public abstract class Jeu {
         menuRoom.setTextureNorth("textures/black.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setRoom(menuRoom);
+        env.soundStop("/audio/TheLoomingBattle.OGG");
 
+        env.soundPlay("/audio/click.wav");
         // Décide quoi faire en fonction de la touche pressée
         switch (touche) {
             // -------------------------------------
@@ -369,6 +369,7 @@ public abstract class Jeu {
  
             // Ici, on applique les regles
             if(env.getKeyDown() == Keyboard.KEY_SPACE) {
+                env.soundPlay("/audio/collect.wav");
                 appliqueRegles(partie);
             }
             
@@ -459,6 +460,8 @@ public abstract class Jeu {
 
             env.advanceOneFrame();
         }
+        
+        env.soundPlay("/audio/click.wav");
 
         env.setCameraXYZ(50, 60, 175); 
         env.setCameraPitch(-20);
