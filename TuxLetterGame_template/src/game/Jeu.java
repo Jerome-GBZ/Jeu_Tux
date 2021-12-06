@@ -111,7 +111,6 @@ public abstract class Jeu {
         MENU_VAL playTheGame;
         playTheGame = MENU_VAL.MENU_JOUE;
         Partie partie;
-
         do {
             // restaure la room du menu
             env.setCameraXYZ(50, 50, 150);
@@ -218,6 +217,9 @@ public abstract class Jeu {
         MENU_VAL choix = MENU_VAL.MENU_CONTINUE;
         String nomJoueur;
 
+        env.soundLoop("/audio/TheLoomingBattle.OGG");
+
+
         // restaure la room du menu
         env.setCameraXYZ(50, 50, 150);
         env.setCameraPitch(0);
@@ -239,6 +241,7 @@ public abstract class Jeu {
                 && (env.getMouseY() >= 335 && env.getMouseX() <= 500) ) // (335,500) 
             { 
                 touche = 2;
+                env.soundPlay("/audio/clic.mp3.flac");
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
                   && (env.getMouseY() <= 290 && env.getMouseX() >= 135)   // (290,135)
                   && (env.getMouseY() <= 290 && env.getMouseX() <= 500)   // (290,500)
