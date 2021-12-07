@@ -382,11 +382,14 @@ public abstract class Jeu {
             env.advanceOneFrame();
         }
 
+        gameText.getText("time").clean();
         //Calcul de trouvé = score
         int score = 0;
         if(motTrouve.size() > 0) {
             score = totalNblettres / motTrouve.size();
         }
+        
+        
         partie.setTrouve(score*100);
         
         if(gameText.getText("time") != null) {
@@ -397,7 +400,7 @@ public abstract class Jeu {
         // if(finished) {
         profil.ajouterPartie(partie);
         // }
-
+        frameRecompenses(score*100);
         terminePartie(partie);
     }
 
@@ -577,7 +580,37 @@ public abstract class Jeu {
     }
     
     
-    
+    private void frameRecompenses(int score){
+        System.out.println("score enregistré: "+ score);
+        
+        env.setCameraPitch(0);
+        env.soundPlay("/audio/won.wav");
+        menuRoom.setTextureEast("textures/black.png");
+        menuRoom.setTextureWest("textures/black.png");
+        menuRoom.setTextureBottom("textures/black.png");
+
+        if(score == 100){
+            menuRoom.setTextureNorth("textures/recompense/mot_complet.png");
+        }else if (score> 50){
+            menuRoom.setTextureNorth("textures/recompense/moitie_mot.png");
+        }else{
+            menuRoom.setTextureNorth("textures/recompense/mot_pas_trouve.png");
+        }
+        env.setRoom(menuRoom);
+        int touche = 0;
+        while(touche != 2){
+            if( env.getMouseButtonClicked() == 0                        // ( Y , X )
+                && (env.getMouseY() <= 210 && env.getMouseX() >= 106)   // (210,106)
+                && (env.getMouseY() <= 247 && env.getMouseX() <= 106)   // (247,106)
+                && (env.getMouseY() >= 247 && env.getMouseX() >= 145)   // (247,145)
+                && (env.getMouseY() >= 210 && env.getMouseX() <= 145) ) // (210,145) 
+            { 
+                touche = 2;
+            }
+            env.advanceOneFrame();
+        }
+
+    }
     
     
 }
