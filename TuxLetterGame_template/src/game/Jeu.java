@@ -642,11 +642,11 @@ public abstract class Jeu {
     public void menuHighScore(Profil p) {
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        mainRoom.setTextureNorth("textures/highScore/highScore_3.png");
+        menuRoom.setTextureNorth("textures/highScore/highScore_3.png");
         menuRoom.setTextureBottom("textures/black.png");
-        env.setCameraXYZ(50, 30, 150);
+        env.setCameraXYZ(50, 40, 150);
         env.setCameraPitch(0);
-        env.setRoom(mainRoom);
+        env.setRoom(menuRoom);
 
         ArrayList<Joueur> meilleursJoueur = p.LesMeilleursJoueur(FILEPATH_PROFIL);
 
@@ -674,10 +674,10 @@ public abstract class Jeu {
         int touche = 0;
         while (touche != 200 ) {                                                         
             if( env.getMouseButtonClicked() == 0                            // ( Y , X )
-                && (env.getMouseY() <= 435 && env.getMouseX() >= 135)   // (435,135)
-                && (env.getMouseY() <= 435 && env.getMouseX() <= 500)   // (435,500)
-                && (env.getMouseY() >= 335 && env.getMouseX() >= 135)   // (335,135)
-                && (env.getMouseY() >= 335 && env.getMouseX() <= 500) ) // (335,500) 
+                && (env.getMouseY() <= 140 && env.getMouseX() >= 430)   // (140,430)
+                && (env.getMouseY() <= 140 && env.getMouseX() <= 505)   // (140,505)
+                && (env.getMouseY() >= 90 && env.getMouseX() >= 430)   // (90,430)
+                && (env.getMouseY() >= 90 && env.getMouseX() <= 505) ) // (90,505) 
             { 
                 touche = 200;
             }
@@ -689,9 +689,9 @@ public abstract class Jeu {
 
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        mainRoom.setTextureNorth("textures/black.png");
+        menuRoom.setTextureNorth("textures/black.png");
         menuRoom.setTextureBottom("textures/black.png");
-        env.setRoom(mainRoom);
+        env.setRoom(menuRoom);
 
         menuPrincipal();
     }
