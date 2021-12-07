@@ -2,8 +2,13 @@ package game;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.text.Format;
+import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -274,9 +279,9 @@ public class Profil {
                     joueur = (Element) _doc.getElementsByTagName("profil").item(i);
                     // System.out.println("i : "+i+" - Vrai");
                     System.out.println("Return Joueur");
-                } else {
+                } // else {
                     // System.out.println("i : "+i+" - Faux");
-                }
+                // }
 
                 i++;
             }
@@ -305,5 +310,77 @@ public class Profil {
             this.dateNaissance = "1970/01/01";
             this.avatar = "player1.svg";
         }
+    }
+
+    
+
+    public ArrayList<Joueur> LesMeilleursJoueur(String filename) {
+        _doc = fromXML(filename);
+        NodeList list_profil = _doc.getElementsByTagName("profil");
+
+        ArrayList<Joueur> meilleursJoueur = new ArrayList<>();
+        
+        for (int i = 0; i < list_profil.getLength(); i++) {
+            Element joueur = (Element) _doc.getElementsByTagName("profil").item(i);
+            NodeList parties = joueur.getElementsByTagName("partie");
+            
+            String nom = ((Element) joueur.getElementsByTagName("nom").item(0)).getTextContent();
+            double scoreGlobal = 0.0;
+            int coefficientTot = 0;
+
+
+            for (int j = 0; j < parties.getLength(); j++) {
+                Element partie = (Element) parties.item(j);
+                Element mot = (Element) partie.getElementsByTagName("mot").item(0);
+                int trouve = 0;
+                int niveau = 0;
+
+                // Si l'attribut trouvé existe on supprime le % à la fin s'il existe
+                if(partie.hasAttribute("trouvé")) {
+                    String trouver = partie.getAttribute("trouvé");
+                    if (trouver != null && trouver.length() > 0 && trouver.charAt(trouver.length() - 1) == '%') {
+                        trouver = trouver.substring(0, trouver.length() - 1);
+                    }
+
+                    trouve = Integer.parseInt( trouver );
+                }
+
+                if(mot.hasAttribute("niveau")) {
+                    niveau = Integer.parseInt( mot.getAttribute("niveau") );  
+                }
+
+                coefficientTot += niveau;
+                scoreGlobal += niveau*trouve;
+            }
+
+            if(coefficientTot > 0) {
+                NumberFormat formatter = new DecimalFormat("#0.00");
+                meilleursJoueur.add(new Joueur(nom, scoreGlobal/coefficientTot )); // formatter.format()
+            } else {
+                meilleursJoueur.add(new Joueur(nom, 0));
+            }
+        }
+        
+        meilleursJoueur = TrieTableau(meilleursJoueur);
+
+        return meilleursJoueur;
+    }
+
+    public ArrayList<Joueur> TrieTableau(ArrayList<Joueur> tab) {
+        for (int i = 0; i <= tab.size() - 2; i++) {
+            for (int j = tab.size() - 1; j > i; j--) {
+                if(tab.get(j).estInferieur(tab.get(j-1))) {
+                    Joueur jAutre = tab.get(j);
+
+                    tab.remove(j);
+                    tab.add(j, tab.get(j-1));
+
+                    tab.remove(j-1);
+                    tab.add(j-1, jAutre);
+                }
+            }
+        }
+
+        return tab;
     }
 }

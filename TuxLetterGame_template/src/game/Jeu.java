@@ -67,17 +67,17 @@ public abstract class Jeu {
         menuText = new EnvTextMap(env);
         
         // Textes affichés à l'écran
-        menuText.addText("Voulez vous ?", "Question", 200, 300);
-        menuText.addText("1. Commencer une nouvelle partie ?", "Jeu1", 250, 280);
-        menuText.addText("2. Charger une partie existante ?", "Jeu2", 250, 260);
-        menuText.addText("3. Sortir de ce jeu ?", "Jeu3", 250, 240);
-        menuText.addText("4. Quitter le jeu ?", "Jeu4", 250, 220);
+        // menuText.addText("Voulez vous ?", "Question", 200, 300);
+        // menuText.addText("1. Commencer une nouvelle partie ?", "Jeu1", 250, 280);
+        // menuText.addText("2. Charger une partie existante ?", "Jeu2", 250, 260);
+        // menuText.addText("3. Sortir de ce jeu ?", "Jeu3", 250, 240);
+        // menuText.addText("4. Quitter le jeu ?", "Jeu4", 250, 220);
         
-        menuText.addText("Choisissez un nom de joueur : ", "NomJoueur", 200, 300);
-        menuText.addText("Le joueur entré n'existe pas !", "J_not_exist", 150, 300);
-        menuText.addText("1. Charger un profil de joueur existant ?", "Principal1", 250, 280);
-        menuText.addText("2. Créer un nouveau joueur ?", "Principal2", 250, 260);
-        menuText.addText("3. Sortir du jeu ?", "Principal3", 250, 240);
+        // menuText.addText("Choisissez un nom de joueur : ", "NomJoueur", 200, 300);
+        // menuText.addText("Le joueur entré n'existe pas !", "J_not_exist", 150, 300);
+        // menuText.addText("1. Charger un profil de joueur existant ?", "Principal1", 250, 280);
+        // menuText.addText("2. Créer un nouveau joueur ?", "Principal2", 250, 260);
+        // menuText.addText("3. Sortir du jeu ?", "Principal3", 250, 240);
     }
     
     public void execute(){
@@ -115,7 +115,7 @@ public abstract class Jeu {
             // restaure la room du menu
             env.setCameraXYZ(50, 50, 150);
             env.setCameraPitch(0);
-            menuRoom.setTextureNorth("textures/menuJeu.png");
+            menuRoom.setTextureNorth("textures/menu/menuJeu.png");
             env.setRoom(menuRoom);
             
             try {
@@ -225,15 +225,15 @@ public abstract class Jeu {
         env.setCameraPitch(0);
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        menuRoom.setTextureNorth("textures/menuPrincipal.png");
+        menuRoom.setTextureNorth("textures/menu/menuPrincipal.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setRoom(menuRoom);
         
         // vérifie qu'une touche 1, 2 ou 3 est pressée
         System.out.println("game.Jeu.menuPrincipal()");
         int touche = 0;
-        
-        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3)) {                                                         
+
+        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4)) {                                                         
             if( env.getMouseButtonClicked() == 0                            // ( Y , X )
                 && (env.getMouseY() <= 435 && env.getMouseX() >= 135)   // (435,135)
                 && (env.getMouseY() <= 435 && env.getMouseX() <= 500)   // (435,500)
@@ -255,7 +255,17 @@ public abstract class Jeu {
                 && (env.getMouseY() >= 50 && env.getMouseX() <= 500) ) // (50,500) 
             {
                 touche = 4;
+            } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
+                && (env.getMouseY() <= 480 && env.getMouseX() >= 540)   // (480,540)
+                && (env.getMouseY() <= 480 && env.getMouseX() <= 640)   // (480,540)
+                && (env.getMouseY() >= 380 && env.getMouseX() >= 540)   // (380,640)
+                && (env.getMouseY() >= 380 && env.getMouseX() <= 640) ) // (380,640) 
+            {
+                touche = 5;
             }
+
+            System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX()+" - click: "+env.getMouseButtonClicked());
+
             env.advanceOneFrame();
         }
 
@@ -307,6 +317,14 @@ public abstract class Jeu {
             // -------------------------------------
             case Keyboard.KEY_3:
                 choix = MENU_VAL.MENU_SORTIE;
+                break;
+            
+            // -------------------------------------
+            // Touche 4 : Classement des meilleurs joueurs
+            // -------------------------------------
+            case Keyboard.KEY_4:
+                menuHighScore(profil);
+                break;
         }
 
         return choix;
@@ -386,21 +404,23 @@ public abstract class Jeu {
         //Calcul de trouvé = score
         int score = 0;
         if(motTrouve.size() > 0) {
-            score = totalNblettres / motTrouve.size();
+            score = (motTrouve.size()*100) / totalNblettres;
         }
-        
-        
-        partie.setTrouve(score*100);
+        System.out.println("totalNblettres: "+totalNblettres);
+        System.out.println("motTrouve: "+motTrouve+" - taille: "+motTrouve.size());        
+        System.out.println("score: "+score);
+
+        partie.setTrouve(score);
         
         if(gameText.getText("time") != null) {
             gameText.getText("time").clean();
         }
         
         // Ici on peut calculer des valeurs lorsque la partie est terminée
-        // if(finished) {
         profil.ajouterPartie(partie);
-        // }
-        frameRecompenses(score*100);
+        
+        frameRecompenses(score);
+
         terminePartie(partie);
     }
 
@@ -413,7 +433,7 @@ public abstract class Jeu {
     private int frameChoisirNiveau(){
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        mainRoom.setTextureNorth("textures/menuNiveau.png");
+        mainRoom.setTextureNorth("textures/menu/menuNiveau.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setCameraXYZ(50, 30, 150);
         env.setCameraPitch(0);
@@ -459,8 +479,6 @@ public abstract class Jeu {
                 touche = 6;
             }
 
-            // System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX()+" - click: "+env.getMouseButtonClicked());
-
             env.advanceOneFrame();
         }
         
@@ -470,6 +488,8 @@ public abstract class Jeu {
         env.setCameraPitch(-20);
         mainRoom.resetRoom(FILEPATH_PLATEAU);
         env.setRoom(mainRoom);
+
+        touche--;
 
         if(touche > 5) {
             touche = 5;
@@ -494,7 +514,7 @@ public abstract class Jeu {
         int middleWord = mot.length()/2; // Moitié d'un mot
         int startPos = (room.getWidth() / 2) - (middleWord * 20);// Position de départ
         ArrayList<Letter> motTmp = new ArrayList<>();
-        menuRoom.setTextureNorth("textures/menuJeu.png");
+        menuRoom.setTextureNorth("textures/menu/menuJeu.png");
         for(int i=0; i<mot.length(); i++){
            Letter l = new Letter(tab[i], startPos, 50, room);
            env.addObject(l); 
@@ -580,37 +600,100 @@ public abstract class Jeu {
     }
     
     
-    private void frameRecompenses(int score){
+    private void frameRecompenses(int score) {
         System.out.println("score enregistré: "+ score);
         
         env.setCameraPitch(0);
         env.soundPlay("/audio/won.wav");
+
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
         menuRoom.setTextureBottom("textures/black.png");
 
-        if(score == 100){
+        if(score == 100) {
             menuRoom.setTextureNorth("textures/recompense/mot_complet.png");
-        }else if (score> 50){
-            menuRoom.setTextureNorth("textures/recompense/moitie_mot.png");
-        }else{
+        } else if (score > 60) {
+            menuRoom.setTextureNorth("textures/recompense/moitie_de_mot.png");
+        } else if(score <= 60 && score > 30) {
             menuRoom.setTextureNorth("textures/recompense/mot_pas_trouve.png");
+        } else {
+            menuRoom.setTextureNorth("textures/recompense/mot_vraiment_pas_trouve.png");
         }
+
         env.setRoom(menuRoom);
-        int touche = 0;
-        while(touche != 2){
+        
+        int touche = 0; // 200 : bouton cliqué
+        while(touche != 200){
             if( env.getMouseButtonClicked() == 0                        // ( Y , X )
-                && (env.getMouseY() <= 210 && env.getMouseX() >= 106)   // (210,106)
-                && (env.getMouseY() <= 247 && env.getMouseX() <= 106)   // (247,106)
-                && (env.getMouseY() >= 247 && env.getMouseX() >= 145)   // (247,145)
-                && (env.getMouseY() >= 210 && env.getMouseX() <= 145) ) // (210,145) 
-            { 
-                touche = 2;
+                && (env.getMouseY() <= 100 && env.getMouseX() >= 290)   // (100,290)
+                && (env.getMouseY() <= 100 && env.getMouseX() <= 350)   // (100,350)
+                && (env.getMouseY() >= 40 && env.getMouseX() >= 290)   // (40,290)
+                && (env.getMouseY() >= 40 && env.getMouseX() <= 350) ) // (40,350) 
+            {
+                touche = 200;
             }
+
             env.advanceOneFrame();
         }
 
+        env.soundPlay("/audio/click.wav");
     }
-    
-    
+
+    public void menuHighScore(Profil p) {
+        menuRoom.setTextureEast("textures/black.png");
+        menuRoom.setTextureWest("textures/black.png");
+        mainRoom.setTextureNorth("textures/highScore/highScore_3.png");
+        menuRoom.setTextureBottom("textures/black.png");
+        env.setCameraXYZ(50, 30, 150);
+        env.setCameraPitch(0);
+        env.setRoom(mainRoom);
+
+        ArrayList<Joueur> meilleursJoueur = p.LesMeilleursJoueur(FILEPATH_PROFIL);
+
+        int posX = 250;
+        int nbIteration = 0;
+        if(meilleursJoueur.size() >= 4) {
+            nbIteration = 4;
+        } else {
+            nbIteration = meilleursJoueur.size();
+        }
+
+        for (int i = 0; i < nbIteration; i++) {
+            String nomJ = "Joueur"+(i+1);
+            String scoreJ = "ScoreJoueur"+(i+1);
+
+            menuText.addText(meilleursJoueur.get(i).getNom(), nomJ, 250, posX);
+            menuText.addText(String.valueOf( meilleursJoueur.get(i).getScoreTotal() ), scoreJ, 300, posX);
+
+            menuText.getText(nomJ).display();
+            menuText.getText(scoreJ).display();
+
+            posX += 50;
+        }
+
+        int touche = 0;
+        while (touche != 200 ) {                                                         
+            if( env.getMouseButtonClicked() == 0                            // ( Y , X )
+                && (env.getMouseY() <= 435 && env.getMouseX() >= 135)   // (435,135)
+                && (env.getMouseY() <= 435 && env.getMouseX() <= 500)   // (435,500)
+                && (env.getMouseY() >= 335 && env.getMouseX() >= 135)   // (335,135)
+                && (env.getMouseY() >= 335 && env.getMouseX() <= 500) ) // (335,500) 
+            { 
+                touche = 200;
+            }
+
+            System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX()+" - click: "+env.getMouseButtonClicked());
+
+            env.advanceOneFrame();
+        }
+
+        menuRoom.setTextureEast("textures/black.png");
+        menuRoom.setTextureWest("textures/black.png");
+        mainRoom.setTextureNorth("textures/black.png");
+        menuRoom.setTextureBottom("textures/black.png");
+        env.setRoom(mainRoom);
+
+        menuPrincipal();
+    }
 }
+

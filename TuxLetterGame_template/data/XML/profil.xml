@@ -71,7 +71,7 @@
         <avatar>player2.svg</avatar>
         <anniversaire>2000-03-22</anniversaire>
         <parties>
-            <partie date="2013-12-10">
+            <partie date="2013-12-10" trouvé="100%">
                 <temps>17.50</temps>
                 <mot niveau="1">police</mot>
             </partie>
@@ -91,7 +91,7 @@
                 <temps>1.0</temps>
                 <mot niveau="1">Fuir</mot>
             </partie>
-            <partie date="28-11-2021" trouvé="200%">
+            <partie date="28-11-2021" trouvé="100%">²
                 <temps>29.0</temps>
                 <mot niveau="5">Gratte-ciel</mot>
             </partie>
@@ -99,7 +99,7 @@
                 <temps>17.0</temps>
                 <mot niveau="5">Bonjour</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="400%">
+        <partie date="28-11-2021" trouvé="100%">
                 <temps>6.0</temps>
                 <mot niveau="2">Jazz</mot>
             </partie>
@@ -124,6 +124,10 @@
             <partie date="28-11-2021" trouvé="100%">
                 <temps>15.0</temps>
                 <mot niveau="5">Langage</mot>
+            </partie>
+        <partie date="28-11-2021" trouvé="50%">
+                <temps>29.0</temps>
+                <mot niveau="1">Jazz</mot>
             </partie>
         </parties>
     </profil>
