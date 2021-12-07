@@ -1,6 +1,6 @@
 ### Todo liste
 
-- Voyageur santé : 
+- Voyageur santé : </br> 
                [ ] le com ligne 94 du xsd : verifNum
                [] On doit commencer que par une majuscule ? : verifVille
                [] On doit commencer que par une majuscule ? : verifMot
