@@ -44,6 +44,26 @@
                 <temps>19.0</temps>
                 <mot niveau="4">Manteau</mot>
             </partie>
+        <partie date="28-11-2021" trouvé="100%">
+                <temps>11.0</temps>
+                <mot niveau="3">Chien</mot>
+            </partie>
+        <partie date="28-11-2021" trouvé="100%">
+                <temps>16.0</temps>
+                <mot niveau="3">Volet</mot>
+            </partie>
+        <partie date="28-11-2021" trouvé="100%">
+                <temps>29.0</temps>
+                <mot niveau="2">Avion</mot>
+            </partie>
+        <partie date="28-11-2021" trouvé="100%">
+                <temps>25.0</temps>
+                <mot niveau="2">Chant</mot>
+            </partie>
+            <partie date="28-11-2021" trouvé="100%">
+                <temps>29.0</temps>
+                <mot niveau="2">Livre</mot>
+            </partie>
         </parties>
     </profil>
     <profil>

@@ -491,7 +491,7 @@ public abstract class Jeu {
         int middleWord = mot.length()/2; // Moitié d'un mot
         int startPos = (room.getWidth() / 2) - (middleWord * 20);// Position de départ
         ArrayList<Letter> motTmp = new ArrayList<>();
-
+        menuRoom.setTextureNorth("textures/menuJeu.png");
         for(int i=0; i<mot.length(); i++){
            Letter l = new Letter(tab[i], startPos, 50, room);
            env.addObject(l); 
