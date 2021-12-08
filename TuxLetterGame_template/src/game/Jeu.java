@@ -669,7 +669,7 @@ public abstract class Jeu {
             String scoreJ = "ScoreJoueur"+(i+1);
             posX = 285+7*(meilleursJoueur.get(i).getNom().length()+2);
 
-            menuText.addText(meilleursJoueur.get(i).getNom(), nomJ, 285, posY); // 285 410 - 
+            menuText.addText(meilleursJoueur.get(i).getNom(), nomJ, 280, posY); // 280 410 - 
             
             menuText.addText(String.valueOf( meilleursJoueur.get(i).getScoreTotal() ), scoreJ, posX, posY);
 
