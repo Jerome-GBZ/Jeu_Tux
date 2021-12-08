@@ -393,7 +393,6 @@ public abstract class Jeu {
  
             // Ici, on applique les regles
             if(env.getKeyDown() == Keyboard.KEY_SPACE) {
-                env.soundPlay("/audio/collect.wav");
                 appliqueRegles(partie);
             }
             
@@ -588,6 +587,8 @@ public abstract class Jeu {
     }
 
     private void lettreTrouve(Letter letter){
+        
+        env.soundPlay("/audio/collect.wav");
         motTrouve.add(letter);
         afficherLettreSelectionnee(letter);
         if(lettres.size() != 0){
