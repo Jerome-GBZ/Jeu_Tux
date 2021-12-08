@@ -17,4 +17,4 @@ __Tux__
   - [ ] Sax partie 13
   - [x] Fichier 'son' et 'menu' et SRC/DATA'
   - [x] Lettre se supperpose dans le jeu
-
+  - [ ] Je crois avoir un bug qunad je clique sur un bouton jai le son de click mais il se passe rien. je lai eu quand jai fait highscore puis quitter
