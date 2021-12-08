@@ -73,7 +73,7 @@ public abstract class Jeu {
         // menuText.addText("3. Sortir de ce jeu ?", "Jeu3", 250, 240);
         // menuText.addText("4. Quitter le jeu ?", "Jeu4", 250, 220);
         
-        // menuText.addText("Choisissez un nom de joueur : ", "NomJoueur", 200, 300);
+         menuText.addText("Choisissez un nom de joueur : ", "NomJoueur", 200, 300);
         // menuText.addText("Le joueur entré n'existe pas !", "J_not_exist", 150, 300);
         // menuText.addText("1. Charger un profil de joueur existant ?", "Principal1", 250, 280);
         // menuText.addText("2. Créer un nouveau joueur ?", "Principal2", 250, 260);
