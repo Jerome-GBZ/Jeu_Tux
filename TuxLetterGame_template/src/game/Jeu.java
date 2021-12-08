@@ -348,10 +348,16 @@ public abstract class Jeu {
         // Instancie un Tux
         tux = new Tux(env, room);
         char[] tab = mot.toCharArray();
+        int[][] positionLettres = new int[mot.length()][2];
         for(int i=0; i<mot.length(); i++) {
-            int randomPositionX = (int) (Math.random() * (room.getWidth()));
-            int randomPositionZ = (int) (Math.random() * (room.getDepth()));
-
+            int randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
+            int randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
+            while(!verifiePositionLettreValide(positionLettres, randomPositionX, randomPositionZ, i)){
+                randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
+                randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
+            }
+            positionLettres[i][0]=randomPositionX;
+            positionLettres[i][1]=randomPositionZ;
             Letter l = new Letter(tab[i], randomPositionX,randomPositionZ, room);
             lettres.add(l);
             env.addObject(l); 
@@ -510,13 +516,12 @@ public abstract class Jeu {
         env.setRoom(menuRoom);
 
         char[] tab = mot.toCharArray();
-        int spacing = 15; // Espace de 15 pixel
-        int middleWord = mot.length()/2; // Moitié d'un mot
-        int startPos = (room.getWidth() / 2) - (middleWord * 20);// Position de départ
+        int spacing = 8; // Espace de 15 pixel
+        int startPos = 15;// Position de départ
         ArrayList<Letter> motTmp = new ArrayList<>();
         menuRoom.setTextureNorth("textures/menu/menuJeu.png");
         for(int i=0; i<mot.length(); i++){
-           Letter l = new Letter(tab[i], startPos, 50, room);
+           Letter l = new Letter(tab[i], startPos, 50, room, "apprendre");
            env.addObject(l); 
            motTmp.add(l);
            startPos+=spacing;
@@ -695,5 +700,25 @@ public abstract class Jeu {
 
         menuPrincipal();
     }
+
+    /**
+     * Verifie que la position de la lettre n'est dans rayon de 15 pixel de celles déjà présentes
+     * @param lettres les positions des autres lettres
+     * @param x,y position de la lettre que l'on cherche à valider
+     */
+
+     private boolean verifiePositionLettreValide(int[][] positionsLettres, int x, int z, int fin){
+        boolean estValide = true;
+        int i = 0;
+        while(i<fin && estValide){
+            double mDistance = Math.sqrt(Math.pow(positionsLettres[i][0]-x, 2)+Math.pow(positionsLettres[i][1]-z, 2));
+            if(mDistance < 15){
+                estValide = false;
+            }
+            i++;
+        }
+      
+        return estValide;
+     }
 }
 
