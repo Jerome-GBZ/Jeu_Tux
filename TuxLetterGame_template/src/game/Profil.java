@@ -355,13 +355,24 @@ public class Profil {
 
             if(coefficientTot > 0) {
                 NumberFormat formatter = new DecimalFormat("#0.00");
-                meilleursJoueur.add(new Joueur(nom, scoreGlobal/coefficientTot )); // formatter.format()
+                Double resScore = Double.parseDouble(formatter.format(scoreGlobal/coefficientTot).replace(",", "."));
+                meilleursJoueur.add(new Joueur(nom, resScore)); // on supprime tous les chiffres apres le 2ème nombre apres la virgule
             } else {
                 meilleursJoueur.add(new Joueur(nom, 0));
             }
+        }   
+
+        for (int i = 0; i < meilleursJoueur.size(); i++) {
+            System.out.println(i+" - "+ meilleursJoueur.get(i).getNom() +": "+ meilleursJoueur.get(i).getScoreTotal() );
         }
+        System.out.println("");
         
         meilleursJoueur = TrieTableau(meilleursJoueur);
+
+        System.out.println("");
+        for (int i = 0; i < meilleursJoueur.size(); i++) {
+            System.out.println(i+" - "+ meilleursJoueur.get(i).getNom() +": "+ meilleursJoueur.get(i).getScoreTotal() );
+        }
 
         return meilleursJoueur;
     }
@@ -369,7 +380,10 @@ public class Profil {
     public ArrayList<Joueur> TrieTableau(ArrayList<Joueur> tab) {
         for (int i = 0; i <= tab.size() - 2; i++) {
             for (int j = tab.size() - 1; j > i; j--) {
+                System.out.println(j+" - "+ tab.get(j).getNom() +": "+ tab.get(j).getScoreTotal() );
+                System.out.println(j-1+" - "+ tab.get(j-1).getNom() +": "+ tab.get(j-1).getScoreTotal() );
                 if(tab.get(j).estInferieur(tab.get(j-1))) {
+                    System.out.println("on change !");
                     Joueur jAutre = tab.get(j);
 
                     tab.remove(j);
@@ -378,6 +392,7 @@ public class Profil {
                     tab.remove(j-1);
                     tab.add(j-1, jAutre);
                 }
+                System.out.println(" ");
             }
         }
 

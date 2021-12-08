@@ -21,9 +21,7 @@ public class Joueur implements Comparable {
 
     @Override
     public boolean estInferieur(Comparable unJoueur) {
-        double compareScoreTot = ((Joueur) unJoueur).getScoreTotal();
-
-        if(this.getScoreTotal() < compareScoreTot) {
+        if(this.getScoreTotal() > ((Joueur) unJoueur).getScoreTotal()) {
             return true;
         } else {
             return false;

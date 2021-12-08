@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 // import java.util.function.ToDoubleFunction;
 
+import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 
 public abstract class Jeu {
@@ -225,7 +226,7 @@ public abstract class Jeu {
         env.setCameraPitch(0);
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        menuRoom.setTextureNorth("textures/menu/menuPrincipal.png");
+        menuRoom.setTextureNorth("textures/menu/menuPrincipal2.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setRoom(menuRoom);
         
@@ -235,36 +236,36 @@ public abstract class Jeu {
 
         while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4)) {                                                         
             if( env.getMouseButtonClicked() == 0                            // ( Y , X )
-                && (env.getMouseY() <= 435 && env.getMouseX() >= 135)   // (435,135)
-                && (env.getMouseY() <= 435 && env.getMouseX() <= 500)   // (435,500)
+                && (env.getMouseY() <= 430 && env.getMouseX() >= 135)   // (430,135)
+                && (env.getMouseY() <= 430 && env.getMouseX() <= 500)   // (430,500)
                 && (env.getMouseY() >= 335 && env.getMouseX() >= 135)   // (335,135)
                 && (env.getMouseY() >= 335 && env.getMouseX() <= 500) ) // (335,500) 
             { 
                 touche = 2;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                  && (env.getMouseY() <= 290 && env.getMouseX() >= 135)   // (290,135)
-                  && (env.getMouseY() <= 290 && env.getMouseX() <= 500)   // (290,500)
-                  && (env.getMouseY() >= 195 && env.getMouseX() >= 135)   // (195,135)
-                  && (env.getMouseY() >= 195 && env.getMouseX() <= 500) ) // (195,500) 
+                  && (env.getMouseY() <= 320 && env.getMouseX() >= 135)   // (320,135)
+                  && (env.getMouseY() <= 320 && env.getMouseX() <= 500)   // (320,500)
+                  && (env.getMouseY() >= 225 && env.getMouseX() >= 135)   // (225,135)
+                  && (env.getMouseY() >= 225 && env.getMouseX() <= 500) ) // (225,500) 
             {
                 touche = 3;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                && (env.getMouseY() <= 150 && env.getMouseX() >= 135)   // (150,135)
-                && (env.getMouseY() <= 150 && env.getMouseX() <= 500)   // (150,500)
-                && (env.getMouseY() >= 50 && env.getMouseX() >= 135)   // (50,135)
-                && (env.getMouseY() >= 50 && env.getMouseX() <= 500) ) // (50,500) 
+                && (env.getMouseY() <= 210 && env.getMouseX() >= 135)     // (210,135)
+                && (env.getMouseY() <= 210 && env.getMouseX() <= 500)     // (210,500)
+                && (env.getMouseY() >= 115 && env.getMouseX() >= 135)     // (115,135)
+                && (env.getMouseY() >= 115 && env.getMouseX() <= 500) )   // (115,500) 
             {
                 touche = 4;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                && (env.getMouseY() <= 480 && env.getMouseX() >= 540)   // (480,540)
-                && (env.getMouseY() <= 480 && env.getMouseX() <= 640)   // (480,540)
-                && (env.getMouseY() >= 380 && env.getMouseX() >= 540)   // (380,640)
-                && (env.getMouseY() >= 380 && env.getMouseX() <= 640) ) // (380,640) 
+                && (env.getMouseY() <= 100 && env.getMouseX() >= 215)   // (100,215)
+                && (env.getMouseY() <= 100 && env.getMouseX() <= 420)   // (100,420)
+                && (env.getMouseY() >= 50 && env.getMouseX() >= 215)    // (50,215)
+                && (env.getMouseY() >= 50 && env.getMouseX() <= 420) )  // (50,420) 
             {
                 touche = 5;
             }
 
-            System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX()+" - click: "+env.getMouseButtonClicked());
+            // System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX()+" - click: "+env.getMouseButtonClicked());
 
             env.advanceOneFrame();
         }
@@ -654,7 +655,8 @@ public abstract class Jeu {
 
         ArrayList<Joueur> meilleursJoueur = p.LesMeilleursJoueur(FILEPATH_PROFIL);
 
-        int posX = 250;
+        int posX = 285;
+        int posY = 420;
         int nbIteration = 0;
         if(meilleursJoueur.size() >= 4) {
             nbIteration = 4;
@@ -665,30 +667,40 @@ public abstract class Jeu {
         for (int i = 0; i < nbIteration; i++) {
             String nomJ = "Joueur"+(i+1);
             String scoreJ = "ScoreJoueur"+(i+1);
+            posX = 285+7*(meilleursJoueur.get(i).getNom().length()+2);
 
-            menuText.addText(meilleursJoueur.get(i).getNom(), nomJ, 250, posX);
-            menuText.addText(String.valueOf( meilleursJoueur.get(i).getScoreTotal() ), scoreJ, 300, posX);
+            menuText.addText(meilleursJoueur.get(i).getNom(), nomJ, 285, posY); // 285 410 - 
+            
+            menuText.addText(String.valueOf( meilleursJoueur.get(i).getScoreTotal() ), scoreJ, posX, posY);
 
             menuText.getText(nomJ).display();
             menuText.getText(scoreJ).display();
 
-            posX += 50;
+            posY -= 85;
         }
 
         int touche = 0;
         while (touche != 200 ) {                                                         
-            if( env.getMouseButtonClicked() == 0                            // ( Y , X )
-                && (env.getMouseY() <= 140 && env.getMouseX() >= 430)   // (140,430)
-                && (env.getMouseY() <= 140 && env.getMouseX() <= 505)   // (140,505)
-                && (env.getMouseY() >= 90 && env.getMouseX() >= 430)   // (90,430)
-                && (env.getMouseY() >= 90 && env.getMouseX() <= 505) ) // (90,505) 
+            if( env.getMouseButtonClicked() == 0                         // ( Y , X )
+                && (env.getMouseY() <= 140 && env.getMouseX() >= 430)    // (140,430)
+                && (env.getMouseY() <= 140 && env.getMouseX() <= 505)    // (140,505)
+                && (env.getMouseY() >= 90 && env.getMouseX() >= 430)     // (90,430)
+                && (env.getMouseY() >= 90 && env.getMouseX() <= 505) )   // (90,505) 
             { 
                 touche = 200;
             }
 
-            System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX()+" - click: "+env.getMouseButtonClicked());
+            // System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX());
 
             env.advanceOneFrame();
+        }
+
+        for (int i = 0; i < nbIteration; i++) {
+            String nomJ = "Joueur"+(i+1);
+            String scoreJ = "ScoreJoueur"+(i+1);
+
+            menuText.getText(nomJ).clean();
+            menuText.getText(scoreJ).clean();
         }
 
         menuRoom.setTextureEast("textures/black.png");
