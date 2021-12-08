@@ -10,7 +10,11 @@ __Voyageur de santé__
 __Tux__
   - [ ] quand tu as 2 fois la lettre 'A' dans un mot il faut prendre le bon 'A'
   - [ ] Mot trop long rentre pas dans la fenetre d'affichage
-  - [ ] Menu de fin de jeu
-  - [ ] Highscore
-  - [ ] Fichier 'son' et 'menu' et SRC/DATA'
-
+  - [x] Menu de fin de jeu
+  - [x] Highscore menu
+  - [ ] bouton highscore dans menu principal
+  - [ ] Sax partie 12
+  - [ ] Sax partie 13
+  - [x] Fichier 'son' et 'menu' et SRC/DATA'
+  - [x] Lettre se supperpose dans le jeu
+  - [ ] Je crois avoir un bug qunad je clique sur un bouton jai le son de click mais il se passe rien. je lai eu quand jai fait highscore puis quitter
