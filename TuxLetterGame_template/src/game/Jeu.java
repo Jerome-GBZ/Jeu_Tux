@@ -599,9 +599,7 @@ public abstract class Jeu {
 
     private void afficherLettreSelectionnee(Letter letter){
         int startPos = (room.getWidth() / 2) - (lettres.size() * 5);
-        Letter l = new Letter(letter.getLetter(), startPos,room.getDepth(), room);
-        l.setScale(1.0);
-        l.setY(room.getHeight());
+        Letter l = new Letter(letter.getLetter(), startPos,0, room,"apprendre");
         env.addObject(l); 
     }
     
