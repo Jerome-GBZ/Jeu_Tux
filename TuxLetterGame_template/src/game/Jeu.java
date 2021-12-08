@@ -116,7 +116,7 @@ public abstract class Jeu {
             // restaure la room du menu
             env.setCameraXYZ(50, 50, 150);
             env.setCameraPitch(0);
-            menuRoom.setTextureNorth("textures/menu/menuJeu.png");
+            menuRoom.setTextureNorth("menu/menuJeu.png");
             env.setRoom(menuRoom);
             
             try {
@@ -226,7 +226,7 @@ public abstract class Jeu {
         env.setCameraPitch(0);
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        menuRoom.setTextureNorth("textures/menu/menuPrincipal2.png");
+        menuRoom.setTextureNorth("menu/menuPrincipal2.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setRoom(menuRoom);
         
@@ -439,7 +439,7 @@ public abstract class Jeu {
     private int frameChoisirNiveau(){
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        mainRoom.setTextureNorth("textures/menu/menuNiveau.png");
+        mainRoom.setTextureNorth("menu/menuNiveau.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setCameraXYZ(50, 30, 150);
         env.setCameraPitch(0);
@@ -519,7 +519,7 @@ public abstract class Jeu {
         int spacing = 8; // Espace de 15 pixel
         int startPos = 15;// Position de départ
         ArrayList<Letter> motTmp = new ArrayList<>();
-        menuRoom.setTextureNorth("textures/menu/menuJeu.png");
+        menuRoom.setTextureNorth("menu/menuJeu.png");
         for(int i=0; i<mot.length(); i++){
            Letter l = new Letter(tab[i], startPos, 50, room, "apprendre");
            env.addObject(l); 
@@ -616,13 +616,13 @@ public abstract class Jeu {
         menuRoom.setTextureBottom("textures/black.png");
 
         if(score == 100) {
-            menuRoom.setTextureNorth("textures/recompense/mot_complet.png");
+            menuRoom.setTextureNorth("recompense/mot_complet.png");
         } else if (score > 60) {
-            menuRoom.setTextureNorth("textures/recompense/moitie_de_mot.png");
+            menuRoom.setTextureNorth("recompense/moitie_de_mot.png");
         } else if(score <= 60 && score > 30) {
-            menuRoom.setTextureNorth("textures/recompense/mot_pas_trouve.png");
+            menuRoom.setTextureNorth("recompense/mot_pas_trouve.png");
         } else {
-            menuRoom.setTextureNorth("textures/recompense/mot_vraiment_pas_trouve.png");
+            menuRoom.setTextureNorth("recompense/mot_vraiment_pas_trouve.png");
         }
 
         env.setRoom(menuRoom);
@@ -647,13 +647,13 @@ public abstract class Jeu {
     public void menuHighScore(Profil p) {
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        menuRoom.setTextureNorth("textures/highScore/highScore_3.png");
+        menuRoom.setTextureNorth("classementMenu/highScore_3.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setCameraXYZ(50, 40, 150);
         env.setCameraPitch(0);
         env.setRoom(menuRoom);
 
-        ArrayList<Joueur> meilleursJoueur = p.LesMeilleursJoueur(FILEPATH_PROFIL);
+        ArrayList<Profil> meilleursJoueur = p.LesMeilleursJoueur(FILEPATH_PROFIL);
 
         int posX = 285;
         int posY = 420;

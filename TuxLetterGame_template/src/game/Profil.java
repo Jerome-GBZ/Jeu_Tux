@@ -2,8 +2,6 @@ package game;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.text.Format;
@@ -14,10 +12,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import utils.XMLUtil;
 
-public class Profil {
+public class Profil implements Comparable {
     private String nom;
     private String dateNaissance;
     private String avatar;
+    private double scoreTotal;
     private ArrayList<Partie> parties;
     public Document _doc;
     private static final String filepathAvatar = "data/AVATAR/";
@@ -27,10 +26,20 @@ public class Profil {
         this.nom = nom;
         this.dateNaissance = dateNaissance;
         this.avatar = "player1.svg";
+        this.scoreTotal = 0.0;
 
         if(!this.JoeurExist(nom)) {
             sauvegarderJoueur(filepathProfil);
         }
+
+        parties = new ArrayList<>();
+    }
+
+    public Profil(String nom, double scoreTotal) {
+        this.nom = nom;
+        this.dateNaissance = "1970/01/01";
+        this.avatar = "player1.svg";
+        this.scoreTotal = scoreTotal;
 
         parties = new ArrayList<>();
     }
@@ -314,11 +323,11 @@ public class Profil {
 
     
 
-    public ArrayList<Joueur> LesMeilleursJoueur(String filename) {
+    public ArrayList<Profil> LesMeilleursJoueur(String filename) {
         _doc = fromXML(filename);
         NodeList list_profil = _doc.getElementsByTagName("profil");
 
-        ArrayList<Joueur> meilleursJoueur = new ArrayList<>();
+        ArrayList<Profil> meilleursJoueur = new ArrayList<>();
         
         for (int i = 0; i < list_profil.getLength(); i++) {
             Element joueur = (Element) _doc.getElementsByTagName("profil").item(i);
@@ -356,9 +365,9 @@ public class Profil {
             if(coefficientTot > 0) {
                 NumberFormat formatter = new DecimalFormat("#0.00");
                 Double resScore = Double.parseDouble(formatter.format(scoreGlobal/coefficientTot).replace(",", "."));
-                meilleursJoueur.add(new Joueur(nom, resScore)); // on supprime tous les chiffres apres le 2ème nombre apres la virgule
+                meilleursJoueur.add(new Profil(nom, resScore)); // on supprime tous les chiffres apres le 2ème nombre apres la virgule
             } else {
-                meilleursJoueur.add(new Joueur(nom, 0));
+                meilleursJoueur.add(new Profil(nom, 0));
             }
         }   
 
@@ -377,14 +386,14 @@ public class Profil {
         return meilleursJoueur;
     }
 
-    public ArrayList<Joueur> TrieTableau(ArrayList<Joueur> tab) {
+    public ArrayList<Profil> TrieTableau(ArrayList<Profil> tab) {
         for (int i = 0; i <= tab.size() - 2; i++) {
             for (int j = tab.size() - 1; j > i; j--) {
                 System.out.println(j+" - "+ tab.get(j).getNom() +": "+ tab.get(j).getScoreTotal() );
                 System.out.println(j-1+" - "+ tab.get(j-1).getNom() +": "+ tab.get(j-1).getScoreTotal() );
                 if(tab.get(j).estInferieur(tab.get(j-1))) {
                     System.out.println("on change !");
-                    Joueur jAutre = tab.get(j);
+                    Profil jAutre = tab.get(j);
 
                     tab.remove(j);
                     tab.add(j, tab.get(j-1));
@@ -397,5 +406,18 @@ public class Profil {
         }
 
         return tab;
+    }
+
+    public double getScoreTotal() {
+        return scoreTotal;
+    }
+
+    @Override
+    public boolean estInferieur(Comparable unJoueur) {
+        if(this.getScoreTotal() > ((Profil) unJoueur).getScoreTotal()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
