@@ -6,7 +6,7 @@
     Autorise les mots composés
 -->
 
-<dictionnaire   xmlns="http://myGame/tux"
+<dictionnaire xmlns="http://myGame/tux"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://myGame/tux ../XSD/dico.xsd">
     <mot niveau="1">Jazz</mot>

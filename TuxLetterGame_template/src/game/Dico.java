@@ -1,20 +1,29 @@
 package game;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
+
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.helpers.DefaultHandler;
 
-public class Dico {
+public class Dico{
     
     private ArrayList<String> listeNiveau1;
     private ArrayList<String> listeNiveau2;
     private ArrayList<String> listeNiveau3;
     private ArrayList<String> listeNiveau4;
     private ArrayList<String> listeNiveau5;
-    
     private String cheminFichierDico;
+    
+    //SAX VAR
+    private static String pathToDicoFile = "data/XML/dico.xml";
     
     public Dico(String cheminFichierDico){
         this.cheminFichierDico = cheminFichierDico;
@@ -24,8 +33,10 @@ public class Dico {
         listeNiveau4 = new ArrayList<>();
         listeNiveau5 = new ArrayList<>();
         
-        lireDictionnaireDOM(this.cheminFichierDico, "dico.xml");
+        //lireDictionnaireDOM(this.cheminFichierDico, "dico.xml");
+        lireDictionnaire();
     }
+    
     
     
     public String getMotDepusiListeNiveaux(int niveau){
@@ -113,4 +124,28 @@ public class Dico {
             System.out.println("Erreur: "+e);
         }
     }
+
+    public void lireDictionnaire(){
+        try{ 
+			// création d'une fabrique de parseurs SAX 
+			SAXParserFactory fabrique = SAXParserFactory.newInstance(); 
+  
+			// création d'un parseur SAX 
+			SAXParser parseur = fabrique.newSAXParser(); 
+  
+			// lecture d'un fichier XML avec un DefaultHandler 
+			File fichier = new File("data/XML/dico.xml"); 
+            
+			DefaultHandler dh = new DicoHandler(this); 
+			parseur.parse(fichier, dh); 
+		}catch(Exception e){ 
+			System.out.println("Exception lire dico : "+e);
+		} 
+	 
+    }
+
+
+    
+
+
 }

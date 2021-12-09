@@ -68,6 +68,10 @@
                 <temps>29.0</temps>
                 <mot niveau="1">Jazz</mot>
             </partie>
+        <partie date="28-11-2021" trouvé="100%">
+                <temps>14.0</temps>
+                <mot niveau="3">Volet</mot>
+            </partie>
         </parties>
     </profil>
     <profil>
