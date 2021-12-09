@@ -131,40 +131,43 @@ public abstract class Jeu {
 
             while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4)) {
                 if( env.getMouseButtonClicked() == 0                        // ( Y , X )
-                    && (env.getMouseY() <= 435 && env.getMouseX() >= 135)   // (435,135)
+                    && (env.getMouseY() <= 435 && env.getMouseX() >= 130)   // (435,130)
                     && (env.getMouseY() <= 435 && env.getMouseX() <= 500)   // (435,500)
-                    && (env.getMouseY() >= 335 && env.getMouseX() >= 135)   // (335,135)
-                    && (env.getMouseY() >= 335 && env.getMouseX() <= 500) ) // (335,500) 
-                { 
+                    && (env.getMouseY() >= 340 && env.getMouseX() >= 130)   // (340,130)
+                    && (env.getMouseY() >= 340 && env.getMouseX() <= 500) ) // (340,500) 
+                { // Quand on clique sur le bouton "Nouvelle partie"
                     touche = 2;
-                } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                    && (env.getMouseY() <= 290 && env.getMouseX() >= 135)   // (290,135)
-                    && (env.getMouseY() <= 290 && env.getMouseX() <= 500)   // (290,500)
-                    && (env.getMouseY() >= 195 && env.getMouseX() >= 135)   // (195,135)
-                    && (env.getMouseY() >= 195 && env.getMouseX() <= 500) ) // (195,500) 
-                {
+                } else if( env.getMouseButtonClicked() == 0                 // ( Y , X )
+                    && (env.getMouseY() <= 325 && env.getMouseX() >= 130)   // (325,130)
+                    && (env.getMouseY() <= 325 && env.getMouseX() <= 500)   // (325,500)
+                    && (env.getMouseY() >= 230 && env.getMouseX() >= 130)   // (230,130)
+                    && (env.getMouseY() >= 230 && env.getMouseX() <= 500) ) // (230,500) 
+                { // Quand on clique sur le bouton "Partie existante"
                     touche = 3;
-                } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                    && (env.getMouseY() <= 150 && env.getMouseX() >= 135)   // (150,135)
-                    && (env.getMouseY() <= 150 && env.getMouseX() <= 500)   // (150,500)
-                    && (env.getMouseY() >= 50 && env.getMouseX() >= 135)   // (50,135)
-                    && (env.getMouseY() >= 50 && env.getMouseX() <= 500) ) // (50,500) 
-                {
+                } else if( env.getMouseButtonClicked() == 0                 // ( Y , X )
+                    && (env.getMouseY() <= 215 && env.getMouseX() >= 130)   // (215,130)
+                    && (env.getMouseY() <= 215 && env.getMouseX() <= 500)   // (215,500)
+                    && (env.getMouseY() >= 120 && env.getMouseX() >= 130)   // (120,130)
+                    && (env.getMouseY() >= 120 && env.getMouseX() <= 500) ) // (120,500) 
+                { // Quand on clique sur le bouton "Classement"
                     touche = 4;
+                } else if( env.getMouseButtonClicked() == 0                 // ( Y , X )
+                    && (env.getMouseY() <= 90 && env.getMouseX() >= 130)    // (90,130)
+                    && (env.getMouseY() <= 90 && env.getMouseX() <= 190)    // (90,190)
+                    && (env.getMouseY() >= 50 && env.getMouseX() >= 130)    // (50,130)
+                    && (env.getMouseY() >= 50 && env.getMouseX() <= 190) )  // (50,190) 
+                { // Quand on clique sur le bouton "Quitter"
+                    touche = 5;
                 }
                 
+                // System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX() );
+
                 env.advanceOneFrame();
             }
 
-            // Nettoie l'environnement du texte
-            // menuText.getText("Question").clean();
-            // menuText.getText("Jeu1").clean();
-            // menuText.getText("Jeu2").clean();
-            // menuText.getText("Jeu3").clean();
-            // menuText.getText("Jeu4").clean();
-
             System.out.println("Menu Jeu - Touche: "+touche);
             env.soundPlay("/audio/click.wav");
+
             // Restaure la room du jeu
             menuRoom.setTextureEast("textures/black.png");
             menuRoom.setTextureWest("textures/black.png");
@@ -197,11 +200,19 @@ public abstract class Jeu {
                     
                     playTheGame = MENU_VAL.MENU_JOUE;
                     break;
+                
+                // -------------------------------------
+                // Touche 3 : Classement des meilleurs joueurs
+                // -------------------------------------
+                case Keyboard.KEY_3:
+                    menuHighScore(profil);
+                    menuJeu();
+                    break;
 
                 // -----------------------------------------
-                // Touche 3 : Revenir au menu Principal
+                // Touche 4 : Revenir au menu Principal
                 // -----------------------------------------                
-                case Keyboard.KEY_3:
+                case Keyboard.KEY_4:
                     profil.sauvegarder(FILEPATH_PROFIL);
 
                     menuPrincipal();
@@ -226,7 +237,7 @@ public abstract class Jeu {
         env.setCameraPitch(0);
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        menuRoom.setTextureNorth("menu/menuPrincipal2.png");
+        menuRoom.setTextureNorth("menu/menuPrincipal.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setRoom(menuRoom);
         
@@ -234,38 +245,45 @@ public abstract class Jeu {
         System.out.println("game.Jeu.menuPrincipal()");
         int touche = 0;
 
-        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4)) {                                                         
-            if( env.getMouseButtonClicked() == 0                            // ( Y , X )
-                && (env.getMouseY() <= 430 && env.getMouseX() >= 135)   // (430,135)
-                && (env.getMouseY() <= 430 && env.getMouseX() <= 500)   // (430,500)
-                && (env.getMouseY() >= 335 && env.getMouseX() >= 135)   // (335,135)
-                && (env.getMouseY() >= 335 && env.getMouseX() <= 500) ) // (335,500) 
-            { 
+        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5)) {                                                         
+            if( env.getMouseButtonClicked() == 0                        // ( Y , X )
+                && (env.getMouseY() <= 430 && env.getMouseX() >= 170)   // (430,170)
+                && (env.getMouseY() <= 430 && env.getMouseX() <= 460)   // (430,460)
+                && (env.getMouseY() >= 360 && env.getMouseX() >= 170)   // (360,170)
+                && (env.getMouseY() >= 360 && env.getMouseX() <= 460) ) // (360,460) 
+            {   // Quand on clique sur le bouton "Joueur existant"
                 touche = 2;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                  && (env.getMouseY() <= 320 && env.getMouseX() >= 135)   // (320,135)
-                  && (env.getMouseY() <= 320 && env.getMouseX() <= 500)   // (320,500)
-                  && (env.getMouseY() >= 225 && env.getMouseX() >= 135)   // (225,135)
-                  && (env.getMouseY() >= 225 && env.getMouseX() <= 500) ) // (225,500) 
-            {
+                  && (env.getMouseY() <= 345 && env.getMouseX() >= 170)   // (345,170)
+                  && (env.getMouseY() <= 345 && env.getMouseX() <= 460)   // (345,460)
+                  && (env.getMouseY() >= 270 && env.getMouseX() >= 170)   // (270,170)
+                  && (env.getMouseY() >= 270 && env.getMouseX() <= 460) ) // (270,460) 
+            {   // Quand on clique sur le bouton "Nouveau joueur"
                 touche = 3;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                && (env.getMouseY() <= 210 && env.getMouseX() >= 135)     // (210,135)
-                && (env.getMouseY() <= 210 && env.getMouseX() <= 500)     // (210,500)
-                && (env.getMouseY() >= 115 && env.getMouseX() >= 135)     // (115,135)
-                && (env.getMouseY() >= 115 && env.getMouseX() <= 500) )   // (115,500) 
-            {
+                && (env.getMouseY() <= 250 && env.getMouseX() >= 170)     // (250,170)
+                && (env.getMouseY() <= 250 && env.getMouseX() <= 460)     // (250,460)
+                && (env.getMouseY() >= 180 && env.getMouseX() >= 170)     // (180,170)
+                && (env.getMouseY() >= 180 && env.getMouseX() <= 460) )   // (180,460) 
+            {   // Quand on clique sur le bouton "Ajouter mot"
                 touche = 4;
-            } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                && (env.getMouseY() <= 100 && env.getMouseX() >= 215)   // (100,215)
-                && (env.getMouseY() <= 100 && env.getMouseX() <= 420)   // (100,420)
-                && (env.getMouseY() >= 50 && env.getMouseX() >= 215)    // (50,215)
-                && (env.getMouseY() >= 50 && env.getMouseX() <= 420) )  // (50,420) 
-            {
+            } else if( env.getMouseButtonClicked() == 0                  // ( Y , X )
+                && (env.getMouseY() <= 165 && env.getMouseX() >= 170)    // (165,170)
+                && (env.getMouseY() <= 165 && env.getMouseX() <= 460)    // (165,460)
+                && (env.getMouseY() >= 90 && env.getMouseX() >= 170)     // (90,170)
+                && (env.getMouseY() >= 90 && env.getMouseX() <= 460) )   // (90,460) 
+            {   // Quand on clique sur le bouton "Classement"
                 touche = 5;
+            } else if( env.getMouseButtonClicked() == 0                 // ( Y , X )
+                && (env.getMouseY() <= 100 && env.getMouseX() >= 130)   // (80,130)
+                && (env.getMouseY() <= 100 && env.getMouseX() <= 170)   // (80,170)
+                && (env.getMouseY() >= 50 && env.getMouseX() >= 130)    // (55,130)
+                && (env.getMouseY() >= 50 && env.getMouseX() <= 170) )  // (55,170) 
+            {   // Quand on clique sur le bouton "Quitter"
+                touche = 6;
             }
 
-            // System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX()+" - click: "+env.getMouseButtonClicked());
+            // System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX() );
 
             env.advanceOneFrame();
         }
@@ -314,10 +332,10 @@ public abstract class Jeu {
                 break;
 
             // -------------------------------------
-            // Touche 3 : Sortir du jeu
+            // Touche 3 : Ajouter un mot
             // -------------------------------------
             case Keyboard.KEY_3:
-                choix = MENU_VAL.MENU_SORTIE;
+                // choix = MENU_VAL.MENU_SORTIE;
                 break;
             
             // -------------------------------------
@@ -325,6 +343,14 @@ public abstract class Jeu {
             // -------------------------------------
             case Keyboard.KEY_4:
                 menuHighScore(profil);
+                menuPrincipal();
+                break;
+
+            // -------------------------------------
+            // Touche 5 : Sortir du jeu
+            // -------------------------------------
+            case Keyboard.KEY_5:
+                choix = MENU_VAL.MENU_SORTIE;
                 break;
         }
 
@@ -647,7 +673,7 @@ public abstract class Jeu {
     public void menuHighScore(Profil p) {
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        menuRoom.setTextureNorth("classementMenu/highScore_3.png");
+        menuRoom.setTextureNorth("menu/menuHighScore.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setCameraXYZ(50, 40, 150);
         env.setCameraPitch(0);
@@ -681,16 +707,16 @@ public abstract class Jeu {
 
         int touche = 0;
         while (touche != 200 ) {                                                         
-            if( env.getMouseButtonClicked() == 0                         // ( Y , X )
-                && (env.getMouseY() <= 140 && env.getMouseX() >= 430)    // (140,430)
-                && (env.getMouseY() <= 140 && env.getMouseX() <= 505)    // (140,505)
-                && (env.getMouseY() >= 90 && env.getMouseX() >= 430)     // (90,430)
-                && (env.getMouseY() >= 90 && env.getMouseX() <= 505) )   // (90,505) 
+            if( env.getMouseButtonClicked() == 0                       // ( Y , X )
+                && (env.getMouseY() <= 125 && env.getMouseX() >= 125)  // (125,125)
+                && (env.getMouseY() <= 125 && env.getMouseX() <= 180)  // (125,180)
+                && (env.getMouseY() >= 90 && env.getMouseX() >= 125)   // (90,125)
+                && (env.getMouseY() >= 90 && env.getMouseX() <= 180) ) // (90,180) 
             { 
                 touche = 200;
             }
 
-            // System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX());
+            //  System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX());
 
             env.advanceOneFrame();
         }
@@ -708,8 +734,6 @@ public abstract class Jeu {
         menuRoom.setTextureNorth("textures/black.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setRoom(menuRoom);
-
-        menuPrincipal();
     }
 
     /**
