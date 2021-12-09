@@ -364,122 +364,129 @@ public abstract class Jeu {
 
         int level = frameChoisirNiveau();
         System.out.println("level = "+ level);
+        if(level != 200) {
+            String mot = dico.getMotDepusiListeNiveaux(level);
+            
+            partie.setMot(mot);
+            partie.setNiveau(level);
+            frameApprendreLeMot(mot);
+            env.setRoom(room);
+    
+            // Instancie un Tux
+            tux = new Tux(env, room);
+            char[] tab = mot.toCharArray();
+            int[][] positionLettres = new int[mot.length()][2];
 
-        String mot = dico.getMotDepusiListeNiveaux(level);
-        
-        partie.setMot(mot);
-        partie.setNiveau(level);
-        frameApprendreLeMot(mot);
-        env.setRoom(room);
- 
-        // Instancie un Tux
-        tux = new Tux(env, room);
-        char[] tab = mot.toCharArray();
-        int[][] positionLettres = new int[mot.length()][2];
-        for(int i=0; i<mot.length(); i++) {
-            int randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
-            int randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
-            while(!verifiePositionLettreValide(positionLettres, randomPositionX, randomPositionZ, i)){
-                randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
-                randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
-            }
-            positionLettres[i][0]=randomPositionX;
-            positionLettres[i][1]=randomPositionZ;
-            Letter l = new Letter(tab[i], randomPositionX,randomPositionZ, room);
-            lettres.add(l);
-            env.addObject(l); 
-        }
-        int totalNblettres = lettres.size();
-        env.addObject(tux);
-         
-        // Ici, on peut initialiser des valeurs pour une nouvelle partie
-        démarrePartie(partie);
-         
-        // Boucle de jeu
-        Boolean finished;
-        finished = false;
-        gameText = new EnvTextMap(env);
-        
-        while (!finished) {
-            // On applique le chronometre lors du lancement du jeu
-            // L'interface va update le chronomètre chaque secondes
-            finished = appliqueTemps(new OnJeuCallback() {
-                @Override
-                public void onTimeSpentListener(int time) {
-                    if(gameText.getText("time") != null) {
-                        gameText.getText("time").clean();
-                    }
+            for(int i=0; i<mot.length(); i++) {
+                int randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
+                int randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
 
-                    gameText.addText("Time: "+(30-time), "time", 10, 420);
-                    gameText.getText("time").display();
-                    partie.setTemps(time);
+                while(!verifiePositionLettreValide(positionLettres, randomPositionX, randomPositionZ, i)){
+                    randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
+                    randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
                 }
-            });
-            
-            tux.déplace();
- 
-            // Ici, on applique les regles
-            if(env.getKeyDown() == Keyboard.KEY_SPACE) {
-                appliqueRegles(partie);
-            }
-            
-            // 1 is for escape key
-            if(env.getKey() == 1 || lettres.size() == 0){
-                finished = true;
-            }
- 
-            // Fait avancer le moteur de jeu (mise à jour de l'affichage, de l'écoute des événements clavier...)
-            env.advanceOneFrame();
-        }
 
-        gameText.getText("time").clean();
-        //Calcul de trouvé = score
-        int score = 0;
-        if(motTrouve.size() > 0) {
-            score = (motTrouve.size()*100) / totalNblettres;
-        }
-        System.out.println("totalNblettres: "+totalNblettres);
-        System.out.println("motTrouve: "+motTrouve+" - taille: "+motTrouve.size());        
-        System.out.println("score: "+score);
+                positionLettres[i][0]=randomPositionX;
+                positionLettres[i][1]=randomPositionZ;
+                Letter l = new Letter(tab[i], randomPositionX,randomPositionZ, room);
+                lettres.add(l);
+                env.addObject(l); 
+            }
 
-        partie.setTrouve(score);
-        
-        if(gameText.getText("time") != null) {
+            int totalNblettres = lettres.size();
+            env.addObject(tux);
+            
+            // Ici, on peut initialiser des valeurs pour une nouvelle partie
+            démarrePartie(partie);
+            
+            // Boucle de jeu
+            Boolean finished;
+            finished = false;
+            gameText = new EnvTextMap(env);
+            
+            while (!finished) {
+                // On applique le chronometre lors du lancement du jeu
+                // L'interface va update le chronomètre chaque secondes
+                finished = appliqueTemps(new OnJeuCallback() {
+                    @Override
+                    public void onTimeSpentListener(int time) {
+                        if(gameText.getText("time") != null) {
+                            gameText.getText("time").clean();
+                        }
+
+                        gameText.addText("Time: "+(30-time), "time", 10, 420);
+                        gameText.getText("time").display();
+                        partie.setTemps(time);
+                    }
+                });
+                
+                tux.déplace();
+    
+                // Ici, on applique les regles
+                if(env.getKeyDown() == Keyboard.KEY_SPACE) {
+                    appliqueRegles(partie);
+                }
+                
+                // 1 is for escape key
+                if(env.getKey() == 1 || lettres.size() == 0){
+                    finished = true;
+                }
+    
+                // Fait avancer le moteur de jeu (mise à jour de l'affichage, de l'écoute des événements clavier...)
+                env.advanceOneFrame();
+            }
+
             gameText.getText("time").clean();
-        }
-        
-        // Ici on peut calculer des valeurs lorsque la partie est terminée
-        profil.ajouterPartie(partie);
-        
-        frameRecompenses(score);
+            //Calcul de trouvé = score
+            int score = 0;
+            if(motTrouve.size() > 0) {
+                score = (motTrouve.size()*100) / totalNblettres;
+            }
+            System.out.println("totalNblettres: "+totalNblettres);
+            System.out.println("motTrouve: "+motTrouve+" - taille: "+motTrouve.size());        
+            System.out.println("score: "+score);
 
-        terminePartie(partie);
+            partie.setTrouve(score);
+            
+            if(gameText.getText("time") != null) {
+                gameText.getText("time").clean();
+            }
+            
+            // Ici on peut calculer des valeurs lorsque la partie est terminée
+            profil.ajouterPartie(partie);
+            
+            frameRecompenses(score);
+
+            terminePartie(partie);
+        } else {
+            menuJeu();
+        }
     }
 
 
     /**
      * La frame choisir niveau permet à l'utilisateur de choisir un niveau 
      * afin de pouvoir apprendre des mots à son rythme
-     * @return level compris entre 1 et 5
+     * @return level compris entre 1 et 5 ou 200 pour revenir en arrière
      */
-    private int frameChoisirNiveau(){
-        menuRoom.setTextureEast("textures/black.png");
-        menuRoom.setTextureWest("textures/black.png");
+    private int frameChoisirNiveau() {
+        mainRoom.setTextureEast("textures/black.png");
+        mainRoom.setTextureWest("textures/black.png");
         mainRoom.setTextureNorth("menu/menuNiveau.png");
-        menuRoom.setTextureBottom("textures/black.png");
+        mainRoom.setTextureBottom("textures/black.png");
         env.setCameraXYZ(50, 30, 150);
         env.setCameraPitch(0);
         env.setRoom(mainRoom);
 
         int touche = 0;
          
-        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5)) {
+        while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4 || touche == Keyboard.KEY_5 || touche == 200)) {
             if( env.getMouseButtonClicked() == 0                        // ( Y , X )
                 && (env.getMouseY() <= 355 && env.getMouseX() >= 195)   // (355,195)
                 && (env.getMouseY() <= 355 && env.getMouseX() <= 440)   // (355,440)
                 && (env.getMouseY() >= 320 && env.getMouseX() >= 195)   // (320,195)
                 && (env.getMouseY() >= 320 && env.getMouseX() <= 440) ) // (320,440) 
-            { 
+            {   // Quand on clique sur le bouton "niveau 1"
                 touche = 2;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
                   && (env.getMouseY() <= 310 && env.getMouseX() >= 195)   // (310,195)
@@ -489,27 +496,36 @@ public abstract class Jeu {
             {
                 touche = 3;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                  && (env.getMouseY() <= 260 && env.getMouseX() >= 195)   // (260,195)
-                  && (env.getMouseY() <= 260 && env.getMouseX() <= 440)   // (260,440)
-                  && (env.getMouseY() >= 220 && env.getMouseX() >= 195)   // (220,195)
-                  && (env.getMouseY() >= 220 && env.getMouseX() <= 440) ) // (220,440) 
-            {
+                  && (env.getMouseY() <= 305 && env.getMouseX() >= 200)   // (305,200)
+                  && (env.getMouseY() <= 305 && env.getMouseX() <= 440)   // (305,440)
+                  && (env.getMouseY() >= 270 && env.getMouseX() >= 200)   // (270,200)
+                  && (env.getMouseY() >= 270 && env.getMouseX() <= 440) ) // (270,440) 
+            {   // Quand on clique sur le bouton "niveau 2"
                 touche = 4;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                && (env.getMouseY() <= 210 && env.getMouseX() >= 195)     // (210,195)
-                && (env.getMouseY() <= 210 && env.getMouseX() <= 440)     // (210,440)
-                && (env.getMouseY() >= 170 && env.getMouseX() >= 195)     // (170,195)
-                && (env.getMouseY() >= 170 && env.getMouseX() <= 440) )   // (170,440) 
-            {
+                && (env.getMouseY() <= 260 && env.getMouseX() >= 200)     // (260,200)
+                && (env.getMouseY() <= 260 && env.getMouseX() <= 440)     // (260,440)
+                && (env.getMouseY() >= 220 && env.getMouseX() >= 200)     // (220,200)
+                && (env.getMouseY() >= 220 && env.getMouseX() <= 440) )   // (220,440) 
+            {   // Quand on clique sur le bouton "niveau 3"
                 touche = 5;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                && (env.getMouseY() <= 160 && env.getMouseX() >= 195)     // (160,195)
-                && (env.getMouseY() <= 160 && env.getMouseX() <= 440)     // (160,440)
-                && (env.getMouseY() >= 120 && env.getMouseX() >= 195)     // (120,195)
-                && (env.getMouseY() >= 120 && env.getMouseX() <= 440) )   // (120,440) 
-            {
+                && (env.getMouseY() <= 210 && env.getMouseX() >= 200)     // (210,200)
+                && (env.getMouseY() <= 210 && env.getMouseX() <= 440)     // (210,440)
+                && (env.getMouseY() >= 175 && env.getMouseX() >= 200)     // (175,200)
+                && (env.getMouseY() >= 175 && env.getMouseX() <= 440) )   // (175,440) 
+            {   // Quand on clique sur le bouton "niveau 4"
                 touche = 6;
+            } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
+                && (env.getMouseY() <= 155 && env.getMouseX() >= 130)     // (155,130)
+                && (env.getMouseY() <= 155 && env.getMouseX() <= 185)     // (155,185)
+                && (env.getMouseY() >= 125 && env.getMouseX() >= 130)     // (125,130)
+                && (env.getMouseY() >= 125 && env.getMouseX() <= 185) )   // (125,185) 
+            {   // Quand on clique sur le bouton "Revenir en arrière"
+                touche = 200;
             }
+
+            // System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX() );
 
             env.advanceOneFrame();
         }
@@ -521,14 +537,15 @@ public abstract class Jeu {
         mainRoom.resetRoom(FILEPATH_PLATEAU);
         env.setRoom(mainRoom);
 
-        touche--;
+        if(touche != 200) {
+            touche--;
 
-        if(touche > 5) {
-            touche = 5;
-        } else if(touche < 1) {
-            touche = 1;
+            if(touche > 5) {
+                touche = 5;
+            } else if(touche < 1) {
+                touche = 1;
+            }
         }
-
         System.out.println("Level apres : "+touche);
 
         return touche;
