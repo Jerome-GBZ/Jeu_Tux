@@ -18,6 +18,7 @@ public class JeuDevineLeMotOrdre extends Jeu{
             System.out.println("Tux trouve lettre !");
             return true;
         }
+        
         return false;
     }
     
@@ -25,6 +26,7 @@ public class JeuDevineLeMotOrdre extends Jeu{
     public void setNbLettresRestantes(int nbLettresRestantes) {
         this.nbLettresRestantes = nbLettresRestantes;
     }
+
     @Override
     protected void démarrePartie(Partie partie) {
        chrono = new Chronometre(TIME);

@@ -4,9 +4,6 @@ import env.EnvTextMap;
 import env3d.Env;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-// import java.util.function.ToDoubleFunction;
-
-import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 
 public abstract class Jeu {
@@ -620,21 +617,22 @@ public abstract class Jeu {
     }
     
     protected boolean collision(Letter letter){
-        if(distance(letter)==0.0){
-            System.out.println("Collision détéctée avec"
-                    + "la lettre "+ letter);
+        if(distance(letter) == 0.0){
+            System.out.println("Collision détéctée avec la lettre "+ letter);
         }
+
         if(distance(letter) <= 5.5){
             lettreTrouve(letter);
         }
+
         return distance(letter) <= 5.5;
     }
 
-    private void lettreTrouve(Letter letter){
-        
+    private void lettreTrouve(Letter letter){  
         env.soundPlay("/audio/collect.wav");
         motTrouve.add(letter);
         afficherLettreSelectionnee(letter);
+
         if(lettres.size() != 0){
             env.removeObject(letter);
             lettres.remove(0);

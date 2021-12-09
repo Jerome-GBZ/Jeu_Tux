@@ -4,7 +4,6 @@ import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.text.Format;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
 import org.w3c.dom.Document;
@@ -119,7 +118,17 @@ public class Profil implements Comparable {
                 + "\n nom = " + nom
                 + "\n dateNaissance = " + dateNaissance; //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    /*  Exemple profil :
+        <profil>
+            <nom>jerome</nom>
+            <avatar>player2.svg</avatar>
+            <anniversaire>2000-03-22</anniversaire>
+            <parties>
+                ...
+            </parties>
+        </profil>
+    */
     public void sauvegarderJoueur(String filename){
         try{
             System.out.println("Sauvegarde d'un nouveau profil en cours...");
@@ -132,17 +141,6 @@ public class Profil implements Comparable {
             Element newAvatar = _doc.createElement("avatar");
             Element newBirthday = _doc.createElement("anniversaire");
             Element newParties = _doc.createElement("parties");
-
-            /*  Exemple profil :
-                <profil>
-                    <nom>jerome</nom>
-                    <avatar>player2.svg</avatar>
-                    <anniversaire>2000-03-22</anniversaire>
-                    <parties>
-                        ...
-                    </parties>
-                </profil>
-            */
 
             // Ajout contenu :
             newName.setTextContent(this.nom.toLowerCase());
@@ -247,11 +245,11 @@ public class Profil implements Comparable {
 
             while(!joueurTrouve && i < list_profil.getLength()) {
                 String nom_existant = ((Element) _doc.getElementsByTagName("nom").item(i)).getTextContent();
-                System.out.println("Joueur existant : "+nom_existant);
+                // System.out.println("Joueur existant : "+nom_existant);
 
                 if(nom_existant.equals(nomJ)) {
                     joueurTrouve = true;
-                    System.out.println("Return true");
+                    // System.out.println("Return true");
                 }
                 i++;
             }
@@ -259,8 +257,8 @@ public class Profil implements Comparable {
             System.out.println("Erreur: "+e);
         }
 
-        if(!joueurTrouve)
-            System.out.println("Return false");
+        // if(!joueurTrouve)
+        //     System.out.println("Return false");
         
         return joueurTrouve;
     }
@@ -280,14 +278,14 @@ public class Profil implements Comparable {
 
             while(!joueurTrouve || i < list_profil.getLength()) {
                 String nom_existant = ((Element) _doc.getElementsByTagName("nom").item(i)).getTextContent();
-                System.out.println("Joueur existant : "+nom_existant);
-                System.out.println("Joueur à chercher : "+nomJ);
+                // System.out.println("Joueur existant : "+nom_existant);
+                // System.out.println("Joueur à chercher : "+nomJ);
 
                 if(nomJ.equals(nom_existant)) {
                     joueurTrouve = true;
                     joueur = (Element) _doc.getElementsByTagName("profil").item(i);
                     // System.out.println("i : "+i+" - Vrai");
-                    System.out.println("Return Joueur");
+                    // System.out.println("Return Joueur");
                 } // else {
                     // System.out.println("i : "+i+" - Faux");
                 // }
