@@ -14,7 +14,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class Dico{
-    
     private ArrayList<String> listeNiveau1;
     private ArrayList<String> listeNiveau2;
     private ArrayList<String> listeNiveau3;

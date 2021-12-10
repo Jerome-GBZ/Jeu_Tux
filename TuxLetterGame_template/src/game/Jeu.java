@@ -460,7 +460,7 @@ public abstract class Jeu {
             
             frameRecompenses(score);
 
-            terminePartie(partie);
+            // terminePartie(partie);
         } else {
             menuJeu();
         }
@@ -601,7 +601,7 @@ public abstract class Jeu {
     
     protected abstract void appliqueRegles(Partie partie);
     
-    protected abstract void terminePartie(Partie partie);
+    // protected abstract void terminePartie(Partie partie);
     
     protected abstract boolean appliqueTemps(OnJeuCallback callback);
     

@@ -177,6 +177,22 @@
                 <temps>29.0</temps>
                 <mot niveau="5">Porte-bonheur</mot>
             </partie>
+        <partie date="28-11-2021" trouvé="84%">
+                <temps>29.0</temps>
+                <mot niveau="5">Porte-monnaie</mot>
+            </partie>
+            <partie date="28-11-2021" trouvé="72%">
+                <temps>29.0</temps>
+                <mot niveau="5">Gratte-ciel</mot>
+            </partie>
+        <partie date="28-11-2021" trouvé="0%">
+                <temps>1.0</temps>
+                <mot niveau="3">Volet</mot>
+            </partie>
+        <partie date="28-11-2021" trouvé="100%">
+                <temps>12.0</temps>
+                <mot niveau="3">Poire</mot>
+            </partie>
         </parties>
     </profil>
 <profil>

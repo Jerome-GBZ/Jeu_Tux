@@ -34,8 +34,6 @@ public class JeuDevineLeMotOrdre extends Jeu{
 
             return trouveLettre;
         }
-
-        // return false;
     }
     
     
@@ -56,10 +54,8 @@ public class JeuDevineLeMotOrdre extends Jeu{
         }
     }
 
-    @Override
-    protected void terminePartie(Partie partie) {
-        
-    }
+    // @Override
+    // protected void terminePartie(Partie partie);
     
     @Override
     protected boolean appliqueTemps(OnJeuCallback callback) {

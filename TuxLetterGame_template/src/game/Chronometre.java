@@ -1,27 +1,47 @@
 package game;
 
+/**
+ * Class Chronometre :
+ *    @attribute : long begin    : Date minute-seconde à la qu'elle à commencer le chrono
+ *                 long end      : Date minute-seconde à la qu'elle le chrono doit se terminer = begin + limite
+ *                 long current  : Date minute-seconde actuelle
+ *                 int limite    : nombre de seconde que toi durée le chronomètre
+ **/
 public class Chronometre {
     private long begin;
     private long end;
     private long current;
     private int limite;
 
+    /**
+     * @param limite int
+     * @initialise toutes les variables dont begin et current à 0
+     */
     public Chronometre(int limite) {
-        //intialisation
         this.limite = limite;//Seconds
         begin = 0;
         current = 0;
     }
     
-    public void start(){
+    /**
+     * Lancer le chronomètre : initialiser dans combien de temps le timer doit se finir stop() et la variable begin
+     */
+    public void start() {
         stop();
         begin = System.currentTimeMillis(); 
     }
  
-    public void stop(){
+    /**
+     * Initialiser la variable de fin pour dire dans combien de seconde ou minute le timer doit s'arreter
+     */
+    public void stop() {
         end = System.currentTimeMillis() + (limite*1000);
     }
  
+
+    /**
+     * GETTER ATTRIBUTES
+     */
     public long getTime() {
         getCurrentTime();
         return end-current;
@@ -48,16 +68,17 @@ public class Chronometre {
         current = System.currentTimeMillis();
     }
     
+
     /**
-    * Method to know if it remains time.
+    * @return true  : quand le temps restant est inférieur au temps limite
+              false : quand le temps restant est supérieur au temps limite
     */
     public boolean remainsTime() {
-        
         if(getSeconds() < limite){
              return true;
-        }
-        return false;
+        } else {
+            return false;
+        }        
     }
-     
 }
 

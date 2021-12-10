@@ -101,12 +101,14 @@ public class EnvText {
      * @param y
      * @return
      */
+    /*
     private int adjustYValue(int y) {
         if (y < 0) {
             return 0;
         }
         return y;
     }
+    */
 
     /**
      * ajuster la valeur de la couleur

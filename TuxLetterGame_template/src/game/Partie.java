@@ -21,7 +21,10 @@ public class Partie {
         this.temps = temps;
     }
     
-    // A TESTER
+    /**
+     * Créer un objet à partir d'un element XML partie
+     * @param partieElt : Element
+     */
     public Partie(Element partieElt) {
         this.date = partieElt.getAttribute("date");
 
@@ -41,23 +44,13 @@ public class Partie {
         Element unMot = (Element) partieElt.getElementsByTagName("mot").item(0);
         this.mot = unMot.getTextContent();
         this.niveau = Integer.parseInt(unMot.getAttribute("niveau"));
-        
-        /*
-            System.out.println("Date :   "+date);
-            System.out.println("Trouvé : "+trouve);
-            System.out.println("Temps : "+temps);
-            System.out.println("Niveau : "+niveau);
-            System.out.println("Mot :    "+mot);
-            System.out.println("");
-
-            <partie date="2013-12-11" trouve="75%">
-            <temps>20</temps>
-            <mot niveau="2">indice</mot>
-            </partie>
-        */
     }
     
-    // A TESTER
+
+
+    /**
+     * GETTER ATTRIBUTES
+     */
     public ArrayList<Partie> getParties(Document doc) {
         NodeList parties = doc.getElementsByTagName("partie");
         ArrayList<Partie> listParties = new ArrayList<>();
@@ -113,8 +106,9 @@ public class Partie {
         this.temps = temps;
     }
     
+
+    @Override
     public String toString(){
-        //A redefinir !
         return "Partie jouée le "+date+"\n"
         +"Mot: "+mot+"\n"
         +"Trouvé: "+trouve+"\n"
