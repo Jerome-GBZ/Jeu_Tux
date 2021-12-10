@@ -18,9 +18,11 @@ public class EditeurDico{
 
     public EditeurDico(){
         motsDico = new ArrayList<>();
+        lireDOM();
     }
 
     public void lireDOM(){
+        motsDico.clear();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
         try {

@@ -24,6 +24,7 @@ public abstract class Jeu {
     private Tux tux;
     public ArrayList<Letter> lettres;
     private final Dico dico;
+    private final EditeurDico edDico;
     protected EnvTextMap menuText;                         //text (affichage des texte du jeu)
     protected EnvTextMap gameText;                         //text (affichage des texte du jeu)
     private final Room mainRoom;
@@ -63,6 +64,9 @@ public abstract class Jeu {
 
         // Instancie le menuText
         menuText = new EnvTextMap(env);
+
+        //Editeur de dictionnaire
+        edDico = new EditeurDico();
         
         // Textes affichés à l'écran
         // menuText.addText("Voulez vous ?", "Question", 200, 300);
@@ -72,6 +76,8 @@ public abstract class Jeu {
         // menuText.addText("4. Quitter le jeu ?", "Jeu4", 250, 220);
         
          menuText.addText("Choisissez un nom de joueur : ", "NomJoueur", 200, 300);
+         menuText.addText("Ecrivez un mot que vous souhaitez apprendre: ", "nouveauMot", 200, 300);
+         menuText.addText("Choisissez un niveau entre 1 et 5: ", "niveauMot", 200, 300);
         // menuText.addText("Le joueur entré n'existe pas !", "J_not_exist", 150, 300);
         // menuText.addText("1. Charger un profil de joueur existant ?", "Principal1", 250, 280);
         // menuText.addText("2. Créer un nouveau joueur ?", "Principal2", 250, 260);
@@ -332,7 +338,7 @@ public abstract class Jeu {
             // Touche 3 : Ajouter un mot
             // -------------------------------------
             case Keyboard.KEY_3:
-                // choix = MENU_VAL.MENU_SORTIE;
+                frameAjouterMotDico();
                 break;
             
             // -------------------------------------
@@ -757,7 +763,7 @@ public abstract class Jeu {
      * @param x,y position de la lettre que l'on cherche à valider
      */
 
-     private boolean verifiePositionLettreValide(int[][] positionsLettres, int x, int z, int fin){
+    private boolean verifiePositionLettreValide(int[][] positionsLettres, int x, int z, int fin){
         boolean estValide = true;
         int i = 0;
         while(i<fin && estValide){
@@ -767,8 +773,52 @@ public abstract class Jeu {
             }
             i++;
         }
-      
+    
         return estValide;
-     }
+    }
+
+
+    /**
+      * Frame choisir le mot a ajouter dans le dictionnaire
+      */
+    
+    private void frameAjouterMotDico(){
+        String mot = getMotSaisie();
+        frameAjouterNiveauMot(mot);
+    }
+
+    /**
+      * Frame choisir le mot a ajouter dans le dictionnaire
+      */
+
+    private void frameAjouterNiveauMot(String mot){
+        String sniveau =getNiveauSaisie();
+        int niveau = Integer.parseInt(sniveau);
+        edDico.ajouterMot(mot, niveau);
+    }
+
+    
+    // Reccuperer le mot saisie au clavier par utilisateur
+    private String getMotSaisie() {
+        String mot  = "";
+
+        menuText.getText("nouveauMot").display();
+        mot = menuText.getText("nouveauMot").lire(true);
+        menuText.getText("nouveauMot").clean();
+
+        return mot;
+    } 
+
+    // Reccuperer le mot saisie au clavier par utilisateur
+    private String getNiveauSaisie() {
+        String mot  = "";
+
+        menuText.getText("niveauMot").display();
+        mot = menuText.getText("niveauMot").lire(true);
+        menuText.getText("niveauMot").clean();
+
+        return mot;
+    }
+    
 }
 
