@@ -15,7 +15,7 @@
     <mot niveau="2">Chant</mot>
     <mot niveau="2">Livre</mot>
     <mot niveau="2">Avion</mot>
-    <mot niveau="2">Jazz</mot>
+    <mot niveau="2">Talon</mot>
     <mot niveau="2">Jour</mot>
     
     <mot niveau="3">Journal</mot>
@@ -55,8 +55,5 @@
         <mot niveau="0">Mot</mot>
         <mot niveau="6">Mot</mot>
     -->
-    
-    <mot niveau="2">pouvoir</mot>
-    <mot niveau="5">aaaaaaaa</mot>
-    <mot niveau="4">Chameau</mot>
+<mot niveau="1">Chat</mot>
 </dictionnaire>

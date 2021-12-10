@@ -805,6 +805,14 @@ public abstract class Jeu {
         menuText.getText("nouveauMot").display();
         mot = menuText.getText("nouveauMot").lire(true);
         menuText.getText("nouveauMot").clean();
+        
+    
+        // Capitalize first letter
+        String firstLetter=mot.substring(0,1);
+        // Get remaining letter
+        String remainingLetters=mot.substring(1);
+        mot="";
+        mot+=firstLetter.toUpperCase()+remainingLetters;
 
         return mot;
     } 
