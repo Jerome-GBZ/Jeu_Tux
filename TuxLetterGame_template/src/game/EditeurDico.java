@@ -47,6 +47,7 @@ public class EditeurDico{
                 String sniveau = ""+niveau;
                 newMot.setAttribute("niveau", sniveau);
                 dico.appendChild(newMot);
+                motsDico.add(mot);
                 toXML();
             }else{
                 System.out.println("le mot exist déjà veuillez en choisir un autre !");
