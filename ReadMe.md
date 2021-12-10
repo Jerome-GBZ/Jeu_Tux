@@ -15,7 +15,8 @@ __Tux__
   - [x] bouton highscore dans menu principal
   - [x] Sax partie 12
   - [x] Sax partie 13
-  - [ ] Sax partie 14
+  - [x] Sax partie 14
   - [x] Fichier 'son' et 'menu' et SRC/DATA'
   - [x] Lettre se supperpose dans le jeu
   - [ ] Je crois avoir un bug qunad je clique sur un bouton jai le son de click mais il se passe rien. je lai eu quand jai fait highscore puis quitter
+  - [ ] J'ai vu hier qu'on avait un bug aussi sur xylophone quand j'étais obligé de prendre les 2 O à la suite
