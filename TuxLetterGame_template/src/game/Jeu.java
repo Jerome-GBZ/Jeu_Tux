@@ -513,17 +513,17 @@ public abstract class Jeu {
             {   // Quand on clique sur le bouton "niveau 4"
                 touche = 5;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                && (env.getMouseY() <= 310 && env.getMouseX() >= 195)   // (310,195)
-                && (env.getMouseY() <= 310 && env.getMouseX() <= 440)   // (310,440)
-                && (env.getMouseY() >= 270 && env.getMouseX() >= 195)   // (270,195)
-                && (env.getMouseY() >= 270 && env.getMouseX() <= 440) ) // (270,440) 
+                && (env.getMouseY() <= 165 && env.getMouseX() >= 195)   // (165,195)
+                && (env.getMouseY() <= 165 && env.getMouseX() <= 440)   // (165,440)
+                && (env.getMouseY() >= 125 && env.getMouseX() >= 195)   // (125,195)
+                && (env.getMouseY() >= 125 && env.getMouseX() <= 440) ) // (125,440) 
             {   // Quand on clique sur le bouton "niveau 5"
                 touche = 6;
             } else if( env.getMouseButtonClicked() == 0                   // ( Y , X )
-                && (env.getMouseY() <= 165 && env.getMouseX() >= 195)     // (165,195)
-                && (env.getMouseY() <= 165 && env.getMouseX() <= 440)     // (165,440)
-                && (env.getMouseY() >= 125 && env.getMouseX() >= 195)     // (125,195)
-                && (env.getMouseY() >= 125 && env.getMouseX() <= 440) )   // (125,440) 
+                && (env.getMouseY() <= 150 && env.getMouseX() >= 130)     // (150,130)
+                && (env.getMouseY() <= 150 && env.getMouseX() <= 180)     // (150,180)
+                && (env.getMouseY() >= 125 && env.getMouseX() >= 130)     // (125,130)
+                && (env.getMouseY() >= 125 && env.getMouseX() <= 180) )   // (125,180) 
             {   // Quand on clique sur le bouton "Revenir en arrière"
                 touche = 200;
             }

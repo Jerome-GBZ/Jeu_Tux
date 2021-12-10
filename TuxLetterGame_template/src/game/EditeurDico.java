@@ -21,7 +21,7 @@ public class EditeurDico{
         lireDOM();
     }
 
-    public void lireDOM(){
+    public void lireDOM() {
         motsDico.clear();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
@@ -36,10 +36,10 @@ public class EditeurDico{
     }
 
     public void ajouterMot(String mot, int niveau){
-        if(niveau <1 || niveau >5){
+        if(niveau <1 || niveau >5) {
             System.out.println("Niveau saisie invalide il doit être compris entre 1 et 5.");
-        }else{
-            if(!verifieMotExiste(mot)){
+        } else{
+            if(!verifieMotExiste(mot)) {
                 System.out.println("Ajout du mot !");
                 Element dico = (Element) doc.getElementsByTagName("dictionnaire").item(0);
                 Element newMot = doc.createElement("mot");
@@ -76,6 +76,7 @@ public class EditeurDico{
         }
         return trouve;
     }
+
     private void afficherNodeList(NodeList nodeList){
         for(int i=0; i <nodeList.getLength(); i++){
             String mot = nodeList.item(i).getTextContent();
@@ -83,5 +84,4 @@ public class EditeurDico{
             motsDico.add(mot);
         }
     }
-    
 }
