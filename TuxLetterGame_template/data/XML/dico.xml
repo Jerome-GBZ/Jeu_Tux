@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
     Dictionnaire de mot pour le jeux Tux
     Mot comporte une au moins 3 lettres 
     Mot peut contenir 1-* majuscule
     Autorise les mots composés
--->
-
-<dictionnaire xmlns="http://myGame/tux"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://myGame/tux ../XSD/dico.xsd">
+--><dictionnaire xmlns="http://myGame/tux" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://myGame/tux ../XSD/dico.xsd">
     <mot niveau="1">Jazz</mot>
     <mot niveau="1">Clef</mot>
     <mot niveau="1">Lait</mot>
