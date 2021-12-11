@@ -329,9 +329,13 @@ public abstract class Jeu {
                 nomJoueur = getNomJoueur();
 
                 // crée un profil avec le nom d'un nouveau joueur
-                profil = new Profil(nomJoueur, "2000-01-30");
+                if (!profil.JoeurExist(nomJoueur)) {
+                    profil = new Profil(nomJoueur, "2000-01-30");
 
-                choix = menuJeu();
+                    choix = menuJeu();
+                } else {
+                    choix = menuPrincipal(); //CONTINUE;
+                }
                 break;
 
             // -------------------------------------
@@ -407,6 +411,7 @@ public abstract class Jeu {
             finished = false;
             gameText = new EnvTextMap(env);
             
+            gameText.addText("Appuyez sur ESPACE", "collect", 200, 100);
             while (!finished) {
                 // On applique le chronometre lors du lancement du jeu
                 // L'interface va update le chronomètre chaque secondes
@@ -424,6 +429,7 @@ public abstract class Jeu {
                 });
                 
                 tux.déplace();
+                updateUICollect(lettres.get(0));
     
                 // Ici, on applique les regles
                 if(env.getKeyDown() == Keyboard.KEY_SPACE) {
@@ -439,6 +445,7 @@ public abstract class Jeu {
                 env.advanceOneFrame();
             }
 
+            gameText.getText("collect").clean();
             gameText.getText("time").clean();
             //Calcul de trouvé = score
             int score = 0;
@@ -622,6 +629,16 @@ public abstract class Jeu {
         return Math.sqrt(Math.pow(x-xT, 2)+Math.pow(y-yT, 2)+Math.pow(z-zT, 2));
     }
     
+
+    protected void updateUICollect(Letter letter){
+        if(distance(letter) <= 5.5){
+            if(gameText.getText("collect") != null)
+                gameText.getText("collect").display();
+        }else{
+            gameText.getText("collect").clean();
+        }
+    }
+
     protected boolean collision(Letter letter){
         if(distance(letter) == 0.0){
             System.out.println("Collision détéctée avec la lettre "+ letter);
@@ -630,7 +647,6 @@ public abstract class Jeu {
         if(distance(letter) <= 5.5){
             lettreTrouve(letter);
         }
-
         return distance(letter) <= 5.5;
     }
 

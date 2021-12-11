@@ -35,8 +35,7 @@ public class JeuDevineLeMotOrdre extends Jeu{
             return trouveLettre;
         }
     }
-    
-    
+
     public void setNbLettresRestantes(int nbLettresRestantes) {
         this.nbLettresRestantes = nbLettresRestantes;
     }
@@ -53,6 +52,7 @@ public class JeuDevineLeMotOrdre extends Jeu{
             setNbLettresRestantes(nbLettresRestantes-1);
         }
     }
+
 
     // @Override
     // protected void terminePartie(Partie partie);
