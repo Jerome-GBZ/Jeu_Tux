@@ -18,5 +18,6 @@ __Tux__
   - [x] Sax partie 14
   - [x] Fichier 'son' et 'menu' et SRC/DATA'
   - [x] Lettre se supperpose dans le jeu
+  - [x] Text Touche ESPACE affiché quand le joueur est sur une lettre
   - [ ] J'ai vu hier qu'on avait un bug aussi sur xylophone quand j'étais obligé de prendre les 2 O à la suite
   - [ ] Commenter le code
