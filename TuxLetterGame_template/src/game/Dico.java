@@ -133,7 +133,7 @@ public class Dico{
 			SAXParser parseur = fabrique.newSAXParser(); 
   
 			// lecture d'un fichier XML avec un DefaultHandler 
-			File fichier = new File("data/XML/dico.xml"); 
+			File fichier = new File(pathToDicoFile);  // "data/XML/dico.xml"
             
 			DefaultHandler dh = new DicoHandler(this); 
 			parseur.parse(fichier, dh); 
@@ -142,9 +142,4 @@ public class Dico{
 		} 
 	 
     }
-
-
-    
-
-
 }
