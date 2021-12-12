@@ -342,7 +342,7 @@ public class Profil implements Comparable {
                 int trouve = 0;
                 int niveau = 0;
 
-                // Si l'attribut trouvé existe on supprime le % à la fin s'il existe
+                // Si l'attribut 'trouvé' existe on supprime le % à la fin
                 if(partie.hasAttribute("trouvé")) {
                     String trouver = partie.getAttribute("trouvé");
                     if (trouver != null && trouver.length() > 0 && trouver.charAt(trouver.length() - 1) == '%') {
