@@ -3,6 +3,7 @@
 __Voyageur de santé__
 
   - [x] le com ligne 94 du xsd : verifNum
+  - [x] Commentaires du cabinet xsd
   - [ ] On doit commencer que par une majuscule ? : verifVille
   - [ ] On doit commencer que par une majuscule ? : verifMot
   - [ ] Vérifier si le projet est bien formé exemple les fichiers sont bien nommée ... 
