@@ -107,7 +107,7 @@ public class Dico{
         DOMParser parser = new DOMParser();
         String filepath = path +filename;
        
-        try{
+        try {
             parser.parse(filepath);
             Document doc = parser.getDocument();
             NodeList mots = doc.getElementsByTagName("mot");
@@ -116,7 +116,7 @@ public class Dico{
                 Element mot = (Element) mots.item(i);
                 String contenuMot = mot.getTextContent();
                 int niveau = Integer.parseInt(mot.getAttribute("niveau"));
-             
+                
                 ajouteMotADico(niveau, contenuMot);
             }
         }catch(Exception e){

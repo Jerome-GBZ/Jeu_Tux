@@ -263,7 +263,7 @@ public class Profil implements Comparable {
         return joueurTrouve;
     }
 
-    private Element ChargerJoueur(String nomJ) {
+    public Element ChargerJoueur(String nomJ) {
         boolean joueurTrouve = false;
         int i = 0;
         Element joueur = null;
@@ -296,8 +296,8 @@ public class Profil implements Comparable {
             System.out.println("Erreur: "+e);
         }
         
-        if(!joueurTrouve)
-            System.out.println("Return null");
+        // if(!joueurTrouve)
+        //     System.out.println("Return null");
         
         String joueurSelected = ((Element) joueur.getElementsByTagName("nom").item(0)).getTextContent();
         System.out.println("Joueur select : "+joueurSelected);

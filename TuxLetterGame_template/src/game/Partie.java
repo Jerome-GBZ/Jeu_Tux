@@ -6,6 +6,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+
 public class Partie {
     private String date;
     private String mot;
@@ -114,5 +115,25 @@ public class Partie {
         +"Trouvé: "+trouve+"\n"
         +"Niveau: "+niveau+"\n"
         +"Temps: "+temps+"\n";
+    }
+
+    public ArrayList<Partie> getListPartieNonFini(Profil profil) {
+        ArrayList<Partie> parties = new ArrayList<>();
+
+        Element joueur = profil.ChargerJoueur(profil.getNom());
+        NodeList partiesNodeList = joueur.getElementsByTagName("partie");
+        
+        for (int i = 0; i < partiesNodeList.getLength(); i++) {
+            Element partieElm = (Element) partiesNodeList.item(i);
+            if(partieElm.hasAttribute("trouvé")) {
+                if( Integer.parseInt(partieElm.getAttribute("trouvé").replace("%", "")) < 100) {
+                    parties.add( new Partie(partieElm) );
+                }
+            } else {
+                parties.add( new Partie(partieElm) );
+            }
+        }
+
+        return parties;
     }
 }

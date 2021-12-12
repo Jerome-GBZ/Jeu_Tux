@@ -4,6 +4,9 @@ import env.EnvTextMap;
 import env3d.Env;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
+import javax.lang.model.util.ElementScanner6;
+
 import org.lwjgl.input.Keyboard;
 
 public abstract class Jeu {
@@ -68,20 +71,10 @@ public abstract class Jeu {
         //Editeur de dictionnaire
         edDico = new EditeurDico();
         
-        // Textes affichés à l'écran
-        // menuText.addText("Voulez vous ?", "Question", 200, 300);
-        // menuText.addText("1. Commencer une nouvelle partie ?", "Jeu1", 250, 280);
-        // menuText.addText("2. Charger une partie existante ?", "Jeu2", 250, 260);
-        // menuText.addText("3. Sortir de ce jeu ?", "Jeu3", 250, 240);
-        // menuText.addText("4. Quitter le jeu ?", "Jeu4", 250, 220);
         
-         menuText.addText("Choisissez un nom de joueur : ", "NomJoueur", 200, 300);
-         menuText.addText("Ecrivez un mot que vous souhaitez apprendre: ", "nouveauMot", 200, 300);
-         menuText.addText("Choisissez un niveau entre 1 et 5: ", "niveauMot", 200, 300);
-        // menuText.addText("Le joueur entré n'existe pas !", "J_not_exist", 150, 300);
-        // menuText.addText("1. Charger un profil de joueur existant ?", "Principal1", 250, 280);
-        // menuText.addText("2. Créer un nouveau joueur ?", "Principal2", 250, 260);
-        // menuText.addText("3. Sortir du jeu ?", "Principal3", 250, 240);
+        menuText.addText("Choisissez un nom de joueur : ", "NomJoueur", 200, 300);
+        menuText.addText("Ecrivez un mot que vous souhaitez apprendre: ", "nouveauMot", 200, 300);
+        menuText.addText("Choisissez un niveau entre 1 et 5: ", "niveauMot", 200, 300);
     }
     
     public void execute(){
@@ -109,6 +102,48 @@ public abstract class Jeu {
         return nomJoueur;
     }
 
+    // Reccuperer le numéro de la partie que l'on veut reprendre de 0
+    // A FAIRE / TO DO  
+    private int getNomPartie(int nombrePartie, String textParties) {
+        menuRoom.setTextureEast("textures/black.png");
+        menuRoom.setTextureWest("textures/black.png");
+        menuRoom.setTextureNorth("textures/black.png");
+        menuRoom.setTextureBottom("textures/black.png");
+        env.setRoom(menuRoom);
+
+        int numPartieChoisit = 0;
+        String textAfficher = "";
+
+        if(nombrePartie > 0) {
+            textAfficher = "Choisissez un nombre entre 1 et "+nombrePartie+" : ";
+        } else {
+            textAfficher = "Vous n'avez pas de partie en cours.";
+        }
+
+        System.out.println("textAfficher: "+textAfficher);
+
+        menuText.addText(textParties, "lesPartiesNonFini", 5, 150);
+        menuText.addText(textAfficher, "numMotChoisit", 200, 300);
+        menuText.addText("Nombre choisit incorrect", "errorNumChoisit", 200, 50);
+
+        menuText.getText("lesPartiesNonFini").display();
+        menuText.getText("numMotChoisit").display();
+
+        while(numPartieChoisit < 1 || numPartieChoisit > nombrePartie) {
+            numPartieChoisit = Integer.valueOf( menuText.getText("numMotChoisit").lire(true) );
+
+            if(numPartieChoisit > nombrePartie || numPartieChoisit < 1) {
+                menuText.getText("errorNumChoisit").display();
+            }
+        }
+
+        menuText.getText("errorNumChoisit").clean();
+        menuText.getText("lesPartiesNonFini").clean();
+        menuText.getText("numMotChoisit").clean();
+
+        return numPartieChoisit;
+    }
+
     
     // Menu selectionner une partie ou sortir du jeu
     private MENU_VAL menuJeu() {
@@ -132,7 +167,7 @@ public abstract class Jeu {
             int touche = 0;
             // System.out.println("Touche Avant : "+touche);
 
-            while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == Keyboard.KEY_4)) {
+            while (!(touche == Keyboard.KEY_1 || touche == Keyboard.KEY_2 || touche == Keyboard.KEY_3 || touche == 200)) {
                 if( env.getMouseButtonClicked() == 0                        // ( Y , X )
                     && (env.getMouseY() <= 435 && env.getMouseX() >= 130)   // (435,130)
                     && (env.getMouseY() <= 435 && env.getMouseX() <= 500)   // (435,500)
@@ -160,7 +195,7 @@ public abstract class Jeu {
                     && (env.getMouseY() >= 50 && env.getMouseX() >= 130)    // (50,130)
                     && (env.getMouseY() >= 50 && env.getMouseX() <= 190) )  // (50,190) 
                 { // Quand on clique sur le bouton "Quitter"
-                    touche = 5;
+                    touche = 200;
                 }
                 
                 // System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX() );
@@ -176,7 +211,7 @@ public abstract class Jeu {
             menuRoom.setTextureWest("textures/black.png");
             menuRoom.setTextureNorth("textures/black.png");
             menuRoom.setTextureBottom("textures/black.png");
-            env.setRoom(mainRoom);
+            env.setRoom(menuRoom);
             
             // Décide quoi faire en fonction de la touche pressée
             switch (touche) {
@@ -197,9 +232,35 @@ public abstract class Jeu {
                 // -----------------------------------------
                 // A FAIRE / TO DO            
                 case Keyboard.KEY_2: // charge une partie existante
-                    partie = new Partie("2021-11-28", "bonjour", 1, 0, 0);
+                    Partie partieDefault = new Partie("2021-01-01", "bonjour", 1, 0, 0);
+                    
+                    String textParties = "";
+                    ArrayList<Partie> listeParties = partieDefault.getListPartieNonFini(profil);
+                    int nbPartieTot = listeParties.size();
+                    int nombreChoisit = 0;
 
-                    joue(partie);
+                    for (int i = 0; i < nbPartieTot; i++) {
+                        System.out.println(i+"-"+listeParties.get(i).getMot()+" - "+listeParties.get(i).getTrouve());
+                        
+                        if(i == 0) {
+                            textParties += (i+1)+": "+listeParties.get(i).getMot()+" - "+listeParties.get(i).getTrouve()+"%";
+                        } else {
+                            textParties += " / "+(i+1)+": "+listeParties.get(i).getMot()+" - "+listeParties.get(i).getTrouve()+"%";
+                        }
+
+                        if(i!= 0 && i%3 == 0) {
+                            textParties += "\n";
+                        }
+                    }
+
+                    System.out.println("\n Message: "+textParties);
+
+                    nombreChoisit = getNomPartie(nbPartieTot, textParties);
+                    System.out.println("nombreChoisit: "+nombreChoisit+" - nbParties: "+nbPartieTot);
+
+                    if(nombreChoisit != 0) {
+                        rejouer( listeParties.get(nombreChoisit-1) );
+                    }
                     
                     playTheGame = MENU_VAL.MENU_JOUE;
                     break;
@@ -215,7 +276,7 @@ public abstract class Jeu {
                 // -----------------------------------------
                 // Touche 4 : Revenir au menu Principal
                 // -----------------------------------------                
-                case Keyboard.KEY_4:
+                case 200:
                     profil.sauvegarder(FILEPATH_PROFIL);
 
                     menuPrincipal();
@@ -362,6 +423,118 @@ public abstract class Jeu {
         }
 
         return choix;
+    }
+
+    public void rejouer(Partie partie) {
+        motTrouve.clear();
+        lettres.clear();
+        env.advanceOneFrame();
+
+        mainRoom.setTextureEast("textures/black.png");
+        mainRoom.setTextureWest("textures/black.png");
+        mainRoom.setTextureNorth("menu/menuNiveau.png");
+        mainRoom.setTextureBottom("textures/black.png");
+        env.setCameraXYZ(50, 30, 150);
+        env.setCameraPitch(0);
+        env.setRoom(mainRoom);
+
+        System.out.println("level = "+ partie.getNiveau());
+        String mot = partie.getMot();
+
+        frameApprendreLeMot(mot);
+
+        env.setCameraXYZ(50, 60, 175); 
+        env.setCameraPitch(-20);
+        mainRoom.resetRoom(FILEPATH_PLATEAU);
+        env.setRoom(mainRoom);
+
+        // Instancie un Tux
+        tux = new Tux(env, room);
+        char[] tab = mot.toCharArray();
+        int[][] positionLettres = new int[mot.length()][2];
+
+        for(int i=0; i<mot.length(); i++) {
+            int randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
+            int randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
+
+            while(!verifiePositionLettreValide(positionLettres, randomPositionX, randomPositionZ, i)){
+                randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
+                randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
+            }
+
+            positionLettres[i][0]=randomPositionX;
+            positionLettres[i][1]=randomPositionZ;
+            Letter l = new Letter(tab[i], randomPositionX,randomPositionZ, room);
+            lettres.add(l);
+            env.addObject(l); 
+        }
+
+        int totalNblettres = lettres.size();
+        env.addObject(tux);
+        
+        // Ici, on peut initialiser des valeurs pour une nouvelle partie
+        démarrePartie(partie);
+        
+        // Boucle de jeu
+        Boolean finished;
+        finished = false;
+        gameText = new EnvTextMap(env);
+        
+        gameText.addText("Appuyez sur ESPACE", "collect", 200, 100);
+        while (!finished) {
+            // On applique le chronometre lors du lancement du jeu
+            // L'interface va update le chronomètre chaque secondes
+            finished = appliqueTemps(new OnJeuCallback() {
+                @Override
+                public void onTimeSpentListener(int time) {
+                    if(gameText.getText("time") != null) {
+                        gameText.getText("time").clean();
+                    }
+
+                    gameText.addText("Time: "+(30-time), "time", 10, 420);
+                    gameText.getText("time").display();
+                    partie.setTemps(time);
+                }
+            });
+            
+            tux.déplace();
+            updateUICollect(lettres.get(0));
+
+            // Ici, on applique les regles
+            if(env.getKeyDown() == Keyboard.KEY_SPACE) {
+                appliqueRegles(partie);
+            }
+            
+            // 1 is for escape key
+            if(env.getKey() == 1 || lettres.size() == 0){
+                finished = true;
+            }
+
+            // Fait avancer le moteur de jeu (mise à jour de l'affichage, de l'écoute des événements clavier...)
+            env.advanceOneFrame();
+        }
+
+        gameText.getText("collect").clean();
+        gameText.getText("time").clean();
+        //Calcul de trouvé = score
+        int score = 0;
+        if(motTrouve.size() > 0) {
+            score = (motTrouve.size()*100) / totalNblettres;
+        }
+        System.out.println("totalNblettres: "+totalNblettres);
+        System.out.println("motTrouve: "+motTrouve+" - taille: "+motTrouve.size());        
+        System.out.println("score: "+score);
+
+        partie.setTrouve(score);
+        
+        if(gameText.getText("time") != null) {
+            gameText.getText("time").clean();
+        }
+        
+        // Ici on peut calculer des valeurs lorsque la partie est terminée
+        profil.ajouterPartie(partie);
+        
+        frameRecompenses(score);
     }
     
     public void joue(Partie partie){   
