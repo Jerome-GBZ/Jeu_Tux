@@ -1,74 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="profil.xsl"?><profils xmlns="http://myGame/tux" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://myGame/tux ../XSD/profil.xsd">
+<?xml-stylesheet type="text/xsl" href="profil.xsl"?>
+<profils xmlns="http://myGame/tux" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://myGame/tux ../XSD/profil.xsd">
     <profil>
         <nom>riad</nom>
         <avatar>player1.svg</avatar>
         <anniversaire>2000-10-01</anniversaire>
         <parties>
-            <partie date="2013-12-10">
-                <temps>20.0</temps>
-                <mot niveau="1">cle</mot>
-            </partie>
-            <partie date="2013-12-11" trouvé="75%">
-                <mot niveau="2">indice</mot>
-            </partie>
-            <partie date="2021-09-07" trouvé="100%">
-                <temps>3.0</temps>
-                <mot niveau="1">Jazz</mot>
-            </partie>
-            <partie date="2021-09-07" trouvé="100%">
-                <temps>6.0</temps>
-                <mot niveau="1">Fruit</mot>
-            </partie>
-            <partie date="2021-11-28" trouvé="98%">
-                <temps>14.78</temps>
-                <mot niveau="2">acheter</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="100%">
-                <temps>9.0</temps>
-                <mot niveau="1">Clef</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="100%">
-                <temps>29.0</temps>
-                <mot niveau="4">Xylophone</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="100%">
-                <temps>10.0</temps>
-                <mot niveau="3">Venir</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="100%">
-                <temps>10.0</temps>
-                <mot niveau="3">Venir</mot>
-            </partie>
-            <partie date="28-11-2021" trouvé="100%">
+            <partie date="2021-12-11" trouvé="100%">
                 <temps>19.0</temps>
                 <mot niveau="4">Manteau</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="100%">
+        <partie date="2021-12-11" trouvé="100%">
                 <temps>11.0</temps>
                 <mot niveau="3">Chien</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="100%">
+        <partie date="2021-12-11" trouvé="100%">
                 <temps>16.0</temps>
                 <mot niveau="3">Volet</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="100%">
+        <partie date="2021-12-11" trouvé="100%">
                 <temps>29.0</temps>
                 <mot niveau="2">Avion</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="100%">
+        <partie date="2021-12-11" trouvé="100%">
                 <temps>25.0</temps>
                 <mot niveau="2">Chant</mot>
             </partie>
-            <partie date="28-11-2021" trouvé="100%">
+            <partie date="2021-12-11" trouvé="100%">
                 <temps>29.0</temps>
                 <mot niveau="2">Livre</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="50%">
+        <partie date="2021-12-11" trouvé="50%">
                 <temps>29.0</temps>
                 <mot niveau="1">Jazz</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="100%">
+        <partie date="2021-12-11" trouvé="100%">
                 <temps>14.0</temps>
                 <mot niveau="3">Volet</mot>
             </partie>
@@ -84,39 +50,39 @@
                 <temps>17.50</temps>
                 <mot niveau="1">police</mot>
             </partie>
-            <partie date="28-11-2021" trouvé="100%">
+            <partie date="2021-12-11" trouvé="100%">
                 <temps>14.0</temps>
                 <mot niveau="1">Jazz</mot>
             </partie>
-            <partie date="28-11-2021" trouvé="100%">
+            <partie date="2021-12-11" trouvé="100%">
                 <temps>15.0</temps>
                 <mot niveau="1">Fuir</mot>
             </partie>
-            <partie date="28-11-2021" trouvé="100%">
+            <partie date="2021-12-11" trouvé="100%">
                 <temps>10.0</temps>
                 <mot niveau="1">Lait</mot>
             </partie>
-            <partie date="28-11-2021" trouvé="0%">
+            <partie date="2021-12-11" trouvé="0%">
                 <temps>1.0</temps>
                 <mot niveau="1">Fuir</mot>
             </partie>
-            <partie date="28-11-2021" trouvé="100%">²
+            <partie date="2021-12-11" trouvé="100%">²
                 <temps>29.0</temps>
                 <mot niveau="5">Gratte-ciel</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="100%">
+        <partie date="2021-12-11" trouvé="100%">
                 <temps>17.0</temps>
                 <mot niveau="5">Bonjour</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="100%">
+        <partie date="2021-12-11" trouvé="100%">
                 <temps>6.0</temps>
                 <mot niveau="2">Jazz</mot>
             </partie>
-        <partie date="28-11-2021" trouvé="100%">
+        <partie date="2021-12-11" trouvé="100%">
                 <temps>13.0</temps>
                 <mot niveau="3">Chien</mot>
             </partie>
-            <partie date="28-11-2021" trouvé="100%">
+            <partie date="2021-12-11" trouvé="100%">
                 <temps>11.0</temps>
                 <mot niveau="3">Poire</mot>
             </partie>
@@ -131,6 +97,18 @@
             <partie date="2021-12-13" trouvé="100%">
                 <temps>18.0</temps>
                 <mot niveau="1">Fruit</mot>
+            </partie>
+            <partie date="2021-12-13" trouvé="20%">
+                <temps>13.0</temps>
+                <mot niveau="1">Fort</mot>
+            </partie>
+            <partie date="2021-12-13" trouvé="100%">
+                <temps>24.0</temps>
+                <mot niveau="1">Fuir</mot>
+            </partie>
+            <partie date="2021-12-13" trouvé="100%">
+                <temps>7.0</temps>
+                <mot niveau="1">Fort</mot>
             </partie>
         </parties>
     </profil>

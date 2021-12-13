@@ -143,7 +143,7 @@ public abstract class Jeu {
         if(nombrePartie > 0) {
             textAfficher = "Choisissez un nombre entre 1 et "+nombrePartie+" : ";
         } else {
-            textAfficher = "Vous n'avez pas de partie en cours.";
+            textAfficher = "Vous n'avez pas de partie en cours : ";
         }
 
         System.out.println("textAfficher: "+textAfficher);
@@ -261,6 +261,10 @@ public abstract class Jeu {
                     LocalDateTime now = LocalDateTime.now();  
                     partie = new Partie(dtf.format(now), "bonjour", 1, 0, 0);
 
+                    System.out.println("\n\n");
+                    System.out.println("Rejoue: "+partie);
+                    System.out.println("\n\n");
+
                     jouer(partie);
                     
                     playTheGame = MENU_VAL.MENU_JOUE;
@@ -302,6 +306,10 @@ public abstract class Jeu {
                         playTheGame = MENU_VAL.MENU_JOUE;
                     } else {
                         if(nombreChoisit != 0) {
+                            System.out.println("\n\n");
+                            System.out.println("Rejoue: "+listeParties.get(nombreChoisit-1));
+                            System.out.println("\n\n");
+
                             rejouer( listeParties.get(nombreChoisit-1) );
                         }
                         

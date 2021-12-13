@@ -27,7 +27,8 @@ public class Partie {
      * @param partieElt : Element
      */
     public Partie(Element partieElt) {
-        this.date = partieElt.getAttribute("date");
+        // this.date = partieElt.getAttribute("date");
+        this.date =  xmlDateToProfileDate( partieElt.getAttribute("date") );
 
         if(partieElt.hasAttribute("trouvé")) {
             this.trouve = Integer.parseInt(partieElt.getAttribute("trouvé").replace("%", ""));
@@ -135,5 +136,22 @@ public class Partie {
         }
 
         return parties;
+    }
+
+    private String xmlDateToProfileDate(String xmlDate){
+        String date;
+
+        // récupérer le jour
+        date = xmlDate.substring(xmlDate.lastIndexOf("-") + 1, xmlDate.length());
+        date += "/";
+
+        // récupérer le mois
+        date += xmlDate.substring(xmlDate.indexOf("-") + 1, xmlDate.lastIndexOf("-"));
+        date += "/";
+
+        // récupérer l'année
+        date += xmlDate.substring(0, xmlDate.indexOf("-"));
+
+        return date;
     }
 }
