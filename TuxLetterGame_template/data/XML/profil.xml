@@ -234,4 +234,10 @@
             </partie>
         </parties>
     </profil>
+<profil>
+        <nom>marc</nom>
+        <avatar>player1.svg</avatar>
+        <anniversaire>2000-01-30</anniversaire>
+        <parties/>
+    </profil>
 </profils>

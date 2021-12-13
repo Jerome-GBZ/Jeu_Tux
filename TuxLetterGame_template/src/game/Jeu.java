@@ -90,20 +90,44 @@ public abstract class Jeu {
         env.exit();
     }
     
-    
+    private String getNouveauNomJoueur() {
+        String nomJoueur = "";
+
+        menuText.getText("NomJoueur").display();
+        menuText.addText("(200 pour revenir en arrière)", "infoRetour", 235, 320);
+
+        nomJoueur = menuText.getText("NomJoueur").lire(true);
+        
+        menuText.getText("infoRetour").clean();
+        menuText.getText("NomJoueur").clean();
+
+        return nomJoueur;
+    }
+
     // Reccuperer le nom du joueur saisie au clavier par utilisateur
     private String getNomJoueur() {
         String nomJoueur = "";
 
+        menuText.addText("Nom choisit incorrect", "errorNumChoisit", 240, 250);
+        menuText.addText("(200 pour revenir en arrière)", "infoRetour", 200, 320);
+
         menuText.getText("NomJoueur").display();
-        nomJoueur = menuText.getText("NomJoueur").lire(true);
+        menuText.getText("infoRetour").display();
+
+        while(!nomJoueur.equals("200") && !profil.JoeurExist(nomJoueur)) { // 
+            nomJoueur = menuText.getText("NomJoueur").lire(true);
+
+            menuText.getText("errorNumChoisit").display();
+        }
+
+        menuText.getText("infoRetour").clean();
+        menuText.getText("errorNumChoisit").clean();
         menuText.getText("NomJoueur").clean();
 
         return nomJoueur;
     }
 
     // Reccuperer le numéro de la partie que l'on veut reprendre de 0
-    // A FAIRE / TO DO  
     private int getNomPartie(int nombrePartie, String textParties) {
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
@@ -122,21 +146,32 @@ public abstract class Jeu {
 
         System.out.println("textAfficher: "+textAfficher);
 
-        menuText.addText(textParties, "lesPartiesNonFini", 5, 150);
-        menuText.addText(textAfficher, "numMotChoisit", 200, 300);
-        menuText.addText("Nombre choisit incorrect", "errorNumChoisit", 200, 50);
+        menuText.addText(textParties, "lesPartiesNonFini", 10, 465);
+        menuText.addText(textAfficher, "numMotChoisit", 200, 280);
+        menuText.addText("(200 pour revenir en arrière)", "infoRetour", 235, 300);
+        menuText.addText("Nombre choisit incorrect", "errorNumChoisit", 240, 250);
 
         menuText.getText("lesPartiesNonFini").display();
         menuText.getText("numMotChoisit").display();
+        menuText.getText("infoRetour").display();
 
-        while(numPartieChoisit < 1 || numPartieChoisit > nombrePartie) {
-            numPartieChoisit = Integer.valueOf( menuText.getText("numMotChoisit").lire(true) );
+        // 200 : retour au menu du jeu 
+        while(numPartieChoisit < 1 || numPartieChoisit > 200 || (numPartieChoisit < 200 && numPartieChoisit > nombrePartie) ) {
+            String numChoisit = menuText.getText("numMotChoisit").lire(true);
+
+            // savoir si le chiffre choisit est bien un nombre avec Regex
+            if(numChoisit.matches("[+-]?\\d*(\\.\\d+)?")) {
+                numPartieChoisit = Integer.valueOf( numChoisit );
+            }
 
             if(numPartieChoisit > nombrePartie || numPartieChoisit < 1) {
                 menuText.getText("errorNumChoisit").display();
             }
+
+            System.out.println("Souris Y: "+env.getMouseY()+" - X: "+env.getMouseX() );
         }
 
+        menuText.getText("infoRetour").clean();
         menuText.getText("errorNumChoisit").clean();
         menuText.getText("lesPartiesNonFini").clean();
         menuText.getText("numMotChoisit").clean();
@@ -222,7 +257,7 @@ public abstract class Jeu {
                     // crée un nouvelle partie
                     partie = new Partie("2021/11/28", "bonjour", 1, 0, 0);
 
-                    joue(partie);
+                    jouer(partie);
                     
                     playTheGame = MENU_VAL.MENU_JOUE;
                     break;
@@ -258,11 +293,16 @@ public abstract class Jeu {
                     nombreChoisit = getNomPartie(nbPartieTot, textParties);
                     System.out.println("nombreChoisit: "+nombreChoisit+" - nbParties: "+nbPartieTot);
 
-                    if(nombreChoisit != 0) {
-                        rejouer( listeParties.get(nombreChoisit-1) );
+                    if(nombreChoisit == 200) {
+                        menuJeu();
+                        playTheGame = MENU_VAL.MENU_JOUE;
+                    } else {
+                        if(nombreChoisit != 0) {
+                            rejouer( listeParties.get(nombreChoisit-1) );
+                        }
+                        
+                        playTheGame = MENU_VAL.MENU_JOUE;
                     }
-                    
-                    playTheGame = MENU_VAL.MENU_JOUE;
                     break;
                 
                 // -------------------------------------
@@ -271,6 +311,7 @@ public abstract class Jeu {
                 case Keyboard.KEY_3:
                     menuHighScore(profil);
                     menuJeu();
+                    playTheGame = MENU_VAL.MENU_JOUE;
                     break;
 
                 // -----------------------------------------
@@ -372,12 +413,12 @@ public abstract class Jeu {
                 // Demande le nom du joueur existant
                 nomJoueur = getNomJoueur();
 
-                if (profil.JoeurExist(nomJoueur)) {
+                if (!nomJoueur.equals("200")) {
                     profil.ChargerProfil(nomJoueur);
 
                     choix = menuJeu();
                 } else {
-                    choix = menuPrincipal(); //CONTINUE;
+                    choix = menuPrincipal(); // retour au menu principal;
                 }
 
                 break;
@@ -387,16 +428,17 @@ public abstract class Jeu {
             // -------------------------------------
             case Keyboard.KEY_2:
                 // demande le nom du nouveau joueur
-                nomJoueur = getNomJoueur();
+                nomJoueur = getNouveauNomJoueur();
 
-                // crée un profil avec le nom d'un nouveau joueur
-                if (!profil.JoeurExist(nomJoueur)) {
+                // crée un profil avec le nom d'un nouveau joueur - 200 = revenir au menu principal
+                if (!nomJoueur.equals("200")) {
                     profil = new Profil(nomJoueur, "2000-01-30");
 
                     choix = menuJeu();
                 } else {
                     choix = menuPrincipal(); //CONTINUE;
                 }
+
                 break;
 
             // -------------------------------------
@@ -443,6 +485,31 @@ public abstract class Jeu {
 
         frameApprendreLeMot(mot);
 
+        lancerPartie(mot, partie);
+    }
+    
+    public void jouer(Partie partie){   
+        motTrouve.clear();
+        lettres.clear();
+        env.advanceOneFrame();
+
+        int level = frameChoisirNiveau();
+        System.out.println("level = "+ level);
+        if(level != 200) {
+            String mot = dico.getMotDepusiListeNiveaux(level);
+            
+            partie.setMot(mot);
+            partie.setNiveau(level);
+            frameApprendreLeMot(mot);
+            env.setRoom(room);
+    
+            lancerPartie(mot, partie);
+        } else {
+            menuJeu();
+        }
+    }
+
+    public void lancerPartie(String mot, Partie partie) {
         env.setCameraXYZ(50, 60, 175); 
         env.setCameraPitch(-20);
         mainRoom.resetRoom(FILEPATH_PLATEAU);
@@ -535,115 +602,6 @@ public abstract class Jeu {
         profil.ajouterPartie(partie);
         
         frameRecompenses(score);
-    }
-    
-    public void joue(Partie partie){   
-        motTrouve.clear();
-        lettres.clear();
-        env.advanceOneFrame();
-
-        int level = frameChoisirNiveau();
-        System.out.println("level = "+ level);
-        if(level != 200) {
-            String mot = dico.getMotDepusiListeNiveaux(level);
-            
-            partie.setMot(mot);
-            partie.setNiveau(level);
-            frameApprendreLeMot(mot);
-            env.setRoom(room);
-    
-            // Instancie un Tux
-            tux = new Tux(env, room);
-            char[] tab = mot.toCharArray();
-            int[][] positionLettres = new int[mot.length()][2];
-
-            for(int i=0; i<mot.length(); i++) {
-                int randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
-                int randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
-
-                while(!verifiePositionLettreValide(positionLettres, randomPositionX, randomPositionZ, i)){
-                    randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
-                    randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
-                }
-
-                positionLettres[i][0]=randomPositionX;
-                positionLettres[i][1]=randomPositionZ;
-                Letter l = new Letter(tab[i], randomPositionX,randomPositionZ, room);
-                lettres.add(l);
-                env.addObject(l); 
-            }
-
-            int totalNblettres = lettres.size();
-            env.addObject(tux);
-            
-            // Ici, on peut initialiser des valeurs pour une nouvelle partie
-            démarrePartie(partie);
-            
-            // Boucle de jeu
-            Boolean finished;
-            finished = false;
-            gameText = new EnvTextMap(env);
-            
-            gameText.addText("Appuyez sur ESPACE", "collect", 200, 100);
-            while (!finished) {
-                // On applique le chronometre lors du lancement du jeu
-                // L'interface va update le chronomètre chaque secondes
-                finished = appliqueTemps(new OnJeuCallback() {
-                    @Override
-                    public void onTimeSpentListener(int time) {
-                        if(gameText.getText("time") != null) {
-                            gameText.getText("time").clean();
-                        }
-
-                        gameText.addText("Time: "+(30-time), "time", 10, 420);
-                        gameText.getText("time").display();
-                        partie.setTemps(time);
-                    }
-                });
-                
-                tux.déplace();
-                updateUICollect(lettres.get(0));
-    
-                // Ici, on applique les regles
-                if(env.getKeyDown() == Keyboard.KEY_SPACE) {
-                    appliqueRegles(partie);
-                }
-                
-                // 1 is for escape key
-                if(env.getKey() == 1 || lettres.size() == 0){
-                    finished = true;
-                }
-    
-                // Fait avancer le moteur de jeu (mise à jour de l'affichage, de l'écoute des événements clavier...)
-                env.advanceOneFrame();
-            }
-
-            gameText.getText("collect").clean();
-            gameText.getText("time").clean();
-            //Calcul de trouvé = score
-            int score = 0;
-            if(motTrouve.size() > 0) {
-                score = (motTrouve.size()*100) / totalNblettres;
-            }
-            System.out.println("totalNblettres: "+totalNblettres);
-            System.out.println("motTrouve: "+motTrouve+" - taille: "+motTrouve.size());        
-            System.out.println("score: "+score);
-
-            partie.setTrouve(score);
-            
-            if(gameText.getText("time") != null) {
-                gameText.getText("time").clean();
-            }
-            
-            // Ici on peut calculer des valeurs lorsque la partie est terminée
-            profil.ajouterPartie(partie);
-            
-            frameRecompenses(score);
-
-            // terminePartie(partie);
-        } else {
-            menuJeu();
-        }
     }
 
 
