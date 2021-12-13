@@ -1,5 +1,8 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // import org.lwjgl.input.Keyboard;
 // import net.java.games.input.Keyboard;
 
@@ -14,26 +17,12 @@ public class JeuDevineLeMotOrdre extends Jeu{
     }
 
     private boolean tuxTrouveLettre() {
-        if(super.collision(super.lettres.get(0))) {
-            System.out.println("Tux trouve lettre !");
-            return true;
-        } else {
-            int numLettre = 1;
-            boolean trouveLettre = false;
-            
-            while(numLettre < lettres.size() && !trouveLettre) {
-                // System.out.println("lettre à trouver: "+ super.lettres.get(0).getLetter() +" - "+super.lettres.get(numLettre).getLetter());
-                if( super.lettres.get(0).getLetter() == super.lettres.get(numLettre).getLetter() ) {
-                    if(super.collision(super.lettres.get(numLettre))) {
-                        System.out.println("Tux trouve lettre !");
-                        trouveLettre = true;
-                    }
-                }
-                numLettre++;
-            }
 
-            return trouveLettre;
-        }
+        
+        if(super.collision(super.lettres.get(0)))
+            return true;
+        return false;
+       
     }
 
     public void setNbLettresRestantes(int nbLettresRestantes) {
