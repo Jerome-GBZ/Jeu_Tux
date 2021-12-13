@@ -19,15 +19,16 @@ class DicoHandler extends DefaultHandler{
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         buffer = new StringBuffer(); 
-        if(qName.equals("dictionnaire")){
-        }else if(qName.equals("mot")){
-            try{ 
+        if(qName.equals("dictionnaire")) {
+
+        } else if(qName.equals("mot")) {
+            try { 
 				mNiveau = Integer.parseInt(attributes.getValue("niveau")); 
-			}catch(Exception e){ 
+			} catch(Exception e){ 
 				//erreur, le contenu de niveau n'est pas un entier 
 				throw new SAXException(e); 
 			} 
-        }else{
+        } else{
             //erreur, on peut lever une exception 
 		    throw new SAXException("Balise "+qName+" inconnue."); 
         }

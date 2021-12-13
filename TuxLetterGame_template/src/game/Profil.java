@@ -208,12 +208,15 @@ public class Profil implements Comparable {
     
     private String xmlDateToProfileDate(String xmlDate){
         String date;
+
         // récupérer le jour
         date = xmlDate.substring(xmlDate.lastIndexOf("-") + 1, xmlDate.length());
         date += "/";
+
         // récupérer le mois
         date += xmlDate.substring(xmlDate.indexOf("-") + 1, xmlDate.lastIndexOf("-"));
         date += "/";
+
         // récupérer l'année
         date += xmlDate.substring(0, xmlDate.indexOf("-"));
 
@@ -222,14 +225,19 @@ public class Profil implements Comparable {
     
     private String profileDateToXmlDate(String profileDate){
         String date;
+
+        System.out.println("Date Pro to XML: "+profileDate);
         // Récupérer l'année
         date = profileDate.substring(profileDate.lastIndexOf("/") + 1, profileDate.length());
         date += "-";
+
         // Récupérer  le mois
         date += profileDate.substring(profileDate.indexOf("/") + 1, profileDate.lastIndexOf("/"));
         date += "-";
+
         // Récupérer le jour
         date += profileDate.substring(0, profileDate.indexOf("/"));
+        System.out.println("Result Date Pro to XML: "+date);
 
         return date;
     }
@@ -245,20 +253,15 @@ public class Profil implements Comparable {
 
             while(!joueurTrouve && i < list_profil.getLength()) {
                 String nom_existant = ((Element) _doc.getElementsByTagName("nom").item(i)).getTextContent();
-                // System.out.println("Joueur existant : "+nom_existant);
 
                 if(nom_existant.equals(nomJ)) {
                     joueurTrouve = true;
-                    // System.out.println("Return true");
                 }
                 i++;
             }
         } catch(Exception e) {
             System.out.println("Erreur: "+e);
         }
-
-        // if(!joueurTrouve)
-        //     System.out.println("Return false");
         
         return joueurTrouve;
     }
@@ -284,20 +287,13 @@ public class Profil implements Comparable {
                 if(nomJ.equals(nom_existant)) {
                     joueurTrouve = true;
                     joueur = (Element) _doc.getElementsByTagName("profil").item(i);
-                    // System.out.println("i : "+i+" - Vrai");
-                    // System.out.println("Return Joueur");
-                } // else {
-                    // System.out.println("i : "+i+" - Faux");
-                // }
+                }
 
                 i++;
             }
         } catch(Exception e) {
             System.out.println("Erreur: "+e);
         }
-        
-        // if(!joueurTrouve)
-        //     System.out.println("Return null");
         
         String joueurSelected = ((Element) joueur.getElementsByTagName("nom").item(0)).getTextContent();
         System.out.println("Joueur select : "+joueurSelected);

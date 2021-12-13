@@ -74,6 +74,7 @@
             </partie>
         </parties>
     </profil>
+
     <profil>
         <nom>jerome</nom>
         <avatar>player2.svg</avatar>
@@ -121,123 +122,16 @@
             </partie>
         </parties>
     </profil>
-    <profil>
-        <nom>mathis</nom>
-        <avatar>player1.svg</avatar>
-        <anniversaire>2000/02/02</anniversaire>
-        <parties>
-            <partie date="28-11-2021" trouvé="98%">
-                <temps>14.78</temps>
-                <mot niveau="2">acheter</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="98%">
-                <temps>14.78</temps>
-                <mot niveau="2">acheter</mot>
-            </partie>
-        </parties>
-    </profil>
+
     <profil>
         <nom>leo</nom>
         <avatar>player1.svg</avatar>
         <anniversaire>2000-01-30</anniversaire>
         <parties>
-            <partie date="28-11-2021" trouvé="100%">
-                <temps>15.0</temps>
-                <mot niveau="5">Langage</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="50%">
-                <temps>29.0</temps>
-                <mot niveau="1">Jazz</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="58%">
-                <temps>29.0</temps>
-                <mot niveau="5">Haut-parleur</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="58%">
-                <temps>29.0</temps>
-                <mot niveau="5">Haut-parleur</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="53%">
-                <temps>29.0</temps>
-                <mot niveau="5">Porte-monnaie</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="54%">
-                <temps>29.0</temps>
-                <mot niveau="5">Gratte-ciel</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="46%">
-                <temps>29.0</temps>
-                <mot niveau="5">Porte-monnaie</mot>
-            </partie>
-            <partie date="28-11-2021" trouvé="100%">
-                <temps>21.0</temps>
-                <mot niveau="5">Gratte-ciel</mot>
-            </partie>
-            <partie date="28-11-2021" trouvé="61%">
-                <temps>29.0</temps>
-                <mot niveau="5">Porte-bonheur</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="84%">
-                <temps>29.0</temps>
-                <mot niveau="5">Porte-monnaie</mot>
-            </partie>
-            <partie date="28-11-2021" trouvé="72%">
-                <temps>29.0</temps>
-                <mot niveau="5">Gratte-ciel</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="0%">
-                <temps>1.0</temps>
-                <mot niveau="3">Volet</mot>
-            </partie>
-        <partie date="28-11-2021" trouvé="100%">
-                <temps>12.0</temps>
-                <mot niveau="3">Poire</mot>
-            </partie>
-        </parties>
-    </profil>
-<profil>
-        <nom>iad</nom>
-        <avatar>player1.svg</avatar>
-        <anniversaire>2000-01-30</anniversaire>
-        <parties>
-            <partie date="28-11-2021" trouvé="100%">
-                <temps>13.0</temps>
+            <partie date="2021-12-13" trouvé="100%">
+                <temps>18.0</temps>
                 <mot niveau="1">Fruit</mot>
             </partie>
         </parties>
-    </profil>
-<profil>
-        <nom>michel</nom>
-        <avatar>player1.svg</avatar>
-        <anniversaire>2000-01-30</anniversaire>
-        <parties>
-            <partie date="28-11-2021" trouvé="100%">
-                <temps>12.0</temps>
-                <mot niveau="3">Venir</mot>
-            </partie>
-        </parties>
-    </profil>
-<profil>
-        <nom>jacquie</nom>
-        <avatar>player1.svg</avatar>
-        <anniversaire>2000-01-30</anniversaire>
-        <parties/>
-    </profil>
-<profil>
-        <nom>momo</nom>
-        <avatar>player1.svg</avatar>
-        <anniversaire>2000-01-30</anniversaire>
-        <parties>
-            <partie date="28-11-2021" trouvé="100%">
-                <temps>13.0</temps>
-                <mot niveau="3">Chien</mot>
-            </partie>
-        </parties>
-    </profil>
-<profil>
-        <nom>marc</nom>
-        <avatar>player1.svg</avatar>
-        <anniversaire>2000-01-30</anniversaire>
-        <parties/>
     </profil>
 </profils>

@@ -4,6 +4,8 @@ import env.EnvTextMap;
 import env3d.Env;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime;
 
 // import javax.lang.model.util.ElementScanner6;
 
@@ -28,8 +30,8 @@ public abstract class Jeu {
     public ArrayList<Letter> lettres;
     private final Dico dico;
     private final EditeurDico edDico;
-    protected EnvTextMap menuText;                         //text (affichage des texte du jeu)
-    protected EnvTextMap gameText;                         //text (affichage des texte du jeu)
+    protected EnvTextMap menuText;                         // text (affichage des texte du jeu)
+    protected EnvTextMap gameText;                         // text (affichage des texte du jeu)
     private final Room mainRoom;
     private final Room menuRoom;
     private ArrayList<Letter> motTrouve;
@@ -255,7 +257,9 @@ public abstract class Jeu {
                 // -----------------------------------------                
                 case Keyboard.KEY_1: // choisi un niveau et charge un mot depuis le dico
                     // crée un nouvelle partie
-                    partie = new Partie("2021/11/28", "bonjour", 1, 0, 0);
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");   // yyyy/MM/dd
+                    LocalDateTime now = LocalDateTime.now();  
+                    partie = new Partie(dtf.format(now), "bonjour", 1, 0, 0);
 
                     jouer(partie);
                     

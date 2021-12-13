@@ -36,8 +36,6 @@ public class Dico{
         lireDictionnaire();
     }
     
-    
-    
     public String getMotDepusiListeNiveaux(int niveau){
         String mot = "error";
         
