@@ -525,12 +525,12 @@ public abstract class Jeu {
         int[][] positionLettres = new int[mot.length()][2];
 
         for(int i=0; i<mot.length(); i++) {
-            int randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
-            int randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
+            int randomPositionX = (int) (Math.random() * (room.getWidth()-10) + 10);
+            int randomPositionZ = (int) (Math.random() * (room.getDepth()-10 )+ 10);
 
             while(!verifiePositionLettreValide(positionLettres, randomPositionX, randomPositionZ, i)){
-                randomPositionX = (int) (Math.random() * (room.getWidth()-5) + 5);
-                randomPositionZ = (int) (Math.random() * (room.getDepth()-5 )+ 5);
+                randomPositionX = (int) (Math.random() * (room.getWidth()-10) + 10);
+                randomPositionZ = (int) (Math.random() * (room.getDepth()-10 )+ 10);
             }
 
             positionLettres[i][0]=randomPositionX;
