@@ -541,8 +541,8 @@ public abstract class Jeu {
                 randomPositionZ = (int) (Math.random() * (room.getDepth()-10 )+ 10);
             }
 
-            positionLettres[i][0]=randomPositionX;
-            positionLettres[i][1]=randomPositionZ;
+            positionLettres[i][0] = randomPositionX;
+            positionLettres[i][1] = randomPositionZ;
             Letter l = new Letter(tab[i], randomPositionX,randomPositionZ, room);
             lettres.add(l);
             env.addObject(l); 
@@ -790,6 +790,7 @@ public abstract class Jeu {
         if(distance(letter) <= 5.5){
             lettreTrouve(letter);
         }
+        
         return distance(letter) <= 5.5;
     }
 
@@ -809,8 +810,8 @@ public abstract class Jeu {
         Letter l = new Letter(letter.getLetter(), startPos,0, room,"apprendre");
         env.addObject(l); 
     }
-    
-    
+
+    // Menu des récompenses apres avoir fini une partie
     private void frameRecompenses(int score) {
         System.out.println("score enregistré: "+ score);
         
@@ -821,6 +822,7 @@ public abstract class Jeu {
         menuRoom.setTextureWest("textures/black.png");
         menuRoom.setTextureBottom("textures/black.png");
 
+        // Choisir l'image de fond du menu
         if(score == 100) {
             menuRoom.setTextureNorth("recompense/mot_complet.png");
         } else if (score > 60) {
@@ -833,8 +835,9 @@ public abstract class Jeu {
 
         env.setRoom(menuRoom);
         
+        // Bouton de retour
         int touche = 0; // 200 : bouton cliqué
-        while(touche != 200){
+        while(touche != 200) {
             if( env.getMouseButtonClicked() == 0                        // ( Y , X )
                 && (env.getMouseY() <= 100 && env.getMouseX() >= 290)   // (100,290)
                 && (env.getMouseY() <= 100 && env.getMouseX() <= 350)   // (100,350)
@@ -850,6 +853,7 @@ public abstract class Jeu {
         env.soundPlay("/audio/click.wav");
     }
 
+    // Menu des classements des meilleurs joueurs
     public void menuHighScore(Profil p) {
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
@@ -864,6 +868,7 @@ public abstract class Jeu {
         int posX = 285;
         int posY = 420;
         int nbIteration = 0;
+
         if(meilleursJoueur.size() >= 4) {
             nbIteration = 4;
         } else {
@@ -885,6 +890,7 @@ public abstract class Jeu {
             posY -= 85;
         }
 
+        // Bouton de retour
         int touche = 0;
         while (touche != 200 ) {                                                         
             if( env.getMouseButtonClicked() == 0                       // ( Y , X )
@@ -901,6 +907,7 @@ public abstract class Jeu {
             env.advanceOneFrame();
         }
 
+        // nettoyer les textes affiché à l'écran
         for (int i = 0; i < nbIteration; i++) {
             String nomJ = "Joueur"+(i+1);
             String scoreJ = "ScoreJoueur"+(i+1);
@@ -921,7 +928,6 @@ public abstract class Jeu {
      * @param lettres les positions des autres lettres
      * @param x,y position de la lettre que l'on cherche à valider
      */
-
     private boolean verifiePositionLettreValide(int[][] positionsLettres, int x, int z, int fin){
         boolean estValide = true;
         int i = 0;
@@ -938,9 +944,8 @@ public abstract class Jeu {
 
 
     /**
-      * Frame choisir le mot a ajouter dans le dictionnaire
-      */
-    
+     * Frame choisir le mot a ajouter dans le dictionnaire
+     */
     private void frameAjouterMotDico(){
         String mot = getMotSaisie();
         frameAjouterNiveauMot(mot);

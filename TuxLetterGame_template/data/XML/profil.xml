@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="profil.xsl"?>
-<profils xmlns="http://myGame/tux" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://myGame/tux ../XSD/profil.xsd">
+<?xml-stylesheet type="text/xsl" href="profil.xsl"?><profils xmlns="http://myGame/tux" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://myGame/tux ../XSD/profil.xsd">
     <profil>
         <nom>riad</nom>
         <avatar>../AVATAR/player1.svg</avatar>
@@ -89,6 +88,18 @@
             <partie date="2021-12-13" trouvé="100%">
                 <temps>7.0</temps>
                 <mot niveau="1">Fort</mot>
+            </partie>
+        <partie date="2021-12-13" trouvé="100%">
+                <temps>22.0</temps>
+                <mot niveau="5">xylophone</mot>
+            </partie>
+        <partie date="2021-12-13" trouvé="88%">
+                <temps>29.0</temps>
+                <mot niveau="5">xylophone</mot>
+            </partie>
+        <partie date="2021-12-13" trouvé="42%">
+                <temps>29.0</temps>
+                <mot niveau="5">je-meme</mot>
             </partie>
         </parties>
     </profil>

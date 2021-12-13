@@ -30,6 +30,7 @@
     <mot niveau="4">Xylophone</mot>
     <mot niveau="4">Manteau</mot>
     <mot niveau="4">Apprecier</mot>
+
     <!--
     <mot niveau="5">Dragon</mot>
     <mot niveau="5">Bouteille</mot>
@@ -40,8 +41,9 @@
     <mot niveau="5">Porte-bonheur</mot>
     <mot niveau="5">Haut-parleur</mot>
     <mot niveau="5">Bourg-en-bresse</mot>
+    <mot niveau="5">xylophone</mot>
     -->
-    
+    <mot niveau="5">je-meme</mot>
     <!-- MOT QUI NE DOIT JAMAIS FONCTIONNER
         <mot niveau="2">Ab3</mot>     
         <mot niveau="2">123</mot> 
@@ -56,5 +58,4 @@
     -->
     <mot niveau="1">Chat</mot>
     <mot niveau="3">Baton</mot>
-    <mot niveau="5">aaazaaazaaazaaahhh</mot>
 </dictionnaire>

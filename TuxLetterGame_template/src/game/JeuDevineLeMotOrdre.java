@@ -15,13 +15,33 @@ public class JeuDevineLeMotOrdre extends Jeu{
     }
 
     private boolean tuxTrouveLettre() {
-
-        
-        if(super.collision(super.lettres.get(0)))
+        if(super.collision(super.lettres.get(0))) {
             return true;
+        }
+        
         return false;
-       
     }
+
+    /**
+        private boolean tuxTrouveLettre() {
+            if(super.collision(super.lettres.get(0))) {
+                return true;
+                } else {
+                int nbLettre = 1;
+                while(nbLettre < super.lettres.size()) {
+                    if(super.collision(super.lettres.get(nbLettre))) {
+                        if(Character.compare(super.lettres.get(0).getLetter(), super.lettres.get(nbLettre).getLetter()) == 0) {
+                            System.out.println("je suis sur meme lettre ! ");
+                        }
+                    }
+
+                    nbLettre++;
+                }
+            }
+            
+            return false;
+        }   
+     */
 
     public void setNbLettresRestantes(int nbLettresRestantes) {
         this.nbLettresRestantes = nbLettresRestantes;
