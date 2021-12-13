@@ -1,7 +1,5 @@
 package game;
 
-import java.util.ArrayList;
-import java.util.List;
 
 // import org.lwjgl.input.Keyboard;
 // import net.java.games.input.Keyboard;
