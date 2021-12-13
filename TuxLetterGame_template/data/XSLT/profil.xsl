@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-    Document   : profile.xsl
-    Created on : 9 novembre 2021, 17:01
-    Author     : gambiezj
-    Description:
-        Purpose of transformation follows.
--->
-
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
                 xmlns:tux="http://myGame/tux"
                 version="1.0">
@@ -55,7 +47,7 @@
                             et de l'alphabet                    -->
 
                     <xsl:apply-templates select="//tux:partie">
-                        <xsl:sort select="@date" order="descending"/>
+                        <xsl:sort select="./tux:mot/@niveau" order="descending"/>
                         <xsl:sort select="./tux:mot" order="ascending"/>
                     </xsl:apply-templates>
                 </table>

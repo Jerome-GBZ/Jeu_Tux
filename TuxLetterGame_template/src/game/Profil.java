@@ -24,7 +24,7 @@ public class Profil implements Comparable {
     public Profil(String nom, String dateNaissance) {
         this.nom = nom;
         this.dateNaissance = dateNaissance;
-        this.avatar = "player1.svg";
+        this.avatar = "../AVATAR/player1.svg";
         this.scoreTotal = 0.0;
 
         if(!this.JoeurExist(nom)) {
