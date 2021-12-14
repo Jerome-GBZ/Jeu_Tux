@@ -11,12 +11,13 @@
     <mot niveau="1">Fuir</mot>
     <mot niveau="1">Fruit</mot>
     <mot niveau="1">Fort</mot>
-    
+    <mot niveau="1">Jour</mot>
+
     <mot niveau="2">Chant</mot>
     <mot niveau="2">Livre</mot>
     <mot niveau="2">Avion</mot>
     <mot niveau="2">Talon</mot>
-    <mot niveau="2">Jour</mot>
+    <mot niveau="2">Camion</mot>
     
     <mot niveau="3">Journal</mot>
     <mot niveau="3">Chien</mot>
@@ -27,23 +28,23 @@
     
     <mot niveau="4">Drapeau</mot>
     <mot niveau="4">Jupiter</mot>
-    <mot niveau="4">Xylophone</mot>
     <mot niveau="4">Manteau</mot>
     <mot niveau="4">Apprecier</mot>
+    <mot niveau="4">Dragon</mot>
+    <mot niveau="4">Bonjour</mot>
+    <mot niveau="4">Beaucoup</mot>
+    <mot niveau="4">Chapeau</mot>
+    <mot niveau="4">Chameau</mot>
 
-    <!--
-    <mot niveau="5">Dragon</mot>
     <mot niveau="5">Bouteille</mot>
-    <mot niveau="5">Bonjour</mot>
+    <mot niveau="5">Xylophone</mot>
     <mot niveau="5">Langage</mot>
     <mot niveau="5">Gratte-ciel</mot>
     <mot niveau="5">Porte-monnaie</mot>
     <mot niveau="5">Porte-bonheur</mot>
     <mot niveau="5">Haut-parleur</mot>
     <mot niveau="5">Bourg-en-bresse</mot>
-    <mot niveau="5">xylophone</mot>
-    -->
-    <mot niveau="5">je-meme</mot>
+
     <!-- MOT QUI NE DOIT JAMAIS FONCTIONNER
         <mot niveau="2">Ab3</mot>     
         <mot niveau="2">123</mot> 
