@@ -191,7 +191,7 @@ public abstract class Jeu {
             // restaure la room du menu
             env.setCameraXYZ(50, 50, 150);
             env.setCameraPitch(0);
-            menuRoom.setTextureNorth("menu/menuJeu.png");
+            menuRoom.setTextureNorth("assets/menu/menuJeu.png");
             env.setRoom(menuRoom);
             
             try {
@@ -241,7 +241,7 @@ public abstract class Jeu {
             }
 
             System.out.println("Menu Jeu - Touche: "+touche);
-            env.soundPlay("/audio/click.wav");
+            env.soundPlay("/assets/audio/click.wav");
 
             // Restaure la room du jeu
             menuRoom.setTextureEast("textures/black.png");
@@ -346,7 +346,7 @@ public abstract class Jeu {
         MENU_VAL choix = MENU_VAL.MENU_CONTINUE;
         String nomJoueur;
 
-        env.soundLoop("/audio/TheLoomingBattle.OGG");
+        env.soundLoop("/assets/audio/TheLoomingBattle.OGG");
 
 
         // restaure la room du menu
@@ -354,7 +354,7 @@ public abstract class Jeu {
         env.setCameraPitch(0);
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        menuRoom.setTextureNorth("menu/menuPrincipal.png");
+        menuRoom.setTextureNorth("assets/menu/menuPrincipal.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setRoom(menuRoom);
         
@@ -413,9 +413,9 @@ public abstract class Jeu {
         menuRoom.setTextureNorth("textures/black.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setRoom(menuRoom);
-        env.soundStop("/audio/TheLoomingBattle.OGG");
+        env.soundStop("/assets/audio/TheLoomingBattle.OGG");
 
-        env.soundPlay("/audio/click.wav");
+        env.soundPlay("/assets/audio/click.wav");
         // Décide quoi faire en fonction de la touche pressée
         switch (touche) {
             // -------------------------------------
@@ -486,7 +486,7 @@ public abstract class Jeu {
 
         mainRoom.setTextureEast("textures/black.png");
         mainRoom.setTextureWest("textures/black.png");
-        mainRoom.setTextureNorth("menu/menuNiveau.png");
+        mainRoom.setTextureNorth("assets/menu/menuNiveau.png");
         mainRoom.setTextureBottom("textures/black.png");
         env.setCameraXYZ(50, 30, 150);
         env.setCameraPitch(0);
@@ -533,12 +533,12 @@ public abstract class Jeu {
         int[][] positionLettres = new int[mot.length()][2];
 
         for(int i=0; i<mot.length(); i++) {
-            int randomPositionX = (int) (Math.random() * (room.getWidth()-10) + 10);
-            int randomPositionZ = (int) (Math.random() * (room.getDepth()-10 )+ 10);
+            int randomPositionX = (int) (Math.random() * (room.getWidth()-20) + 20);
+            int randomPositionZ = (int) (Math.random() * (room.getDepth()-20 )+ 20);
 
             while(!verifiePositionLettreValide(positionLettres, randomPositionX, randomPositionZ, i)){
-                randomPositionX = (int) (Math.random() * (room.getWidth()-10) + 10);
-                randomPositionZ = (int) (Math.random() * (room.getDepth()-10 )+ 10);
+                randomPositionX = (int) (Math.random() * (room.getWidth()-20) + 20);
+                randomPositionZ = (int) (Math.random() * (room.getDepth()-20 )+ 20);
             }
 
             positionLettres[i][0] = randomPositionX;
@@ -625,7 +625,7 @@ public abstract class Jeu {
     private int frameChoisirNiveau() {
         mainRoom.setTextureEast("textures/black.png");
         mainRoom.setTextureWest("textures/black.png");
-        mainRoom.setTextureNorth("menu/menuNiveau.png");
+        mainRoom.setTextureNorth("assets/menu/menuNiveau.png");
         mainRoom.setTextureBottom("textures/black.png");
         env.setCameraXYZ(50, 30, 150);
         env.setCameraPitch(0);
@@ -683,7 +683,7 @@ public abstract class Jeu {
             env.advanceOneFrame();
         }
         
-        env.soundPlay("/audio/click.wav");
+        env.soundPlay("/assets/audio/click.wav");
 
         env.setCameraXYZ(50, 60, 175); 
         env.setCameraPitch(-20);
@@ -715,7 +715,7 @@ public abstract class Jeu {
         int spacing = 8; // Espace de 15 pixel
         int startPos = 15;// Position de départ
         ArrayList<Letter> motTmp = new ArrayList<>();
-        menuRoom.setTextureNorth("menu/menuJeu.png");
+        menuRoom.setTextureNorth("assets/menu/menuJeu.png");
         for(int i=0; i<mot.length(); i++){
            Letter l = new Letter(tab[i], startPos, 50, room, "apprendre");
            env.addObject(l); 
@@ -795,7 +795,7 @@ public abstract class Jeu {
     }
 
     private void lettreTrouve(Letter letter){  
-        env.soundPlay("/audio/collect.wav");
+        env.soundPlay("/assets/audio/collect.wav");
         motTrouve.add(lettres.get(0));
         afficherLettreSelectionnee(lettres.get(0));
 
@@ -816,7 +816,7 @@ public abstract class Jeu {
         System.out.println("score enregistré: "+ score);
         
         env.setCameraPitch(0);
-        env.soundPlay("/audio/won.wav");
+        env.soundPlay("/assets/audio/won.wav");
 
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
@@ -824,13 +824,13 @@ public abstract class Jeu {
 
         // Choisir l'image de fond du menu
         if(score == 100) {
-            menuRoom.setTextureNorth("recompense/mot_complet.png");
+            menuRoom.setTextureNorth("assets/recompense/mot_complet.png");
         } else if (score > 60) {
-            menuRoom.setTextureNorth("recompense/moitie_de_mot.png");
+            menuRoom.setTextureNorth("assets/recompense/moitie_de_mot.png");
         } else if(score <= 60 && score > 30) {
-            menuRoom.setTextureNorth("recompense/mot_pas_trouve.png");
+            menuRoom.setTextureNorth("assets/recompense/mot_pas_trouve.png");
         } else {
-            menuRoom.setTextureNorth("recompense/mot_vraiment_pas_trouve.png");
+            menuRoom.setTextureNorth("assets/recompense/mot_vraiment_pas_trouve.png");
         }
 
         env.setRoom(menuRoom);
@@ -850,14 +850,14 @@ public abstract class Jeu {
             env.advanceOneFrame();
         }
 
-        env.soundPlay("/audio/click.wav");
+        env.soundPlay("/assets/audio/click.wav");
     }
 
     // Menu des classements des meilleurs joueurs
     public void menuHighScore(Profil p) {
         menuRoom.setTextureEast("textures/black.png");
         menuRoom.setTextureWest("textures/black.png");
-        menuRoom.setTextureNorth("menu/menuHighScore.png");
+        menuRoom.setTextureNorth("assets/menu/menuHighScore.png");
         menuRoom.setTextureBottom("textures/black.png");
         env.setCameraXYZ(50, 40, 150);
         env.setCameraPitch(0);

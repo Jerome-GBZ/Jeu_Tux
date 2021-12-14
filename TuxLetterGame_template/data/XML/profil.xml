@@ -17,6 +17,14 @@
                 <temps>14.0</temps>
                 <mot niveau="3">Volet</mot>
             </partie>
+        <partie date="2021-12-14" trouvé="100%">
+                <temps>9.0</temps>
+                <mot niveau="1">Lait</mot>
+            </partie>
+            <partie date="2021-12-14" trouvé="100%">
+                <temps>21.0</temps>
+                <mot niveau="5">je-meme</mot>
+            </partie>
         </parties>
     </profil>
 
